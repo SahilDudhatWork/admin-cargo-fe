@@ -1,0 +1,6 @@
+{
+    "errorMessage":"Please fill up your field !",
+    "matchErrorMessage":"Passwords do not match.",
+    "loginMessage":"Successfully logged in.",
+    "matchPasswordMessage":"Passwords do not match."
+}
