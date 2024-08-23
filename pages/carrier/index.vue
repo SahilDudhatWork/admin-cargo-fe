@@ -1,10 +1,13 @@
 <template>
     <div>
         <div>
-            <OptionList  labelText="Carrier list" buttonText="Add Carrier" listWidth="86%"/>
+            <h1 class="text-[#4B4B4B] font-normal text-[12px] mb-5 cursor-pointer"><nuxt-link to="/carrier">CARRIER</nuxt-link></h1>
+        </div>
+        <div>
+            <OptionList  labelText="Carrier list" buttonText="Add Carrier" listWidth="86%" @add="addCarrier"/>
         </div>
         <div class="mt-6">
-          <CarrierActionButton />
+          <CarrierActionButton @add="allActionButtons"/>
         </div>
         <CarrierList />
     </div>
@@ -12,6 +15,14 @@
 
 <script>
 export default {
-    layout:'dashboard'
+    layout:'dashboard',
+    methods: {
+        allActionButtons(type){
+            console.log(type);
+        },
+        addCarrier(){
+            this.$router.push('/carrier/add-carrier')
+        }
+    },
 }
 </script>

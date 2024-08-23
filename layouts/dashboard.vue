@@ -36,9 +36,9 @@
                 <img src="../static/svg/moon.svg" alt="">
                 <img src="../static/svg/bell.svg" alt="">
                 <h1 class="text-[#11263C] font-semibold text-[16px]">Bessie Cooper</h1>
-               <div class="flex gap-2">
+               <div class="flex gap-2 cursor-pointer" @click="isDropdown = !isDropdown">
                 <img src="../static/Images/header-image.webp" alt="">
-                <img src="../static/svg/down-arrow.svg" class="cursor-pointer" alt="" @click="isDropdown = !isDropdown">
+                <img src="../static/svg/down-arrow.svg" alt="">
                </div>
               </div>
           </div>
@@ -53,25 +53,14 @@
                 aria-labelledby="dropdownHoverButton"
                 @click="closeDropdown"
               >
+              <li>
+                <a class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Profile</a>
+              </li>
                 <li>
-                  <a
-                  href="/settings"
-                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                    >Settings</a
-                  >
-                </li>
-                <li>
-                  <a
-                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                    >Earnings</a
-                  >
-                </li>
-                <li>
-                  <a
-                    @click="logOut"
-                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                    >Log out</a
-                  >
+                <a class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+              </li>
+              <li>
+                  <a @click="logOut" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Log out</a>
                 </li>
               </ul>
             </div>
@@ -181,7 +170,7 @@ export default {
         },
         {
           name: "Setting",
-          href: "/settings",
+          href: "/setting",
           isActive: false,
           svg:settingsSvg,
           blackSvg:blackSettingsSvg,
@@ -223,15 +212,15 @@ export default {
       this.isShow = !this.isShow;
     },
     updateActiveTab(path) {
-      const previousPath = this.sideBarItems.find((tab) => tab.href === path);
-      if (previousPath) {
-        this.previousPath = previousPath.href;
-        this.sideBarItems = this.sideBarItems.map((item) => ({
-          ...item,
-          isActive: item.href === path
-        }));
-      }
+    const previousPath = this.sideBarItems.find((tab) => path.startsWith(tab.href));
+    if (previousPath) {
+      this.previousPath = previousPath.href;
+      this.sideBarItems = this.sideBarItems.map((item) => ({
+        ...item,
+        isActive: path.startsWith(item.href)
+      }));
     }
+  }
   },
 };
 </script>
