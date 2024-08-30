@@ -2,7 +2,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 const $axios = axios.create({
-  baseURL: "https://cargo-connect-be.vercel.app",
+  baseURL: "https://api.mycargoconnects.com",
   // baseURL: "http://localhost:4000",
 });
 

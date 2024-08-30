@@ -131,6 +131,7 @@ import settingsSvg from "../static/svg/settings.svg";
 import blackSettingsSvg from "../static/svg/black-settings.svg";
 
 export default {
+  middleware: "auth",
   data() {
     return {
       isSidebarOpen: false,
