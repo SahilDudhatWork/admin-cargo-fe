@@ -58,7 +58,6 @@
           <tbody>
             <tr
               class="bg-white border-b cursor-pointer"
-              @click="editUser(item)"
               v-for="(item, index) in allUserData"
               :key="index"
             >
@@ -139,7 +138,7 @@ export default {
   },
   methods: {
     editUser(item) {
-      this.$router.push(`user/edit-user/${item._id}`);
+      //   this.$router.push(`user/edit-user/${item._id}`);
     },
     async handleBlock(item) {
       this.$emit("handleBlock", item);
