@@ -403,6 +403,7 @@ export default {
         contactNumber: "",
         email: "",
         password: "",
+        companyFormationType: "",
         companyFormation: {
           usa: {
             w9_Form: "",
@@ -443,6 +444,7 @@ export default {
     }),
     getValue(item) {
       this.selectedLabel = item.label;
+      this.formData.companyFormationType = item.label;
     },
     togglePassword() {
       this.isPassword = !this.isPassword;
@@ -504,73 +506,45 @@ export default {
         formData.append("contactNumber", `+1${this.formData.contactNumber}`);
         formData.append("email", this.formData.email);
         formData.append("password", this.formData.password);
+        formData.append(
+          "companyFormationType",
+          this.formData.companyFormationType
+        );
 
         if (this.selectedLabel === "USA") {
           delete this.formData.companyFormation.maxico;
-          if (
-            this.formData.companyFormation.usa.w9_Form != null &&
-            typeof this.formData.companyFormation.usa.w9_Form == "object"
-          ) {
-            formData.append(
-              "companyFormation_usa_w9_Form",
-              this.formData.companyFormation.usa.w9_Form
-            );
-          }
-          if (
-            this.formData.companyFormation.usa.utility_Bill != null &&
-            typeof this.formData.companyFormation.usa.utility_Bill == "object"
-          ) {
-            formData.append(
-              "companyFormation_usa_utility_Bill",
-              this.formData.companyFormation.usa.utility_Bill
-            );
-          }
+
+          formData.append(
+            "companyFormation_usa_w9_Form",
+            this.formData.companyFormation.usa.w9_Form
+          );
+
+          formData.append(
+            "companyFormation_usa_utility_Bill",
+            this.formData.companyFormation.usa.utility_Bill
+          );
         }
         if (this.selectedLabel === "MEXICO") {
           delete this.formData.companyFormation.usa;
+          formData.append(
+            "companyFormation_maxico_copia_Rfc_Form",
+            this.formData.companyFormation.maxico.copia_Rfc_Form
+          );
 
-          if (
-            this.formData.companyFormation.maxico.copia_Rfc_Form != null &&
-            typeof this.formData.companyFormation.maxico.copia_Rfc_Form ==
-              "object"
-          ) {
-            formData.append(
-              "companyFormation_maxico_copia_Rfc_Form",
-              this.formData.companyFormation.maxico.copia_Rfc_Form
-            );
-          }
-          if (
-            this.formData.companyFormation.maxico
-              .constance_Of_Fiscal_Situation != null &&
-            typeof this.formData.companyFormation.maxico
-              .constance_Of_Fiscal_Situation == "object"
-          ) {
-            formData.append(
-              "companyFormation_maxico_constance_Of_Fiscal_Situation",
-              this.formData.companyFormation.maxico
-                .constance_Of_Fiscal_Situation
-            );
-          }
-          if (
-            this.formData.companyFormation.maxico.proof_of_Favorable != null &&
-            typeof this.formData.companyFormation.maxico.proof_of_Favorable ==
-              "object"
-          ) {
-            formData.append(
-              "companyFormation_maxico_proof_of_Favorable",
-              this.formData.companyFormation.maxico.proof_of_Favorable
-            );
-          }
-          if (
-            this.formData.companyFormation.maxico.proof_Of_Address != null &&
-            typeof this.formData.companyFormation.maxico.proof_Of_Address ==
-              "object"
-          ) {
-            formData.append(
-              "companyFormation_maxico_proof_Of_Address",
-              this.formData.companyFormation.maxico.proof_Of_Address
-            );
-          }
+          formData.append(
+            "companyFormation_maxico_constance_Of_Fiscal_Situation",
+            this.formData.companyFormation.maxico.constance_Of_Fiscal_Situation
+          );
+
+          formData.append(
+            "companyFormation_maxico_proof_of_Favorable",
+            this.formData.companyFormation.maxico.proof_of_Favorable
+          );
+
+          formData.append(
+            "companyFormation_maxico_proof_Of_Address",
+            this.formData.companyFormation.maxico.proof_Of_Address
+          );
         }
         this.formData.commercialReference.forEach((ref, index) => {
           for (let key in ref) {
@@ -583,7 +557,6 @@ export default {
           }
         });
         const response = await this.CreateUser(formData);
-        console.log(response, "response");
         this.$toast.open({
           message: response.msg,
         });

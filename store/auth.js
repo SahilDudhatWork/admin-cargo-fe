@@ -1,11 +1,18 @@
 import $axios from "@/plugins/axios";
 
 export const state = () => ({
+  profileData: {},
 });
 
 export const getters = {
+  getUserProfile(state) {
+    return state.profileData;
+  },
 };
 export const mutations = {
+  setUserProfile(state, payload) {
+    state.profileData = payload;
+  },
 };
 
 export const actions = {
@@ -24,9 +31,21 @@ export const actions = {
       throw error;
     }
   },
+  async tokenVerify(ctx, payload) {
+    try {
+      const response = await $axios.post(
+        "/v1/common/tokenVerify/admin",
+        payload
+      );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  },
   async profile(ctx, payload) {
     try {
       const response = await $axios.get("/v1/admin/profile");
+      ctx.commit("setUserProfile", response.data);
       return response;
     } catch (error) {
       throw error;
@@ -67,12 +86,12 @@ export const actions = {
       throw error;
     }
   },
-  async uploadImage(ctx,payload){
+  async uploadImage(ctx, payload) {
     try {
       const response = await $axios.post("/v1/common/imageUpload", payload);
       return response;
     } catch (error) {
-      throw error
+      throw error;
     }
-  }
+  },
 };
