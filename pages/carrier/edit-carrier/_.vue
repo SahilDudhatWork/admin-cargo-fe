@@ -3,14 +3,14 @@
     <div>
       <div class="flex items-center gap-3 mb-5">
         <h1 class="text-[#989898] font-normal text-[12px] cursor-pointer">
-          <nuxt-link to="/user">USERS</nuxt-link>
+          <nuxt-link to="/carrier">CARRIER</nuxt-link>
         </h1>
         <img src="@/static/svg/right-arrow.svg" alt="" />
         <p class="text-[#1E1E1E] font-normal text-[12px] cursor-pointer">
-          EDIT USER
+          EDIT CARRIER
         </p>
       </div>
-      <form class="space-y-4 md:space-y-6 mt-6" @submit.prevent="editUser">
+      <form class="space-y-4 md:space-y-6 mt-6" @submit.prevent="editCarrier">
         <div class="w-[65%]">
           <div class="grid grid-cols-2 gap-y-2">
             <div>
@@ -164,6 +164,61 @@
                 </div>
               </label>
             </div>
+            <div>
+              <inputFile
+                item-label="SCAC"
+                :file="
+                  typeof formData.scac == 'object'
+                    ? formData.scac?.name
+                    : formData.scac
+                "
+                @handleFileChange="uploadScac"
+              />
+            </div>
+            <div>
+              <inputFile
+                item-label="CAAT"
+                :file="
+                  typeof formData.caat == 'object'
+                    ? formData.caat?.name
+                    : formData.caat
+                "
+                @handleFileChange="uploadCaat"
+              />
+            </div>
+            <div>
+              <inputFile
+                item-label="Insurance Policy"
+                :file="
+                  typeof formData.insurancePolicy == 'object'
+                    ? formData.insurancePolicy?.name
+                    : formData.insurancePolicy
+                "
+                @handleFileChange="uploadInsurancePolicy"
+              />
+            </div>
+            <div>
+              <inputFile
+                item-label="OEA"
+                :file="
+                  typeof formData.oea == 'object'
+                    ? formData.oea?.name
+                    : formData.oea
+                "
+                @handleFileChange="uploadOea"
+              />
+            </div>
+            <div>
+              <inputFile
+                item-label="CTPAT"
+                :file="
+                  typeof formData.ctpat == 'object'
+                    ? formData.ctpat?.name
+                    : formData.ctpat
+                "
+                @handleFileChange="uploadCtpat"
+              />
+            </div>
             <div class="">
               <label
                 for="companyFormation"
@@ -180,9 +235,9 @@
               <inputFile
                 item-label="W9 Form"
                 :file="
-                  typeof formData.companyFormation.usa.w9_Form == 'object'
-                    ? formData.companyFormation.usa.w9_Form?.name
-                    : formData.companyFormation.usa.w9_Form
+                  typeof formData?.companyFormation?.usa?.w9_Form == 'object'
+                    ? formData?.companyFormation?.usa?.w9_Form?.name
+                    : formData?.companyFormation?.usa?.w9_Form
                 "
                 @handleFileChange="uploadW9Form"
               />
@@ -191,9 +246,10 @@
               <inputFile
                 item-label="Utility Bill"
                 :file="
-                  typeof formData.companyFormation.usa.utility_Bill == 'object'
-                    ? formData.companyFormation.usa.utility_Bill?.name
-                    : formData.companyFormation.usa.utility_Bill
+                  typeof formData?.companyFormation?.usa?.utility_Bill ==
+                  'object'
+                    ? formData?.companyFormation?.usa?.utility_Bill?.name
+                    : formData?.companyFormation?.usa?.utility_Bill
                 "
                 @handleFileChange="uploadUtilityBill"
               />
@@ -202,10 +258,10 @@
               <inputFile
                 item-label="COPIA RFC Form"
                 :file="
-                  typeof formData.companyFormation.maxico.copia_Rfc_Form ==
+                  typeof formData?.companyFormation?.maxico?.copia_Rfc_Form ==
                   'object'
-                    ? formData.companyFormation.maxico.copia_Rfc_Form?.name
-                    : formData.companyFormation.maxico.copia_Rfc_Form
+                    ? formData?.companyFormation?.maxico?.copia_Rfc_Form?.name
+                    : formData?.companyFormation?.maxico?.copia_Rfc_Form
                 "
                 @handleFileChange="uploadCopiaRfcForm"
               />
@@ -214,12 +270,12 @@
               <inputFile
                 item-label="Constance of Fiscal Situation"
                 :file="
-                  typeof formData.companyFormation.maxico
-                    .constance_Of_Fiscal_Situation == 'object'
-                    ? formData.companyFormation.maxico
-                        .constance_Of_Fiscal_Situation?.name
-                    : formData.companyFormation.maxico
-                        .constance_Of_Fiscal_Situation
+                  typeof formData?.companyFormation?.maxico
+                    ?.constance_Of_Fiscal_Situation == 'object'
+                    ? formData?.companyFormation?.maxico
+                        ?.constance_Of_Fiscal_Situation?.name
+                    : formData?.companyFormation?.maxico
+                        ?.constance_Of_Fiscal_Situation
                 "
                 @handleFileChange="uploadConstanceOfFiscalSituation"
               />
@@ -228,10 +284,11 @@
               <inputFile
                 item-label="Proof of Favorable"
                 :file="
-                  typeof formData.companyFormation.maxico.proof_of_Favorable ==
-                  'object'
-                    ? formData.companyFormation.maxico.proof_of_Favorable?.name
-                    : formData.companyFormation.maxico.proof_of_Favorable
+                  typeof formData?.companyFormation?.maxico
+                    ?.proof_of_Favorable == 'object'
+                    ? formData?.companyFormation?.maxico?.proof_of_Favorable
+                        ?.name
+                    : formData?.companyFormation?.maxico?.proof_of_Favorable
                 "
                 @handleFileChange="uploadProofOfFavorable"
               />
@@ -240,10 +297,10 @@
               <inputFile
                 item-label="Proof of Address"
                 :file="
-                  typeof formData.companyFormation.maxico.proof_Of_Address ==
+                  typeof formData?.companyFormation?.maxico?.proof_Of_Address ==
                   'object'
-                    ? formData.companyFormation.maxico.proof_Of_Address?.name
-                    : formData.companyFormation.maxico.proof_Of_Address
+                    ? formData?.companyFormation?.maxico?.proof_Of_Address?.name
+                    : formData?.companyFormation?.maxico?.proof_Of_Address
                 "
                 @handleFileChange="uploadProofOfAddress"
               />
@@ -368,11 +425,11 @@
               </div>
             </div>
           </div>
-          <div class="flex justify-center">
+          <div class="flex justify-center mt-4">
             <button
-              class="text-white bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] font-medium rounded-lg text-[16px] px-8 py-[15px] text-center mt-8 mr-40"
+              class="mb-5 w-[20%] text-white bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] font-medium rounded-lg text-[16px] px-5 py-[15px] text-center"
             >
-              Update User
+              Add Carrier
             </button>
           </div>
         </div>
@@ -383,7 +440,6 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-
 export default {
   layout: "dashboard",
   data() {
@@ -403,6 +459,7 @@ export default {
         contactName: "",
         contactNumber: "",
         email: "",
+        password: "",
         scac: "",
         caat: "",
         insurancePolicy: "",
@@ -442,13 +499,13 @@ export default {
   },
   computed: {
     ...mapGetters({
-      getSingleUserData: "user/getSingleUserData",
+      getSingleCarrierData: "carrier/getSingleCarrierData",
     }),
   },
   methods: {
     ...mapActions({
-      fetchSingleUser: "user/fetchSingleUser",
-      updateUser: "user/updateUser",
+      fetchSingleCarrier: "carrier/fetchSingleUser",
+      updateCarrier: "carrier/updateCarrier",
     }),
     getValue(item) {
       this.selectedLabel = item.label;
@@ -456,6 +513,46 @@ export default {
     },
     togglePassword() {
       this.isPassword = !this.isPassword;
+    },
+    async uploadScac(event) {
+      try {
+        const file = event.target.files[0];
+        this.formData.scac = file;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async uploadCaat(event) {
+      try {
+        const file = event.target.files[0];
+        this.formData.caat = file;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async uploadInsurancePolicy(event) {
+      try {
+        const file = event.target.files[0];
+        this.formData.insurancePolicy = file;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async uploadOea(event) {
+      try {
+        const file = event.target.files[0];
+        this.formData.oea = file;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async uploadCtpat(event) {
+      try {
+        const file = event.target.files[0];
+        this.formData.ctpat = file;
+      } catch (error) {
+        console.log(error);
+      }
     },
     async uploadW9Form(event) {
       try {
@@ -506,7 +603,7 @@ export default {
         console.log(error);
       }
     },
-    async editUser() {
+    async editCarrier() {
       try {
         const formData = new FormData();
         formData.append("id", this.formData._id);
@@ -519,6 +616,31 @@ export default {
           "companyFormationType",
           this.formData.companyFormationType
         );
+        if (typeof this.formData.scac == "object") {
+          formData.append("scac", this.formData.scac);
+        }
+        if (
+          this.formData.caat != null &&
+          typeof this.formData.caat == "object"
+        ) {
+          formData.append("caat", this.formData.caat);
+        }
+        if (
+          this.formData.insurancePolicy != null &&
+          typeof this.formData.insurancePolicy == "object"
+        ) {
+          formData.append("insurancePolicy", this.formData.insurancePolicy);
+        }
+        if (this.formData.oea != null && typeof this.formData.oea == "object") {
+          formData.append("oea", this.formData.oea);
+        }
+        if (
+          this.formData.ctpat != null &&
+          typeof this.formData.ctpat == "object"
+        ) {
+          formData.append("ctpat", this.formData.ctpat);
+        }
+
         if (this.selectedLabel === "USA") {
           delete this.formData.companyFormation.maxico;
           if (
@@ -596,11 +718,11 @@ export default {
             formData.append(`commercialReference[${index}][${key}]`, value);
           }
         });
-        const response = await this.updateUser(formData);
+        const response = await this.updateCarrier(formData);
         this.$toast.open({
           message: response.msg,
         });
-        this.$router.push("/user");
+        this.$router.push("/carrier");
       } catch (error) {
         this.$toast.open({
           message: error?.response?.data?.msg,
@@ -612,13 +734,13 @@ export default {
   async asyncData({ params, store, redirect }) {
     const id = params.pathMatch;
     try {
-      await store.dispatch("user/fetchSingleUser", { id: id });
+      await store.dispatch("carrier/fetchSingleCarrier", { id: id });
     } catch (error) {
-      return redirect("/user");
+      return redirect("/carrier");
     }
   },
   async beforeMount() {
-    this.formData = this.$lodash.cloneDeep(this.getSingleUserData);
+    this.formData = this.$lodash.cloneDeep(this.getSingleCarrierData);
     this.selectedLabel = this.formData.companyFormationType;
   },
 };
