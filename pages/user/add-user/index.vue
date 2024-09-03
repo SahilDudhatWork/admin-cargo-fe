@@ -23,10 +23,16 @@
                 type="text"
                 name="CompanyName"
                 id="CompanyName"
-                class="xl:w-[382px] border border-gray-300 text-gray-900 rounded-lg block w-full px-3 py-[14px]"
+                class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[14px] focus:outline-none"
+                :class="
+                  errorMessage
+                    ? 'border border-red-600'
+                    : 'border border-gray-300'
+                "
                 placeholder="Your company name"
                 v-model="formData.companyName"
               />
+              <span class="error-msg">{{ errorMessage }}</span>
             </div>
             <div>
               <label
@@ -39,9 +45,15 @@
                 name="ContactName"
                 id="ContactName"
                 placeholder="Your contact name"
-                class="xl:w-[382px] border border-gray-300 text-gray-900 rounded-lg block w-full px-3 py-[14px]"
+                class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[14px] focus:outline-none"
+                :class="
+                  errorMessage
+                    ? 'border border-red-600'
+                    : 'border border-gray-300'
+                "
                 v-model="formData.contactName"
               />
+              <span class="error-msg">{{ errorMessage }}</span>
             </div>
             <div>
               <label
@@ -54,7 +66,7 @@
                 name="email"
                 id="email"
                 placeholder="Your Email Address"
-                class="xl:w-[382px] border border-gray-300 text-gray-900 rounded-lg block w-full px-3 py-[14px]"
+                class="xl:w-[382px] border border-gray-300 text-gray-900 rounded-lg block w-full px-3 py-[14px] focus:outline-none"
                 v-model="formData.email"
               />
             </div>
@@ -98,7 +110,7 @@
                     :type="isPassword ? 'text' : 'password'"
                     name="createPassword"
                     id="createPassword"
-                    class="xl:w-[382px] border border-gray-300 text-gray-900 rounded-lg block w-full px-3 py-[13px]"
+                    class="xl:w-[382px] border border-gray-300 text-gray-900 rounded-lg block w-full px-3 py-[13px] focus:outline-none"
                     placeholder="Type your email address"
                     v-model="formData.password"
                   />
@@ -396,6 +408,7 @@ export default {
           label: "MEXICO",
         },
       ],
+      errorMessage: "",
       selectedLabel: "Select option",
       formData: {
         companyName: "",
@@ -500,67 +513,72 @@ export default {
     },
     async addUser() {
       try {
-        const formData = new FormData();
-        formData.append("companyName", this.formData.companyName);
-        formData.append("contactName", this.formData.contactName);
-        formData.append("contactNumber", `+1${this.formData.contactNumber}`);
-        formData.append("email", this.formData.email);
-        formData.append("password", this.formData.password);
-        formData.append(
-          "companyFormationType",
-          this.formData.companyFormationType
-        );
-
-        if (this.selectedLabel === "USA") {
-          delete this.formData.companyFormation.maxico;
-
+        if (!this.formData.companyName || !this.formData.contactName) {
+          this.errorMessage = this.$i18n.t("errorMessage");
+        } else {
+          const formData = new FormData();
+          formData.append("companyName", this.formData.companyName);
+          formData.append("contactName", this.formData.contactName);
+          formData.append("contactNumber", `+1${this.formData.contactNumber}`);
+          formData.append("email", this.formData.email);
+          formData.append("password", this.formData.password);
           formData.append(
-            "companyFormation_usa_w9_Form",
-            this.formData.companyFormation.usa.w9_Form
+            "companyFormationType",
+            this.formData.companyFormationType
           );
 
-          formData.append(
-            "companyFormation_usa_utility_Bill",
-            this.formData.companyFormation.usa.utility_Bill
-          );
-        }
-        if (this.selectedLabel === "MEXICO") {
-          delete this.formData.companyFormation.usa;
-          formData.append(
-            "companyFormation_maxico_copia_Rfc_Form",
-            this.formData.companyFormation.maxico.copia_Rfc_Form
-          );
+          if (this.selectedLabel === "USA") {
+            delete this.formData.companyFormation.maxico;
 
-          formData.append(
-            "companyFormation_maxico_constance_Of_Fiscal_Situation",
-            this.formData.companyFormation.maxico.constance_Of_Fiscal_Situation
-          );
+            formData.append(
+              "companyFormation_usa_w9_Form",
+              this.formData.companyFormation.usa.w9_Form
+            );
 
-          formData.append(
-            "companyFormation_maxico_proof_of_Favorable",
-            this.formData.companyFormation.maxico.proof_of_Favorable
-          );
-
-          formData.append(
-            "companyFormation_maxico_proof_Of_Address",
-            this.formData.companyFormation.maxico.proof_Of_Address
-          );
-        }
-        this.formData.commercialReference.forEach((ref, index) => {
-          for (let key in ref) {
-            let value = ref[key];
-
-            if (key === "countryCode" || key === "contactNo") {
-              value = `+1${value}`;
-            }
-            formData.append(`commercialReference[${index}][${key}]`, value);
+            formData.append(
+              "companyFormation_usa_utility_Bill",
+              this.formData.companyFormation.usa.utility_Bill
+            );
           }
-        });
-        const response = await this.CreateUser(formData);
-        this.$toast.open({
-          message: response.msg,
-        });
-        this.$router.push("/user");
+          if (this.selectedLabel === "MEXICO") {
+            delete this.formData.companyFormation.usa;
+            formData.append(
+              "companyFormation_maxico_copia_Rfc_Form",
+              this.formData.companyFormation.maxico.copia_Rfc_Form
+            );
+
+            formData.append(
+              "companyFormation_maxico_constance_Of_Fiscal_Situation",
+              this.formData.companyFormation.maxico
+                .constance_Of_Fiscal_Situation
+            );
+
+            formData.append(
+              "companyFormation_maxico_proof_of_Favorable",
+              this.formData.companyFormation.maxico.proof_of_Favorable
+            );
+
+            formData.append(
+              "companyFormation_maxico_proof_Of_Address",
+              this.formData.companyFormation.maxico.proof_Of_Address
+            );
+          }
+          this.formData.commercialReference.forEach((ref, index) => {
+            for (let key in ref) {
+              let value = ref[key];
+
+              if (key === "countryCode" || key === "contactNo") {
+                value = `+1${value}`;
+              }
+              formData.append(`commercialReference[${index}][${key}]`, value);
+            }
+          });
+          const response = await this.CreateUser(formData);
+          this.$toast.open({
+            message: response.msg,
+          });
+          this.$router.push("/user");
+        }
       } catch (error) {
         this.$toast.open({
           message: error?.response?.data?.msg,
@@ -573,3 +591,11 @@ export default {
   async mounted() {},
 };
 </script>
+
+<style>
+.error-msg {
+  font-size: 14px;
+  font-weight: 400;
+  color: red;
+}
+</style>

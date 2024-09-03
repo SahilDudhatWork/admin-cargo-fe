@@ -10,7 +10,7 @@
     >
       <div class="flex justify-between">
         <p class="text-sm text-[#686868] font-normal">
-          {{ file || "Choose file to upload" }}
+          {{ fileUrl || "Choose file to upload" }}
         </p>
         <!-- <img :src="file" alt="" class="w-5 h-5" /> -->
         <svg
@@ -62,6 +62,22 @@ export default {
       type: String,
       required: true,
       default: "Choose file to upload",
+    },
+  },
+  computed: {
+    fileUrl() {
+      const baseUrl = "https://cargo-storage-bucket.s3.amazonaws.com";
+
+      // Check if the URL starts with the base URL
+      if (this.file.startsWith(baseUrl)) {
+        // Split and return the image name
+        const cleanedUrl = this.file.split("?")[0];
+        // Extract and return the image name
+        return cleanedUrl.split("/").pop();
+      } else {
+        // Return the value as it is, assuming it's already the image name
+        return this.file;
+      }
     },
   },
   methods: {
