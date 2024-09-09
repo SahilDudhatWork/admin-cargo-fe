@@ -121,7 +121,7 @@
                   src="@/static/svg/delete-icon.svg"
                   alt=""
                   class="w-[20px] h-[20px] mt-6"
-                  @click="$emit('deleteItem', item._id)"
+                  @click="$emit('deleteItem', item.accountId)"
                 />
               </td>
             </tr>
@@ -137,7 +137,10 @@
             </tr>
           </tbody>
         </table>
-        <div class="mt-4 flex justify-end gap-5 items-center mb-10">
+        <div
+          v-if="allData?.length > 0"
+          class="mt-4 flex justify-end gap-5 items-center mb-10"
+        >
           <span>{{ paginationText }}</span>
           <button
             class="p-1 rounded-lg"

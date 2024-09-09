@@ -5,6 +5,22 @@
         <nuxt-link to="/user">USERS</nuxt-link>
       </h1>
     </div>
+    <div class="relative w-[71%]">
+      <img
+        src="@/static/svg/search.svg"
+        alt=""
+        class="absolute right-3 top-[18px] cursor-pointer"
+      />
+      <input
+        type="text"
+        name="search"
+        id="search"
+        placeholder="Search by user name/ID"
+        class="border border-gray-300 text-gray-900 rounded-lg block px-3 py-[14px] focus:outline-none mb-4 w-full"
+        v-model="search"
+        @keyup="searchText"
+      />
+    </div>
     <div>
       <OptionList
         labelText="User list"
@@ -47,6 +63,7 @@ export default {
       isModal: false,
       selectedItem: null,
       sortBy: "all",
+      search: "",
     };
   },
   computed: {
@@ -66,10 +83,26 @@ export default {
       userUnVerify: "user/userUnVerify",
       deleteUser: "user/deleteUser",
     }),
+    async getAllUser(payload) {
+      let { sortBy, page, limit, keyWord } = payload;
+      sortBy = sortBy || "";
+      page = page || 1;
+      limit = limit || 10;
+      keyWord = keyWord || "";
+      await this.fetchAllUser({
+        sortBy: sortBy,
+        page: page,
+        limit: limit,
+        keyWord: keyWord,
+      });
+    },
     async allActionButtons(type) {
       try {
         this.sortBy = type;
-        const res = await this.fetchAllUser({ sortBy: this.sortBy });
+        const res = await this.getAllUser({
+          keyWord: this.search,
+          sortBy: this.sortBy,
+        });
       } catch (error) {
         this.$toast.open({
           message: error?.response?.data?.msg,
@@ -78,14 +111,14 @@ export default {
       }
     },
     editUser(item) {
-      this.$router.push(`user/edit-user/${item._id}`);
+      this.$router.push(`user/edit-user/${item.accountId}`);
     },
     addUser() {
       this.$router.push("/user/add-user");
     },
     async handleSubmit() {
       try {
-        const response = await this.deleteUser({ id: this.selectedId });
+        const response = await this.deleteUser({ accountId: this.selectedId });
         this.$toast.open({
           message: response.msg,
         });
@@ -107,8 +140,9 @@ export default {
     },
     async firstPage() {
       try {
-        const res = await this.fetchAllUser({
+        const res = await this.getAllUser({
           sortBy: this.sortBy,
+          keyWord: this.search,
           page: 1,
           limit: this.userPaginationData.limit,
         });
@@ -121,14 +155,13 @@ export default {
     },
     async lastPage() {
       try {
-        const res = await this.fetchAllUser({
+        const res = await this.getAllUser({
           sortBy: this.sortBy,
+          keyWord: this.search,
           page: this.userPaginationData?.total_page,
           limit: 10,
         });
       } catch (error) {
-        console.log(error);
-
         this.$toast.open({
           message: error?.response?.data?.msg,
           type: "error",
@@ -137,8 +170,9 @@ export default {
     },
     async prevPage() {
       try {
-        const res = await this.fetchAllUser({
+        const res = await this.getAllUser({
           sortBy: this.sortBy,
+          keyWord: this.search,
           page: this.userPaginationData.current_page - 1,
           limit: this.userPaginationData.limit,
         });
@@ -151,8 +185,9 @@ export default {
     },
     async nextPage() {
       try {
-        const res = await this.fetchAllUser({
+        const res = await this.getAllUser({
           sortBy: this.sortBy,
+          keyWord: this.search,
           page: this.userPaginationData.current_page + 1,
           limit: this.userPaginationData.limit,
         });
@@ -207,13 +242,21 @@ export default {
   },
   async mounted() {
     try {
-      const res = await this.fetchAllUser({ sortBy: this.sortBy });
+      const res = await this.getAllUser({
+        keyWord: this.search,
+        sortBy: this.sortBy,
+      });
     } catch (error) {
       this.$toast.open({
         message: error?.response?.data?.msg,
         type: "error",
       });
     }
+  },
+  async created() {
+    this.searchText = this.$lodash.debounce(async (payload) => {
+      await this.getAllUser({ keyWord: this.search, sortBy: this.sortBy });
+    }, 1000);
   },
 };
 </script>

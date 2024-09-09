@@ -25,14 +25,16 @@
                 id="CompanyName"
                 class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[14px] focus:outline-none"
                 :class="
-                  errorMessage
+                  errors.companyName
                     ? 'border border-red-600'
                     : 'border border-gray-300'
                 "
                 placeholder="Your company name"
                 v-model="formData.companyName"
               />
-              <span class="error-msg">{{ errorMessage }}</span>
+              <span class="error-msg" v-if="errors.companyName">{{
+                errors.companyName
+              }}</span>
             </div>
             <div>
               <label
@@ -47,13 +49,15 @@
                 placeholder="Your contact name"
                 class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[14px] focus:outline-none"
                 :class="
-                  errorMessage
+                  errors.contactName
                     ? 'border border-red-600'
                     : 'border border-gray-300'
                 "
                 v-model="formData.contactName"
               />
-              <span class="error-msg">{{ errorMessage }}</span>
+              <span class="error-msg" v-if="errors.contactName">{{
+                errors.contactName
+              }}</span>
             </div>
             <div>
               <label
@@ -64,11 +68,19 @@
               <input
                 type="email"
                 name="email"
+                :class="
+                  errors.email
+                    ? 'border border-red-600'
+                    : 'border border-gray-300'
+                "
                 id="email"
                 placeholder="Your Email Address"
-                class="xl:w-[382px] border border-gray-300 text-gray-900 rounded-lg block w-full px-3 py-[14px] focus:outline-none"
+                class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[14px] focus:outline-none"
                 v-model="formData.email"
               />
+              <span class="error-msg" v-if="errors.email">{{
+                errors.email
+              }}</span>
             </div>
             <div>
               <label
@@ -76,7 +88,7 @@
                 class="block mb-2 text-sm font-normal text-[#4B4B4B]"
                 >Create Password</label
               >
-              <label class="xl:w-[382px] relative flex cursor-pointer">
+              <label class="xl:w-[382px] relative flex cursor-pointer flex-col">
                 <div class="flex justify-between">
                   <svg
                     @click="togglePassword"
@@ -107,14 +119,22 @@
                     />
                   </svg>
                   <input
+                    :class="
+                      errors.password
+                        ? 'border border-red-600'
+                        : 'border border-gray-300'
+                    "
                     :type="isPassword ? 'text' : 'password'"
                     name="createPassword"
                     id="createPassword"
-                    class="xl:w-[382px] border border-gray-300 text-gray-900 rounded-lg block w-full px-3 py-[13px] focus:outline-none"
+                    class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[13px] focus:outline-none"
                     placeholder="Type your email address"
                     v-model="formData.password"
                   />
                 </div>
+                <span class="error-msg" v-if="errors.password">{{
+                  errors.password
+                }}</span>
               </label>
             </div>
             <div>
@@ -123,57 +143,37 @@
                 class="block mb-2 text-sm font-normal text-[#4B4B4B]"
                 >Contact No.</label
               >
-              <label class="xl:w-[382px] relative flex cursor-pointer">
+              <label class="xl:w-[382px] relative flex cursor-pointer flex-col">
                 <div class="flex justify-between">
-                  <svg
-                    width="24"
-                    class="absolute ml-3 mb-3 mr-4 top-4"
-                    viewBox="0 0 36 36"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                    aria-hidden="true"
-                    role="img"
-                    preserveAspectRatio="xMidYMid meet"
-                  >
-                    <path
-                      fill="#ED2939"
-                      d="M36 27a4 4 0 0 1-4 4h-8V5h8a4 4 0 0 1 4 4v18z"
-                    ></path>
-                    <path
-                      fill="#002495"
-                      d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"
-                    ></path>
-                    <path fill="#EEE" d="M12 5h12v26H12z"></path>
-                  </svg>
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="absolute sm:right-3 right-2 top-4 cursor-pointer"
-                  >
-                    <path
-                      d="M12.5 16.6667H4.16667C3.062 16.6653 2.00296 16.2259 1.22185 15.4448C0.440735 14.6637 0.00132321 13.6047 0 12.5L0 4.16667C0.00132321 3.062 0.440735 2.00296 1.22185 1.22185C2.00296 0.440735 3.062 0.00132321 4.16667 0L12.5 0C13.6047 0.00132321 14.6637 0.440735 15.4448 1.22185C16.2259 2.00296 16.6653 3.062 16.6667 4.16667V12.5C16.6653 13.6047 16.2259 14.6637 15.4448 15.4448C14.6637 16.2259 13.6047 16.6653 12.5 16.6667ZM4.16667 1.66667C3.50363 1.66667 2.86774 1.93006 2.3989 2.3989C1.93006 2.86774 1.66667 3.50363 1.66667 4.16667V12.5C1.66667 13.163 1.93006 13.7989 2.3989 14.2678C2.86774 14.7366 3.50363 15 4.16667 15H12.5C13.163 15 13.7989 14.7366 14.2678 14.2678C14.7366 13.7989 15 13.163 15 12.5V4.16667C15 3.50363 14.7366 2.86774 14.2678 2.3989C13.7989 1.93006 13.163 1.66667 12.5 1.66667H4.16667ZM20 15.8333V5C20 4.77899 19.9122 4.56702 19.7559 4.41074C19.5996 4.25446 19.3877 4.16667 19.1667 4.16667C18.9457 4.16667 18.7337 4.25446 18.5774 4.41074C18.4211 4.56702 18.3333 4.77899 18.3333 5V15.8333C18.3333 16.4964 18.0699 17.1323 17.6011 17.6011C17.1323 18.0699 16.4964 18.3333 15.8333 18.3333H5C4.77899 18.3333 4.56702 18.4211 4.41074 18.5774C4.25446 18.7337 4.16667 18.9457 4.16667 19.1667C4.16667 19.3877 4.25446 19.5996 4.41074 19.7559C4.56702 19.9122 4.77899 20 5 20H15.8333C16.938 19.9987 17.997 19.5593 18.7782 18.7782C19.5593 17.997 19.9987 16.938 20 15.8333Z"
-                      fill="#1E1E1E"
-                    />
-                  </svg>
+                  <img
+                    src="@/static/svg/usa-flag.svg"
+                    alt=""
+                    class="absolute ml-3 mb-3 mr-4 top-4 w-6 h-6"
+                  />
                   <span
                     class="absolute left-12 mb-3 mr-4 top-4 text-[#1E1E1E] font-normal text-base"
-                    >+33</span
+                    >+1</span
                   >
                   <div
                     class="border-r border-gray-400 h-[40%] absolute left-20 top-4"
                   ></div>
                   <input
-                    type="number"
+                    type="text"
                     name="ContactNo"
+                    :class="
+                      errors.contactNumber
+                        ? 'border border-red-600'
+                        : 'border border-gray-300'
+                    "
                     id="ContactNo"
                     placeholder="Your Contact No."
-                    class="xl:w-[382px] border border-gray-300 text-gray-900 rounded-lg block w-full px-3 py-[15px] bg-white pl-24 focus:outline-none mb-3"
+                    class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[15px] bg-white pl-24 focus:outline-none mb-1"
                     v-model="formData.contactNumber"
                   />
                 </div>
+                <span class="error-msg" v-if="errors.contactNumber">{{
+                  errors.contactNumber
+                }}</span>
               </label>
             </div>
             <div class="">
@@ -190,6 +190,7 @@
             </div>
             <div v-if="selectedLabel === 'USA'">
               <inputFile
+                :errors="errors.w9_Form"
                 item-label="W9 Form"
                 :file="
                   typeof formData.companyFormation.usa.w9_Form == 'object'
@@ -198,9 +199,13 @@
                 "
                 @handleFileChange="uploadW9Form"
               />
+              <span class="error-msg" v-if="errors.w9_Form">{{
+                errors.w9_Form
+              }}</span>
             </div>
             <div v-if="selectedLabel === 'USA'">
               <inputFile
+                :errors="errors.utility_Bill"
                 item-label="Utility Bill"
                 :file="
                   typeof formData.companyFormation.usa.utility_Bill == 'object'
@@ -209,9 +214,13 @@
                 "
                 @handleFileChange="uploadUtilityBill"
               />
+              <span class="error-msg" v-if="errors.utility_Bill">{{
+                errors.utility_Bill
+              }}</span>
             </div>
             <div v-if="selectedLabel === 'MEXICO'">
               <inputFile
+                :errors="errors.copia_Rfc_Form"
                 item-label="COPIA RFC Form"
                 :file="
                   typeof formData.companyFormation.maxico.copia_Rfc_Form ==
@@ -221,9 +230,13 @@
                 "
                 @handleFileChange="uploadCopiaRfcForm"
               />
+              <span class="error-msg" v-if="errors.copia_Rfc_Form">{{
+                errors.copia_Rfc_Form
+              }}</span>
             </div>
             <div v-if="selectedLabel === 'MEXICO'">
               <inputFile
+                :errors="errors.constance_Of_Fiscal_Situation"
                 item-label="Constance of Fiscal Situation"
                 :file="
                   typeof formData.companyFormation.maxico
@@ -235,10 +248,16 @@
                 "
                 @handleFileChange="uploadConstanceOfFiscalSituation"
               />
+              <span
+                class="error-msg"
+                v-if="errors.constance_Of_Fiscal_Situation"
+                >{{ errors.constance_Of_Fiscal_Situation }}</span
+              >
             </div>
             <div v-if="selectedLabel === 'MEXICO'">
               <inputFile
                 item-label="Proof of Favorable"
+                :errors="errors.proof_of_Favorable"
                 :file="
                   typeof formData.companyFormation.maxico.proof_of_Favorable ==
                   'object'
@@ -247,9 +266,13 @@
                 "
                 @handleFileChange="uploadProofOfFavorable"
               />
+              <span class="error-msg" v-if="errors.proof_of_Favorable">{{
+                errors.proof_of_Favorable
+              }}</span>
             </div>
             <div v-if="selectedLabel === 'MEXICO'">
               <inputFile
+                :errors="errors.proof_Of_Address"
                 item-label="Proof of Address"
                 :file="
                   typeof formData.companyFormation.maxico.proof_Of_Address ==
@@ -259,6 +282,9 @@
                 "
                 @handleFileChange="uploadProofOfAddress"
               />
+              <span class="error-msg" v-if="errors.proof_Of_Address">{{
+                errors.proof_Of_Address
+              }}</span>
             </div>
           </div>
 
@@ -281,13 +307,24 @@
                   >Company name</label
                 >
                 <input
+                  :class="
+                    errors[`commercialReference[${key}].companyName`]
+                      ? 'border border-red-600'
+                      : 'border border-gray-300'
+                  "
                   type="text"
                   name="CompanyName"
                   id="CompanyName"
-                  class="xl:w-[382px] border border-gray-300 text-gray-900 rounded-lg block w-full px-3 py-[14px]"
+                  class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[14px]"
                   placeholder="Your company name"
                   v-model="reference.companyName"
                 />
+                <span
+                  class="error-msg"
+                  v-if="errors[`commercialReference[${key}].companyName`]"
+                >
+                  {{ errors[`commercialReference[${key}].companyName`] }}
+                </span>
               </div>
               <div>
                 <label
@@ -298,11 +335,22 @@
                 <input
                   type="text"
                   name="ContactName"
+                  :class="
+                    errors[`commercialReference[${key}].contactName`]
+                      ? 'border border-red-600'
+                      : 'border border-gray-300'
+                  "
                   id="ContactName"
                   placeholder="Your contact name"
-                  class="xl:w-[382px] border border-gray-300 text-gray-900 rounded-lg block w-full px-3 py-[14px]"
+                  class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[14px]"
                   v-model="reference.contactName"
                 />
+                <span
+                  class="error-msg"
+                  v-if="errors[`commercialReference[${key}].contactName`]"
+                >
+                  {{ errors[`commercialReference[${key}].contactName`] }}
+                </span>
               </div>
               <div>
                 <label
@@ -313,11 +361,22 @@
                 <input
                   type="email"
                   name="email"
+                  :class="
+                    errors[`commercialReference[${key}].emailAddress`]
+                      ? 'border border-red-600'
+                      : 'border border-gray-300'
+                  "
                   id="email"
                   placeholder="Your Email Address"
-                  class="xl:w-[382px] border border-gray-300 text-gray-900 rounded-lg block w-full px-3 py-[14px]"
+                  class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[14px]"
                   v-model="reference.emailAddress"
                 />
+                <span
+                  class="error-msg"
+                  v-if="errors[`commercialReference[${key}].emailAddress`]"
+                >
+                  {{ errors[`commercialReference[${key}].emailAddress`] }}
+                </span>
               </div>
               <div>
                 <label
@@ -325,41 +384,15 @@
                   class="block mb-2 text-sm font-normal text-[#4B4B4B]"
                   >Contact No.</label
                 >
-                <label class="xl:w-[382px] relative flex cursor-pointer">
+                <label
+                  class="xl:w-[382px] relative flex cursor-pointer flex-col"
+                >
                   <div class="flex justify-between">
-                    <svg
-                      width="24"
-                      class="absolute ml-3 mb-3 mr-4 top-4"
-                      viewBox="0 0 36 36"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                      aria-hidden="true"
-                      role="img"
-                      preserveAspectRatio="xMidYMid meet"
-                    >
-                      <path
-                        fill="#ED2939"
-                        d="M36 27a4 4 0 0 1-4 4h-8V5h8a4 4 0 0 1 4 4v18z"
-                      ></path>
-                      <path
-                        fill="#002495"
-                        d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5H4z"
-                      ></path>
-                      <path fill="#EEE" d="M12 5h12v26H12z"></path>
-                    </svg>
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 20 20"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="absolute sm:right-3 right-2 top-4 cursor-pointer"
-                    >
-                      <path
-                        d="M12.5 16.6667H4.16667C3.062 16.6653 2.00296 16.2259 1.22185 15.4448C0.440735 14.6637 0.00132321 13.6047 0 12.5L0 4.16667C0.00132321 3.062 0.440735 2.00296 1.22185 1.22185C2.00296 0.440735 3.062 0.00132321 4.16667 0L12.5 0C13.6047 0.00132321 14.6637 0.440735 15.4448 1.22185C16.2259 2.00296 16.6653 3.062 16.6667 4.16667V12.5C16.6653 13.6047 16.2259 14.6637 15.4448 15.4448C14.6637 16.2259 13.6047 16.6653 12.5 16.6667ZM4.16667 1.66667C3.50363 1.66667 2.86774 1.93006 2.3989 2.3989C1.93006 2.86774 1.66667 3.50363 1.66667 4.16667V12.5C1.66667 13.163 1.93006 13.7989 2.3989 14.2678C2.86774 14.7366 3.50363 15 4.16667 15H12.5C13.163 15 13.7989 14.7366 14.2678 14.2678C14.7366 13.7989 15 13.163 15 12.5V4.16667C15 3.50363 14.7366 2.86774 14.2678 2.3989C13.7989 1.93006 13.163 1.66667 12.5 1.66667H4.16667ZM20 15.8333V5C20 4.77899 19.9122 4.56702 19.7559 4.41074C19.5996 4.25446 19.3877 4.16667 19.1667 4.16667C18.9457 4.16667 18.7337 4.25446 18.5774 4.41074C18.4211 4.56702 18.3333 4.77899 18.3333 5V15.8333C18.3333 16.4964 18.0699 17.1323 17.6011 17.6011C17.1323 18.0699 16.4964 18.3333 15.8333 18.3333H5C4.77899 18.3333 4.56702 18.4211 4.41074 18.5774C4.25446 18.7337 4.16667 18.9457 4.16667 19.1667C4.16667 19.3877 4.25446 19.5996 4.41074 19.7559C4.56702 19.9122 4.77899 20 5 20H15.8333C16.938 19.9987 17.997 19.5593 18.7782 18.7782C19.5593 17.997 19.9987 16.938 20 15.8333Z"
-                        fill="#1E1E1E"
-                      />
-                    </svg>
+                    <img
+                      src="@/static/svg/usa-flag.svg"
+                      alt=""
+                      class="absolute ml-3 mb-3 mr-4 top-4 w-6 h-6"
+                    />
                     <span
                       class="absolute left-12 mb-3 mr-4 top-4 text-[#1E1E1E] font-normal text-base"
                       >+1</span
@@ -370,13 +403,24 @@
                     <input
                       type="number"
                       name="ContactNo"
+                      :class="
+                        errors[`commercialReference[${key}].contactNo`]
+                          ? 'border border-red-600'
+                          : 'border border-gray-300'
+                      "
                       id="ContactNo"
                       placeholder="Your Contact No."
-                      class="xl:w-[382px] border border-gray-300 text-gray-900 rounded-lg block w-full px-3 py-[15px] bg-white pl-24 focus:outline-none mb-3"
+                      class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[15px] bg-white pl-24 focus:outline-none mb-1"
                       v-model="reference.contactNo"
                     />
                   </div>
                 </label>
+                <span
+                  class="error-msg"
+                  v-if="errors[`commercialReference[${key}].contactNo`]"
+                >
+                  {{ errors[`commercialReference[${key}].contactNo`] }}
+                </span>
               </div>
             </div>
           </div>
@@ -400,6 +444,7 @@ export default {
   data() {
     return {
       isPassword: false,
+      errors: {},
       countriesList: [
         {
           label: "USA",
@@ -513,72 +558,80 @@ export default {
     },
     async addUser() {
       try {
-        if (!this.formData.companyName || !this.formData.contactName) {
-          this.errorMessage = this.$i18n.t("errorMessage");
-        } else {
-          const formData = new FormData();
-          formData.append("companyName", this.formData.companyName);
-          formData.append("contactName", this.formData.contactName);
-          formData.append("contactNumber", `+1${this.formData.contactNumber}`);
-          formData.append("email", this.formData.email);
-          formData.append("password", this.formData.password);
+        this.errors = await this.$validateUserForm({
+          form: this.formData,
+          isEdit: false,
+        });
+        if (Object.keys(this.errors).length > 0) {
+          this.$toast.open({
+            message: "Please fix the errors before submitting.",
+            type: "error",
+          });
+          return;
+        }
+
+        const formData = new FormData();
+        formData.append("companyName", this.formData.companyName);
+        formData.append("contactName", this.formData.contactName);
+        formData.append("contactNumber", `+1${this.formData.contactNumber}`);
+        formData.append("email", this.formData.email);
+        formData.append("password", this.formData.password);
+        formData.append(
+          "companyFormationType",
+          this.formData.companyFormationType
+        );
+
+        if (this.selectedLabel === "USA") {
+          delete this.formData.companyFormation.maxico;
+
           formData.append(
-            "companyFormationType",
-            this.formData.companyFormationType
+            "companyFormation_usa_w9_Form",
+            this.formData.companyFormation.usa.w9_Form
           );
 
-          if (this.selectedLabel === "USA") {
-            delete this.formData.companyFormation.maxico;
-
-            formData.append(
-              "companyFormation_usa_w9_Form",
-              this.formData.companyFormation.usa.w9_Form
-            );
-
-            formData.append(
-              "companyFormation_usa_utility_Bill",
-              this.formData.companyFormation.usa.utility_Bill
-            );
-          }
-          if (this.selectedLabel === "MEXICO") {
-            delete this.formData.companyFormation.usa;
-            formData.append(
-              "companyFormation_maxico_copia_Rfc_Form",
-              this.formData.companyFormation.maxico.copia_Rfc_Form
-            );
-
-            formData.append(
-              "companyFormation_maxico_constance_Of_Fiscal_Situation",
-              this.formData.companyFormation.maxico
-                .constance_Of_Fiscal_Situation
-            );
-
-            formData.append(
-              "companyFormation_maxico_proof_of_Favorable",
-              this.formData.companyFormation.maxico.proof_of_Favorable
-            );
-
-            formData.append(
-              "companyFormation_maxico_proof_Of_Address",
-              this.formData.companyFormation.maxico.proof_Of_Address
-            );
-          }
-          this.formData.commercialReference.forEach((ref, index) => {
-            for (let key in ref) {
-              let value = ref[key];
-
-              if (key === "countryCode" || key === "contactNo") {
-                value = `+1${value}`;
-              }
-              formData.append(`commercialReference[${index}][${key}]`, value);
-            }
-          });
-          const response = await this.CreateUser(formData);
-          this.$toast.open({
-            message: response.msg,
-          });
-          this.$router.push("/user");
+          formData.append(
+            "companyFormation_usa_utility_Bill",
+            this.formData.companyFormation.usa.utility_Bill
+          );
         }
+        if (this.selectedLabel === "MEXICO") {
+          delete this.formData.companyFormation.usa;
+          formData.append(
+            "companyFormation_maxico_copia_Rfc_Form",
+            this.formData.companyFormation.maxico.copia_Rfc_Form
+          );
+
+          formData.append(
+            "companyFormation_maxico_constance_Of_Fiscal_Situation",
+            this.formData.companyFormation.maxico.constance_Of_Fiscal_Situation
+          );
+
+          formData.append(
+            "companyFormation_maxico_proof_of_Favorable",
+            this.formData.companyFormation.maxico.proof_of_Favorable
+          );
+
+          formData.append(
+            "companyFormation_maxico_proof_Of_Address",
+            this.formData.companyFormation.maxico.proof_Of_Address
+          );
+        }
+        this.formData.commercialReference.forEach((ref, index) => {
+          for (let key in ref) {
+            let value = ref[key];
+
+            if (key === "countryCode" || key === "contactNo") {
+              value = `+1${value}`;
+            }
+            formData.append(`commercialReference[${index}][${key}]`, value);
+          }
+        });
+
+        const response = await this.CreateUser(formData);
+        this.$toast.open({
+          message: response.msg,
+        });
+        this.$router.push("/user");
       } catch (error) {
         this.$toast.open({
           message: error?.response?.data?.msg,
@@ -592,7 +645,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .error-msg {
   font-size: 14px;
   font-weight: 400;

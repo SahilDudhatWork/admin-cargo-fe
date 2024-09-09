@@ -44,7 +44,7 @@ export const mutations = {
   },
   removeUser(state, payload) {
     state.allUserData = state.allUserData.filter(
-      (user) => user._id !== payload.id
+      (user) => user.accountId !== payload.accountId
     );
   },
 };
@@ -53,15 +53,16 @@ export const actions = {
   async fetchAllUser(ctx, payload) {
     try {
       const sortBy = payload?.sortBy || "";
+      const keyWord = payload?.keyWord || "";
       const page = payload?.page || "";
       const limit = payload?.limit || "";
 
       const response = await $axios.get(
-        `v1/admin/module/user?&sortBy=${sortBy}&page=${page}&limit=${limit}`,
+        `v1/admin/module/user?&keyWord=${keyWord}&sortBy=${sortBy}&page=${page}&limit=${limit}`,
         payload
       );
-      ctx.commit("setAllUserData", response.data.Response.response);
-      ctx.commit("setUserPaginationData", response.data.Response.pagination);
+      ctx.commit("setAllUserData", response.data.response);
+      ctx.commit("setUserPaginationData", response.data?.pagination);
       return response;
     } catch (error) {
       throw error;
@@ -69,7 +70,9 @@ export const actions = {
   },
   async fetchSingleUser(ctx, payload) {
     try {
-      const response = await $axios.get(`v1/admin/module/user/${payload.id}`);
+      const response = await $axios.get(
+        `v1/admin/module/user/${payload.accountId}`
+      );
       ctx.commit("setSingleUserData", response.data);
       return response;
     } catch (error) {
@@ -86,8 +89,11 @@ export const actions = {
   },
   async updateUser(ctx, payload) {
     try {
+      let accountId = payload.get("accountId");
+      payload.delete("accountId");
+
       const response = await $axios.put(
-        `v1/admin/module/user/${payload.get("id")}`,
+        `v1/admin/module/user/${accountId}`,
         payload
       );
       return response;
@@ -98,7 +104,7 @@ export const actions = {
   async deleteUser(ctx, payload) {
     try {
       const response = await $axios.delete(
-        `v1/admin/module/user/${payload.id}`,
+        `v1/admin/module/user/${payload.accountId}`,
         payload
       );
       ctx.commit("removeUser", payload);
@@ -126,7 +132,7 @@ export const actions = {
   async userVerified(ctx, payload) {
     try {
       const response = await $axios.post(
-        `v1/admin/module/verify/user/${payload._id}`
+        `v1/admin/module/verify/user/${payload.accountId}`
       );
       ctx.commit("userVerification", payload);
       return response;
@@ -137,7 +143,7 @@ export const actions = {
   async userUnVerify(ctx, payload) {
     try {
       const response = await $axios.delete(
-        `v1/admin/module/unverify/user/${payload._id}`
+        `v1/admin/module/unverify/user/${payload.accountId}`
       );
       ctx.commit("userVerification", payload);
       return response;
