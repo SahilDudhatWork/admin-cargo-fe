@@ -69,6 +69,7 @@
                 type="email"
                 name="email"
                 id="email"
+                disabled
                 placeholder="Your Email Address"
                 class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[14px]"
                 v-model="formData.email"
@@ -263,17 +264,17 @@
             </div>
             <div v-if="selectedLabel === 'USA'">
               <inputFile
-                :errors="errors.w9_Form"
+                :errors="errors?.w9_Form"
                 item-label="W9 Form"
                 :file="
-                  typeof formData.companyFormation.usa.w9_Form == 'object'
-                    ? formData.companyFormation.usa.w9_Form?.name
-                    : formData.companyFormation.usa.w9_Form
+                  typeof formData?.companyFormation?.usa?.w9_Form == 'object'
+                    ? formData?.companyFormation?.usa?.w9_Form?.name
+                    : formData?.companyFormation?.usa?.w9_Form
                 "
                 @handleFileChange="uploadW9Form"
               />
-              <span class="error-msg" v-if="errors.w9_Form">{{
-                errors.w9_Form
+              <span class="error-msg" v-if="errors?.w9_Form">{{
+                errors?.w9_Form
               }}</span>
               <!-- <inputFile
                 item-label="W9 Form"
@@ -287,17 +288,18 @@
             </div>
             <div v-if="selectedLabel === 'USA'">
               <inputFile
-                :errors="errors.utility_Bill"
+                :errors="errors?.utility_Bill"
                 item-label="Utility Bill"
                 :file="
-                  typeof formData.companyFormation.usa.utility_Bill == 'object'
-                    ? formData.companyFormation.usa.utility_Bill?.name
-                    : formData.companyFormation.usa.utility_Bill
+                  typeof formData?.companyFormation?.usa?.utility_Bill ==
+                  'object'
+                    ? formData?.companyFormation?.usa?.utility_Bill?.name
+                    : formData?.companyFormation?.usa?.utility_Bill
                 "
                 @handleFileChange="uploadUtilityBill"
               />
-              <span class="error-msg" v-if="errors.utility_Bill">{{
-                errors.utility_Bill
+              <span class="error-msg" v-if="errors?.utility_Bill">{{
+                errors?.utility_Bill
               }}</span>
               <!-- <inputFile
                 item-label="Utility Bill"
@@ -338,7 +340,7 @@
             </div>
             <div v-if="selectedLabel === 'MEXICO'">
               <inputFile
-                :errors="errors.constance_Of_Fiscal_Situation"
+                :errors="errors?.constance_Of_Fiscal_Situation"
                 item-label="Constance of Fiscal Situation"
                 :file="
                   typeof formData?.companyFormation?.maxico
@@ -352,8 +354,8 @@
               />
               <span
                 class="error-msg"
-                v-if="errors.constance_Of_Fiscal_Situation"
-                >{{ errors.constance_Of_Fiscal_Situation }}</span
+                v-if="errors?.constance_Of_Fiscal_Situation"
+                >{{ errors?.constance_Of_Fiscal_Situation }}</span
               >
               <!-- <inputFile
                 item-label="Constance of Fiscal Situation"
@@ -371,7 +373,7 @@
             <div v-if="selectedLabel === 'MEXICO'">
               <inputFile
                 item-label="Proof of Favorable"
-                :errors="errors.proof_of_Favorable"
+                :errors="errors?.proof_of_Favorable"
                 :file="
                   typeof formData?.companyFormation?.maxico
                     ?.proof_of_Favorable == 'object'
@@ -381,8 +383,8 @@
                 "
                 @handleFileChange="uploadProofOfFavorable"
               />
-              <span class="error-msg" v-if="errors.proof_of_Favorable">{{
-                errors.proof_of_Favorable
+              <span class="error-msg" v-if="errors?.proof_of_Favorable">{{
+                errors?.proof_of_Favorable
               }}</span>
               <!-- <inputFile
                 item-label="Proof of Favorable"
@@ -736,18 +738,18 @@ export default {
     },
     async editCarrier() {
       try {
-        this.errors = await this.$validateCarrierForm({
-          form: this.formData,
-          isEdit: true,
-        });
+        // this.errors = await this.$validateCarrierForm({
+        //   form: this.formData,
+        //   isEdit: true,
+        // });
 
-        if (Object.keys(this.errors).length > 0) {
-          this.$toast.open({
-            message: "Please fix the errors before submitting.",
-            type: "error",
-          });
-          return;
-        }
+        // if (Object.keys(this.errors).length > 0) {
+        //   this.$toast.open({
+        //     message: "Please fix the errors before submitting.",
+        //     type: "error",
+        //   });
+        //   return;
+        // }
 
         const formData = new FormData();
         formData.append("accountId", this.formData.accountId);
@@ -884,7 +886,9 @@ export default {
   },
   async beforeMount() {
     this.formData = this.$lodash.cloneDeep(this.getSingleCarrierData);
-    this.selectedLabel = this.formData.companyFormationType;
+    this.selectedLabel = this.formData.companyFormationType
+      ? this.formData.companyFormationType
+      : "Select option";
   },
 };
 </script>

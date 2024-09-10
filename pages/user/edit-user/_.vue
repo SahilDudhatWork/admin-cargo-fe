@@ -66,6 +66,7 @@
                 >Email Address</label
               >
               <input
+                disabled
                 type="email"
                 name="email"
                 id="email"
@@ -138,9 +139,9 @@
                 :errors="errors.w9_Form"
                 item-label="W9 Form"
                 :file="
-                  typeof formData.companyFormation.usa.w9_Form == 'object'
-                    ? formData.companyFormation.usa.w9_Form?.name
-                    : formData.companyFormation.usa.w9_Form
+                  typeof formData?.companyFormation.usa.w9_Form == 'object'
+                    ? formData?.companyFormation.usa.w9_Form?.name
+                    : formData?.companyFormation.usa.w9_Form
                 "
                 @handleFileChange="uploadW9Form"
               />
@@ -153,9 +154,9 @@
                 item-label="Utility Bill"
                 :errors="errors.utility_Bill"
                 :file="
-                  typeof formData.companyFormation.usa.utility_Bill == 'object'
-                    ? formData.companyFormation.usa.utility_Bill?.name
-                    : formData.companyFormation.usa.utility_Bill
+                  typeof formData?.companyFormation.usa.utility_Bill == 'object'
+                    ? formData?.companyFormation.usa.utility_Bill?.name
+                    : formData?.companyFormation.usa.utility_Bill
                 "
                 @handleFileChange="uploadUtilityBill"
               />
@@ -166,69 +167,70 @@
             <div v-if="selectedLabel == 'MEXICO'">
               <inputFile
                 item-label="COPIA RFC Form"
-                :errors="errors.copia_Rfc_Form"
+                :errors="errors?.copia_Rfc_Form"
                 :file="
-                  typeof formData.companyFormation.maxico.copia_Rfc_Form ==
+                  typeof formData?.companyFormation.maxico?.copia_Rfc_Form ==
                   'object'
-                    ? formData.companyFormation.maxico.copia_Rfc_Form?.name
-                    : formData.companyFormation.maxico.copia_Rfc_Form
+                    ? formData?.companyFormation.maxico?.copia_Rfc_Form?.name
+                    : formData?.companyFormation.maxico?.copia_Rfc_Form
                 "
                 @handleFileChange="uploadCopiaRfcForm"
               />
-              <span class="error-msg" v-if="errors.copia_Rfc_Form">{{
-                errors.copia_Rfc_Form
+              <span class="error-msg" v-if="errors?.copia_Rfc_Form">{{
+                errors?.copia_Rfc_Form
               }}</span>
             </div>
             <div v-if="selectedLabel == 'MEXICO'">
               <inputFile
-                :errors="errors.constance_Of_Fiscal_Situation"
+                :errors="errors?.constance_Of_Fiscal_Situation"
                 item-label="Constance of Fiscal Situation"
                 :file="
-                  typeof formData.companyFormation.maxico
-                    .constance_Of_Fiscal_Situation == 'object'
-                    ? formData.companyFormation.maxico
-                        .constance_Of_Fiscal_Situation?.name
-                    : formData.companyFormation.maxico
-                        .constance_Of_Fiscal_Situation
+                  typeof formData?.companyFormation.maxico
+                    ?.constance_Of_Fiscal_Situation == 'object'
+                    ? formData?.companyFormation.maxico
+                        ?.constance_Of_Fiscal_Situation?.name
+                    : formData?.companyFormation.maxico
+                        ?.constance_Of_Fiscal_Situation
                 "
                 @handleFileChange="uploadConstanceOfFiscalSituation"
               />
               <span
                 class="error-msg"
-                v-if="errors.constance_Of_Fiscal_Situation"
-                >{{ errors.constance_Of_Fiscal_Situation }}</span
+                v-if="errors?.constance_Of_Fiscal_Situation"
+                >{{ errors?.constance_Of_Fiscal_Situation }}</span
               >
             </div>
             <div v-if="selectedLabel == 'MEXICO'">
               <inputFile
                 item-label="Proof of Favorable"
-                :errors="errors.proof_of_Favorable"
+                :errors="errors?.proof_of_Favorable"
                 :file="
-                  typeof formData.companyFormation.maxico.proof_of_Favorable ==
-                  'object'
-                    ? formData.companyFormation.maxico.proof_of_Favorable?.name
-                    : formData.companyFormation.maxico.proof_of_Favorable
+                  typeof formData?.companyFormation.maxico
+                    ?.proof_of_Favorable == 'object'
+                    ? formData?.companyFormation.maxico?.proof_of_Favorable
+                        ?.name
+                    : formData?.companyFormation.maxico?.proof_of_Favorable
                 "
                 @handleFileChange="uploadProofOfFavorable"
               />
-              <span class="error-msg" v-if="errors.proof_of_Favorable">{{
-                errors.proof_of_Favorable
+              <span class="error-msg" v-if="errors?.proof_of_Favorable">{{
+                errors?.proof_of_Favorable
               }}</span>
             </div>
             <div v-if="selectedLabel == 'MEXICO'">
               <inputFile
-                :errors="errors.proof_Of_Address"
+                :errors="errors?.proof_Of_Address"
                 item-label="Proof of Address"
                 :file="
-                  typeof formData.companyFormation.maxico.proof_Of_Address ==
+                  typeof formData?.companyFormation.maxico?.proof_Of_Address ==
                   'object'
-                    ? formData.companyFormation.maxico.proof_Of_Address?.name
-                    : formData.companyFormation.maxico.proof_Of_Address
+                    ? formData?.companyFormation.maxico?.proof_Of_Address?.name
+                    : formData?.companyFormation.maxico?.proof_Of_Address
                 "
                 @handleFileChange="uploadProofOfAddress"
               />
-              <span class="error-msg" v-if="errors.proof_Of_Address">{{
-                errors.proof_Of_Address
+              <span class="error-msg" v-if="errors?.proof_Of_Address">{{
+                errors?.proof_Of_Address
               }}</span>
             </div>
           </div>
@@ -506,18 +508,18 @@ export default {
     },
     async editUser() {
       try {
-        this.errors = await this.$validateUserForm({
-          form: this.formData,
-          isEdit: true,
-        });
+        // this.errors = await this.$validateUserForm({
+        //   form: this.formData,
+        //   isEdit: true,
+        // });
 
-        if (Object.keys(this.errors).length > 0) {
-          this.$toast.open({
-            message: "Please fix the errors before submitting.",
-            type: "error",
-          });
-          return;
-        }
+        // if (Object.keys(this.errors).length > 0) {
+        //   this.$toast.open({
+        //     message: "Please fix the errors before submitting.",
+        //     type: "error",
+        //   });
+        //   return;
+        // }
 
         const formData = new FormData();
         formData.append("accountId", this.formData.accountId);
@@ -629,7 +631,9 @@ export default {
   },
   async beforeMount() {
     this.formData = this.$lodash.cloneDeep(this.getSingleUserData);
-    this.selectedLabel = this.formData?.companyFormationType;
+    this.selectedLabel = this.formData.companyFormationType
+      ? this.formData.companyFormationType
+      : "Select option";
   },
 };
 </script>
