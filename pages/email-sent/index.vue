@@ -86,7 +86,7 @@ export default {
       try {
         if (this.otp.some((digit) => digit === "")) {
           this.$toast.open({
-            message: this.$i18n.t("errorMessage"),
+            message: this.$i18n.t("requiredErrorMessage"),
             type: "error",
             duration: 2000,
             position: "bottom-right",
@@ -106,8 +106,9 @@ export default {
           this.$router.push("/create-password");
         }
       } catch (error) {
+        console.log(error);
         this.$toast.open({
-          message: error?.response?.data?.msg,
+          message: error?.response?.data?.msg || this.$i18n.t("errorMessage"),
           type: "error",
           duration: 2000,
           position: "bottom-right",

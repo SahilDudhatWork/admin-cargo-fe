@@ -91,8 +91,9 @@ export default {
           sortBy: this.sortBy,
         });
       } catch (error) {
+        console.log(error);
         this.$toast.open({
-          message: error?.response?.data?.msg,
+          message: error?.response?.data?.msg || this.$i18n.t("errorMessage"),
           type: "error",
         });
       }
@@ -136,8 +137,9 @@ export default {
           limit: this.carrierPaginationData.limit,
         });
       } catch (error) {
+        console.log(error);
         this.$toast.open({
-          message: error?.response?.data?.msg,
+          message: error?.response?.data?.msg || this.$i18n.t("errorMessage"),
           type: "error",
         });
       }
@@ -151,8 +153,9 @@ export default {
           limit: this.carrierPaginationData.limit,
         });
       } catch (error) {
+        console.log(error);
         this.$toast.open({
-          message: error?.response?.data?.msg,
+          message: error?.response?.data?.msg || this.$i18n.t("errorMessage"),
           type: "error",
         });
       }
@@ -166,8 +169,9 @@ export default {
           limit: this.carrierPaginationData.limit,
         });
       } catch (error) {
+        console.log(error);
         this.$toast.open({
-          message: error?.response?.data?.msg,
+          message: error?.response?.data?.msg || this.$i18n.t("errorMessage"),
           type: "error",
         });
       }
@@ -181,8 +185,9 @@ export default {
           limit: this.carrierPaginationData.limit,
         });
       } catch (error) {
+        console.log(error);
         this.$toast.open({
-          message: error?.response?.data?.msg,
+          message: error?.response?.data?.msg || this.$i18n.t("errorMessage"),
           type: "error",
         });
       }
@@ -197,8 +202,9 @@ export default {
         });
         this.isModal = false;
       } catch (error) {
+        console.log(error);
         this.$toast.open({
-          message: error?.response?.data?.msg,
+          message: error?.response?.data?.msg || this.$i18n.t("errorMessage"),
           type: "error",
         });
       }
@@ -216,8 +222,10 @@ export default {
               message: res.msg,
             });
           } catch (error) {
+            console.log(error);
             this.$toast.open({
-              message: error?.response?.data?.msg,
+              message:
+                error?.response?.data?.msg || this.$i18n.t("errorMessage"),
               type: "error",
             });
           }
@@ -228,15 +236,18 @@ export default {
               message: res.msg,
             });
           } catch (error) {
+            console.log(error);
             this.$toast.open({
-              message: error?.response?.data?.msg,
+              message:
+                error?.response?.data?.msg || this.$i18n.t("errorMessage"),
               type: "error",
             });
           }
         }
       } catch (error) {
+        console.log(error);
         this.$toast.open({
-          message: error?.response?.data?.msg,
+          message: error?.response?.data?.msg || this.$i18n.t("errorMessage"),
           type: "error",
         });
       }
@@ -249,8 +260,9 @@ export default {
         keyWord: this.search,
       });
     } catch (error) {
+      console.log(error);
       this.$toast.open({
-        message: error?.response?.data?.msg,
+        message: error?.response?.data?.msg || this.$i18n.t("errorMessage"),
         type: "error",
       });
     }

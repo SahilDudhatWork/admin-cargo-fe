@@ -91,15 +91,12 @@
               >
               <label class="xl:w-[382px] relative flex cursor-pointer flex-col">
                 <div class="flex justify-between">
-                  <img
-                    src="@/static/svg/usa-flag.svg"
-                    alt=""
-                    class="absolute ml-3 mb-3 mr-4 top-4 w-6 h-6"
+                  <CountryDropdown
+                    :items="countries"
+                    :selectedLabel="formData?.countryCode"
+                    @getValue="getCountry"
+                    class="absolute mb-3 mr-4"
                   />
-                  <span
-                    class="absolute left-12 mb-3 mr-4 top-4 text-[#1E1E1E] font-normal text-base"
-                    >+1</span
-                  >
                   <div
                     class="border-r border-gray-400 h-[40%] absolute left-20 top-4"
                   ></div>
@@ -137,17 +134,6 @@
                 errors.scac
               }}</span>
             </div>
-            <!-- <div>
-              <inputFile
-                item-label="SCAC"
-                :file="
-                  typeof formData.scac == 'object'
-                    ? formData.scac?.name
-                    : formData.scac
-                "
-                @handleFileChange="uploadScac"
-              />
-            </div> -->
             <div>
               <inputFile
                 item-label="CAAT"
@@ -163,17 +149,6 @@
                 errors.caat
               }}</span>
             </div>
-            <!-- <div>
-              <inputFile
-                item-label="CAAT"
-                :file="
-                  typeof formData.caat == 'object'
-                    ? formData.caat?.name
-                    : formData.caat
-                "
-                @handleFileChange="uploadCaat"
-              />
-            </div> -->
             <div>
               <inputFile
                 item-label="Insurance Policy"
@@ -189,17 +164,6 @@
                 errors.insurancePolicy
               }}</span>
             </div>
-            <!-- <div>
-              <inputFile
-                item-label="Insurance Policy"
-                :file="
-                  typeof formData.insurancePolicy == 'object'
-                    ? formData.insurancePolicy?.name
-                    : formData.insurancePolicy
-                "
-                @handleFileChange="uploadInsurancePolicy"
-              />
-            </div> -->
             <div>
               <inputFile
                 item-label="OEA"
@@ -213,17 +177,6 @@
               />
               <span class="error-msg" v-if="errors.oea">{{ errors.oea }}</span>
             </div>
-            <!-- <div>
-              <inputFile
-                item-label="OEA"
-                :file="
-                  typeof formData.oea == 'object'
-                    ? formData.oea?.name
-                    : formData.oea
-                "
-                @handleFileChange="uploadOea"
-              />
-            </div> -->
             <div>
               <inputFile
                 :errors="errors.ctpat"
@@ -239,17 +192,6 @@
                 errors.ctpat
               }}</span>
             </div>
-            <!-- <div>
-              <inputFile
-                item-label="CTPAT"
-                :file="
-                  typeof formData.ctpat == 'object'
-                    ? formData.ctpat?.name
-                    : formData.ctpat
-                "
-                @handleFileChange="uploadCtpat"
-              />
-            </div> -->
             <div class="">
               <label
                 for="companyFormation"
@@ -276,15 +218,6 @@
               <span class="error-msg" v-if="errors?.w9_Form">{{
                 errors?.w9_Form
               }}</span>
-              <!-- <inputFile
-                item-label="W9 Form"
-                :file="
-                  typeof formData?.companyFormation?.usa?.w9_Form == 'object'
-                    ? formData?.companyFormation?.usa?.w9_Form?.name
-                    : formData?.companyFormation?.usa?.w9_Form
-                "
-                @handleFileChange="uploadW9Form"
-              /> -->
             </div>
             <div v-if="selectedLabel === 'USA'">
               <inputFile
@@ -301,16 +234,6 @@
               <span class="error-msg" v-if="errors?.utility_Bill">{{
                 errors?.utility_Bill
               }}</span>
-              <!-- <inputFile
-                item-label="Utility Bill"
-                :file="
-                  typeof formData?.companyFormation?.usa?.utility_Bill ==
-                  'object'
-                    ? formData?.companyFormation?.usa?.utility_Bill?.name
-                    : formData?.companyFormation?.usa?.utility_Bill
-                "
-                @handleFileChange="uploadUtilityBill"
-              /> -->
             </div>
             <div v-if="selectedLabel === 'MEXICO'">
               <inputFile
@@ -327,16 +250,6 @@
               <span class="error-msg" v-if="errors.copia_Rfc_Form">{{
                 errors.copia_Rfc_Form
               }}</span>
-              <!-- <inputFile
-                item-label="COPIA RFC Form"
-                :file="
-                  typeof formData?.companyFormation?.maxico?.copia_Rfc_Form ==
-                  'object'
-                    ? formData?.companyFormation?.maxico?.copia_Rfc_Form?.name
-                    : formData?.companyFormation?.maxico?.copia_Rfc_Form
-                "
-                @handleFileChange="uploadCopiaRfcForm"
-              /> -->
             </div>
             <div v-if="selectedLabel === 'MEXICO'">
               <inputFile
@@ -357,18 +270,6 @@
                 v-if="errors?.constance_Of_Fiscal_Situation"
                 >{{ errors?.constance_Of_Fiscal_Situation }}</span
               >
-              <!-- <inputFile
-                item-label="Constance of Fiscal Situation"
-                :file="
-                  typeof formData?.companyFormation?.maxico
-                    ?.constance_Of_Fiscal_Situation == 'object'
-                    ? formData?.companyFormation?.maxico
-                        ?.constance_Of_Fiscal_Situation?.name
-                    : formData?.companyFormation?.maxico
-                        ?.constance_Of_Fiscal_Situation
-                "
-                @handleFileChange="uploadConstanceOfFiscalSituation"
-              /> -->
             </div>
             <div v-if="selectedLabel === 'MEXICO'">
               <inputFile
@@ -386,17 +287,6 @@
               <span class="error-msg" v-if="errors?.proof_of_Favorable">{{
                 errors?.proof_of_Favorable
               }}</span>
-              <!-- <inputFile
-                item-label="Proof of Favorable"
-                :file="
-                  typeof formData?.companyFormation?.maxico
-                    ?.proof_of_Favorable == 'object'
-                    ? formData?.companyFormation?.maxico?.proof_of_Favorable
-                        ?.name
-                    : formData?.companyFormation?.maxico?.proof_of_Favorable
-                "
-                @handleFileChange="uploadProofOfFavorable"
-              /> -->
             </div>
             <div v-if="selectedLabel === 'MEXICO'">
               <inputFile
@@ -413,16 +303,6 @@
               <span class="error-msg" v-if="errors.proof_Of_Address">{{
                 errors.proof_Of_Address
               }}</span>
-              <!-- <inputFile
-                item-label="Proof of Address"
-                :file="
-                  typeof formData?.companyFormation?.maxico?.proof_Of_Address ==
-                  'object'
-                    ? formData?.companyFormation?.maxico?.proof_Of_Address?.name
-                    : formData?.companyFormation?.maxico?.proof_Of_Address
-                "
-                @handleFileChange="uploadProofOfAddress"
-              /> -->
             </div>
           </div>
 
@@ -526,15 +406,14 @@
                   class="xl:w-[382px] relative flex cursor-pointer flex-col"
                 >
                   <div class="flex justify-between">
-                    <img
-                      src="@/static/svg/usa-flag.svg"
-                      alt=""
-                      class="absolute ml-3 mb-3 mr-4 top-4 w-6 h-6"
+                    <CountryDropdown
+                      :items="countries"
+                      :selectedLabel="reference?.countryCode"
+                      @getValue="
+                        (value) => getReferenceCountry(value, reference)
+                      "
+                      class="absolute mb-3 mr-4"
                     />
-                    <span
-                      class="absolute left-12 mb-3 mr-4 top-4 text-[#1E1E1E] font-normal text-base"
-                      >+1</span
-                    >
                     <div
                       class="border-r border-gray-400 h-[40%] absolute left-20 top-4"
                     ></div>
@@ -589,11 +468,22 @@ export default {
           label: "MEXICO",
         },
       ],
+      countries: [
+        {
+          key: 1,
+          value: 1,
+        },
+        {
+          key: 52,
+          value: 52,
+        },
+      ],
       errors: {},
       selectedLabel: "Select option",
       formData: {
         companyName: "",
         contactName: "",
+        countryCode: 1,
         contactNumber: "",
         email: "",
         scac: "",
@@ -619,14 +509,14 @@ export default {
             companyName: "",
             contactName: "",
             emailAddress: "",
-            countryCode: "",
+            countryCode: 1,
             contactNo: "",
           },
           {
             companyName: "",
             contactName: "",
             emailAddress: "",
-            countryCode: "",
+            countryCode: 1,
             contactNo: "",
           },
         ],
@@ -643,6 +533,12 @@ export default {
       fetchSingleCarrier: "carrier/fetchSingleUser",
       updateCarrier: "carrier/updateCarrier",
     }),
+    getCountry(item) {
+      this.formData.countryCode = item.value;
+    },
+    getReferenceCountry(item, ref) {
+      ref.countryCode = item.value;
+    },
     getValue(item) {
       this.selectedLabel = item.label;
       this.formData.companyFormationType = item.label;
@@ -755,101 +651,107 @@ export default {
         formData.append("accountId", this.formData.accountId);
         formData.append("companyName", this.formData.companyName);
         formData.append("contactName", this.formData.contactName);
-        formData.append("contactNumber", `+1${this.formData.contactNumber}`);
+        formData.append("contactNumber", this.formData.contactNumber);
+        formData.append("countryCode", this.formData.countryCode);
         formData.append("email", this.formData.email);
         formData.append(
           "companyFormationType",
-          this.formData.companyFormationType
+          this.formData?.companyFormationType
         );
-        if (typeof this.formData.scac == "object") {
-          formData.append("scac", this.formData.scac);
+        if (typeof this.formData?.scac == "object") {
+          formData.append("scac", this.formData?.scac);
         }
         if (
-          this.formData.caat != null &&
-          typeof this.formData.caat == "object"
+          this.formData?.caat != null &&
+          typeof this.formData?.caat == "object"
         ) {
-          formData.append("caat", this.formData.caat);
+          formData.append("caat", this.formData?.caat);
         }
         if (
-          this.formData.insurancePolicy != null &&
-          typeof this.formData.insurancePolicy == "object"
+          this.formData?.insurancePolicy != null &&
+          typeof this.formData?.insurancePolicy == "object"
         ) {
-          formData.append("insurancePolicy", this.formData.insurancePolicy);
-        }
-        if (this.formData.oea != null && typeof this.formData.oea == "object") {
-          formData.append("oea", this.formData.oea);
+          formData.append("insurancePolicy", this.formData?.insurancePolicy);
         }
         if (
-          this.formData.ctpat != null &&
-          typeof this.formData.ctpat == "object"
+          this.formData?.oea != null &&
+          typeof this.formData?.oea == "object"
         ) {
-          formData.append("ctpat", this.formData.ctpat);
+          formData.append("oea", this.formData?.oea);
+        }
+        if (
+          this.formData?.ctpat != null &&
+          typeof this.formData?.ctpat == "object"
+        ) {
+          formData.append("ctpat", this.formData?.ctpat);
         }
 
         if (this.selectedLabel === "USA") {
-          delete this.formData.companyFormation.maxico;
+          delete this.formData?.companyFormation?.maxico;
           if (
-            this.formData.companyFormation.usa.w9_Form != null &&
-            typeof this.formData.companyFormation.usa.w9_Form == "object"
+            this.formData?.companyFormation?.usa?.w9_Form != null &&
+            typeof this.formData?.companyFormation?.usa?.w9_Form == "object"
           ) {
             formData.append(
               "companyFormation_usa_w9_Form",
-              this.formData.companyFormation.usa.w9_Form
+              this.formData?.companyFormation?.usa?.w9_Form
             );
           }
           if (
-            this.formData.companyFormation.usa.utility_Bill != null &&
-            typeof this.formData.companyFormation.usa.utility_Bill == "object"
+            this.formData?.companyFormation?.usa?.utility_Bill != null &&
+            typeof this.formData?.companyFormation?.usa?.utility_Bill ==
+              "object"
           ) {
             formData.append(
               "companyFormation_usa_utility_Bill",
-              this.formData.companyFormation.usa.utility_Bill
+              this.formData?.companyFormation?.usa?.utility_Bill
             );
           }
         }
         if (this.selectedLabel === "MEXICO") {
-          delete this.formData.companyFormation.usa;
+          delete this.formData?.companyFormation?.usa;
 
           if (
-            this.formData.companyFormation.maxico.copia_Rfc_Form != null &&
-            typeof this.formData.companyFormation.maxico.copia_Rfc_Form ==
+            this.formData?.companyFormation?.maxico?.copia_Rfc_Form != null &&
+            typeof this.formData?.companyFormation?.maxico?.copia_Rfc_Form ==
               "object"
           ) {
             formData.append(
               "companyFormation_maxico_copia_Rfc_Form",
-              this.formData.companyFormation.maxico.copia_Rfc_Form
+              this.formData?.companyFormation?.maxico?.copia_Rfc_Form
             );
           }
           if (
-            this.formData.companyFormation.maxico
-              .constance_Of_Fiscal_Situation != null &&
-            typeof this.formData.companyFormation.maxico
-              .constance_Of_Fiscal_Situation == "object"
+            this.formData?.companyFormation?.maxico
+              ?.constance_Of_Fiscal_Situation != null &&
+            typeof this.formData?.companyFormation?.maxico
+              ?.constance_Of_Fiscal_Situation == "object"
           ) {
             formData.append(
               "companyFormation_maxico_constance_Of_Fiscal_Situation",
-              this.formData.companyFormation.maxico
-                .constance_Of_Fiscal_Situation
+              this.formData?.companyFormation?.maxico
+                ?.constance_Of_Fiscal_Situation
             );
           }
           if (
-            this.formData.companyFormation.maxico.proof_of_Favorable != null &&
-            typeof this.formData.companyFormation.maxico.proof_of_Favorable ==
-              "object"
+            this.formData?.companyFormation?.maxico?.proof_of_Favorable !=
+              null &&
+            typeof this.formData?.companyFormation?.maxico
+              ?.proof_of_Favorable == "object"
           ) {
             formData.append(
               "companyFormation_maxico_proof_of_Favorable",
-              this.formData.companyFormation.maxico.proof_of_Favorable
+              this.formData?.companyFormation?.maxico?.proof_of_Favorable
             );
           }
           if (
-            this.formData.companyFormation.maxico.proof_Of_Address != null &&
-            typeof this.formData.companyFormation.maxico.proof_Of_Address ==
+            this.formData?.companyFormatio?.maxico?.proof_Of_Address != null &&
+            typeof this.formData?.companyFormation?.maxico?.proof_Of_Address ==
               "object"
           ) {
             formData.append(
               "companyFormation_maxico_proof_Of_Address",
-              this.formData.companyFormation.maxico.proof_Of_Address
+              this.formData?.companyFormation?.maxico?.proof_Of_Address
             );
           }
         }
@@ -857,8 +759,11 @@ export default {
           for (let key in ref) {
             let value = ref[key];
 
-            if (key === "countryCode" || key === "contactNo") {
-              value = `+1${value}`;
+            if (key === "contactNo") {
+              value = `${value}`;
+            }
+            if (key === "countryCode") {
+              value = `${value}`;
             }
             formData.append(`commercialReference[${index}][${key}]`, value);
           }
@@ -869,8 +774,9 @@ export default {
         });
         this.$router.push("/carrier");
       } catch (error) {
+        console.log(error);
         this.$toast.open({
-          message: error?.response?.data?.msg,
+          message: error?.response?.data?.msg || this.$i18n.t("errorMessage"),
           type: "error",
         });
       }
