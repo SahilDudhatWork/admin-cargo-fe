@@ -18,7 +18,7 @@
                   name="email"
                   id="email"
                   class="xl:w-[382px] border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full px-3 py-[17px]"
-                  placeholder="Email"
+                  placeholder="Your email"
                   v-model="formData.email"
                 />
               </div>
@@ -56,7 +56,7 @@
                   name="createPassword"
                   id="createPassword"
                   class="xl:w-[382px] border border-gray-300 text-gray-900 rounded-lg block w-full px-3 py-[17px]"
-                  placeholder="Type your email address"
+                  placeholder="Your password"
                   v-model="formData.password"
                 />
               </div>
@@ -125,16 +125,11 @@ export default {
           this.$toast.open({
             message: this.$i18n.t("requiredErrorMessage"),
             type: "error",
-            duration: 2000,
-            position: "bottom-right",
           });
         } else {
           const res = await this.signin(this.formData);
           this.$toast.open({
             message: this.$i18n.t("loginMessage"),
-            type: "success",
-            duration: 2000,
-            position: "bottom-right",
           });
           this.$router.push("/dashboard");
         }
@@ -143,8 +138,6 @@ export default {
         this.$toast.open({
           message: error?.response?.data?.msg || this.$i18n.t("errorMessage"),
           type: "error",
-          duration: 2000,
-          position: "bottom-right",
         });
       }
     },

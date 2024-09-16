@@ -12,7 +12,7 @@
       >
         All
       </button>
-      <button
+      <!-- <button
         :class="
           activeButton === 'recent'
             ? 'bg-[#3683D5] text-white'
@@ -22,7 +22,7 @@
         @click="actionButton('recent')"
       >
         Newly added Carriers
-      </button>
+      </button> -->
       <button
         :class="
           activeButton === 'blocked'

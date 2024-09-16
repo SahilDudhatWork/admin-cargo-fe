@@ -162,12 +162,6 @@ export default {
           duration: 2000,
           position: "bottom-right",
         });
-      } else if (
-        this.password &&
-        this.confirmPassword &&
-        this.password === this.confirmPassword
-      ) {
-        console.log("Passwords match!");
       }
     },
     async changePassword() {

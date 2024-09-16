@@ -189,6 +189,7 @@
               <inputFile
                 :errors="errors.w9_Form"
                 item-label="W9 Form"
+                :fileData="formData?.companyFormation?.usa?.w9_Form"
                 :file="
                   typeof formData?.companyFormation?.usa?.w9_Form == 'object'
                     ? formData?.companyFormation?.usa?.w9_Form?.name
@@ -204,6 +205,7 @@
               <inputFile
                 :errors="errors.utility_Bill"
                 item-label="Utility Bill"
+                :fileData="formData?.companyFormation?.usa?.utility_Bill"
                 :file="
                   typeof formData?.companyFormation?.usa?.utility_Bill ==
                   'object'
@@ -220,6 +222,7 @@
               <inputFile
                 :errors="errors.copia_Rfc_Form"
                 item-label="COPIA RFC Form"
+                :fileData="formData?.companyFormation?.maxico?.copia_Rfc_Form"
                 :file="
                   typeof formData?.companyFormation?.maxico?.copia_Rfc_Form ==
                   'object'
@@ -236,6 +239,10 @@
               <inputFile
                 :errors="errors.constance_Of_Fiscal_Situation"
                 item-label="Constance of Fiscal Situation"
+                :fileData="
+                  formData?.companyFormation?.maxico
+                    ?.constance_Of_Fiscal_Situation
+                "
                 :file="
                   typeof formData?.companyFormation?.maxico
                     ?.constance_Of_Fiscal_Situation == 'object'
@@ -255,6 +262,9 @@
             <div v-if="selectedLabel === 'MEXICO'">
               <inputFile
                 item-label="Proof of Favorable"
+                :fileData="
+                  formData?.companyFormation?.maxico?.proof_of_Favorable
+                "
                 :errors="errors.proof_of_Favorable"
                 :file="
                   typeof formData?.companyFormation?.maxico
@@ -273,6 +283,7 @@
               <inputFile
                 :errors="errors.proof_Of_Address"
                 item-label="Proof of Address"
+                :fileData="formData?.companyFormation?.maxico?.proof_Of_Address"
                 :file="
                   typeof formData?.companyFormation?.maxico?.proof_Of_Address ==
                   'object'
@@ -643,7 +654,9 @@ export default {
             if (key === "countryCode") {
               value = `${value}`;
             }
-            formData.append(`commercialReference[${index}][${key}]`, value);
+            if (value && value != "") {
+              formData.append(`commercialReference[${index}][${key}]`, value);
+            }
           }
         });
 

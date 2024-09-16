@@ -17,12 +17,12 @@
               >
                 User ID
               </th>
-              <th
+              <!-- <th
                 scope="col"
                 class="px-6 py-3 text-[#000000] font-normal text-[12px]"
               >
                 Status
-              </th>
+              </th> -->
               <th
                 scope="col"
                 class="px-6 py-3 text-[#000000] font-normal text-[12px]"
@@ -35,12 +35,12 @@
               >
                 Company name
               </th>
-              <th
+              <!-- <th
                 scope="col"
                 class="px-6 py-3 text-[#000000] font-normal text-[12px]"
               >
                 Company Address
-              </th>
+              </th> -->
               <th
                 scope="col"
                 class="px-6 py-3 text-[#000000] font-normal text-[12px]"
@@ -68,13 +68,13 @@
               >
                 <span class="border-b border-black">{{ item?.accountId }}</span>
               </th>
-              <td class="px-6 text-[10px]">
+              <!-- <td class="px-6 text-[10px]">
                 <button
                   class="bg-[#59D31C] text-white rounded py-[1px] px-[10px]"
                 >
                   NEW REQUEST
                 </button>
-              </td>
+              </td> -->
               <td class="px-6 flex flex-col justify-center">
                 <span class="text-[#000000] font-normal text-[12px] pt-3">{{
                   item?.contactName
@@ -86,13 +86,12 @@
               <td class="px-6 text-[#000000] font-normal text-[12px]">
                 {{ item?.companyName }}
               </td>
-              <td
+              <!-- <td
                 class="px-6 max-w-[240px] text-[#000000] font-normal text-[12px]"
               >
                 Menlo Park, CA 94025, USA Lorem ipsum dolor sit amet
                 consectetur, Vitae netus
-                <!-- {{ item.companyAddress }} -->
-              </td>
+              </td> -->
               <td class="cursor-pointer" @click="handleVerify(item)">
                 <span
                   class="ml-6 border-b font-normal text-[12px]"
@@ -106,11 +105,6 @@
                 </span>
               </td>
               <td class="flex items-center gap-2">
-                <img
-                  src="@/static/svg/eye-icon.svg"
-                  alt=""
-                  class="w-[20px] h-[20px] mt-6"
-                />
                 <img
                   src="@/static/svg/edit-icon.svg"
                   alt=""

@@ -12,7 +12,7 @@
       >
         All
       </button>
-      <button
+      <!-- <button
         :class="
           activeButton === 'recent'
             ? 'bg-[#3683D5] text-white'
@@ -22,7 +22,7 @@
         class="rounded-lg font-medium text-[12px] py-[5px] px-4"
       >
         New Requests
-      </button>
+      </button> -->
       <button
         :class="
           activeButton === 'blocked'
