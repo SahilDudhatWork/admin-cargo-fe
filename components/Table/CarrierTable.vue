@@ -105,11 +105,11 @@
                 </span>
               </td>
               <td class="flex items-center gap-2">
-                <img
+                <!-- <img
                   src="@/static/svg/eye-icon.svg"
                   alt=""
                   class="w-[20px] h-[20px] mt-6"
-                />
+                /> -->
                 <img
                   src="@/static/svg/edit-icon.svg"
                   alt=""

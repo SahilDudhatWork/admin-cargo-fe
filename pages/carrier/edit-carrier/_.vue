@@ -85,6 +85,62 @@
             </div>
             <div>
               <label
+                for="createPassword"
+                class="block mb-2 text-sm font-normal text-[#4B4B4B]"
+              >
+                Password</label
+              >
+              <label class="xl:w-[382px] relative flex cursor-pointer flex-col">
+                <div class="flex justify-between">
+                  <svg
+                    @click="togglePassword"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                    stroke="currentColor"
+                    class="cursor-pointer w-6 h-6 absolute xl:right-3 lg:right-3 sm:right-3 right-2 top-4"
+                  >
+                    <path
+                      v-if="!isPassword"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M15 12c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3z"
+                    />
+                    <path
+                      v-if="!isPassword"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M2.458 12C3.732 7.943 7.297 5 12 5s8.268 2.943 9.542 7c-1.274 4.057-4.839 7-9.542 7S3.732 16.057 2.458 12z"
+                    />
+                    <path
+                      v-else
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M3.98 8.218a10.451 10.451 0 00-.31.282C2.763 9.463 2 10.656 2 12c1.581 4.77 5.804 7.5 10.5 7.5 1.348 0 2.639-.21 3.843-.603M6.179 6.177a9.718 9.718 0 015.821-1.677c3.966 0 7.455 2.12 9.542 5.5a10.354 10.354 0 01-1.065 1.502m-1.814 2.904C15.869 15.673 14.5 16.5 12 16.5a3.5 3.5 0 01-3.5-3.5c0-.861.327-1.656.865-2.245M15 12c0-1.657-1.343-3-3-3a2.992 2.992 0 00-2.78 1.943M3 3l18 18"
+                    />
+                  </svg>
+                  <input
+                    :class="
+                      errors.password
+                        ? 'border border-red-600'
+                        : 'border border-gray-300'
+                    "
+                    :type="isPassword ? 'text' : 'password'"
+                    name="createPassword"
+                    id="createPassword"
+                    class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[13px] focus:outline-none"
+                    placeholder="Password"
+                    v-model="formData.password"
+                  />
+                </div>
+                <span class="error-msg" v-if="errors.password">{{
+                  errors.password
+                }}</span>
+              </label>
+            </div>
+            <div>
+              <label
                 for="ContactNo"
                 class="block mb-2 text-sm font-normal text-[#4B4B4B]"
                 >Contact No.</label
@@ -495,6 +551,7 @@ export default {
         },
       ],
       errors: {},
+      isPassword: false,
       selectedLabel: "Select option",
       formData: {
         companyName: "",
@@ -502,6 +559,7 @@ export default {
         countryCode: 1,
         contactNumber: "",
         email: "",
+        password: "",
         scac: "",
         caat: "",
         insurancePolicy: "",
@@ -558,6 +616,9 @@ export default {
     getValue(item) {
       this.selectedLabel = item.label;
       this.formData.companyFormationType = item.label;
+    },
+    togglePassword() {
+      this.isPassword = !this.isPassword;
     },
     async uploadScac(event) {
       try {
@@ -670,6 +731,7 @@ export default {
         formData.append("contactNumber", this.formData.contactNumber);
         formData.append("countryCode", this.formData.countryCode);
         formData.append("email", this.formData.email);
+        formData.append("password", this.formData.password);
         formData.append(
           "companyFormationType",
           this.formData?.companyFormationType

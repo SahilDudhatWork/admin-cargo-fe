@@ -9,7 +9,7 @@
       type="button"
     >
       <span class="flex gap-2 justify-between">
-        <span>{{ selectedLabel }}</span>
+        <span>{{ selectedLabel || "Select option" }}</span>
         <img
           src="@/static/svg/up-arrow.svg"
           alt=""

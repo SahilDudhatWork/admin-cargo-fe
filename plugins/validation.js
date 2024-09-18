@@ -1,6 +1,6 @@
 export default async (ctx, inject) => {
   const validatePhoneNumber = async (number) => {
-    const phonePattern = /^\+?[\d\s-]+$/;
+    const phonePattern = /^\d{10}$/;
     if (number && !phonePattern.test(number)) {
       return false;
     }
