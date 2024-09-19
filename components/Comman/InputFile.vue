@@ -82,7 +82,7 @@ export default {
   },
   computed: {
     fileUrl() {
-      const baseUrl = "https://cargo-storage-bucket.s3.amazonaws.com";
+      const baseUrl = "https://cargo-storage-bucket.s3.us-east-1.amazonaws.com";
       if (this.file.startsWith(baseUrl)) {
         return this.file;
       } else {

@@ -263,6 +263,7 @@
                 :items="countriesList"
                 :selectedLabel="selectedLabel"
                 @getValue="getValue"
+                :isDisabled="isDropdownDisabled"
               />
             </div>
             <div v-if="selectedLabel === 'USA'">
@@ -490,7 +491,7 @@
                       class="border-r border-gray-400 h-[40%] absolute left-20 top-4"
                     ></div>
                     <input
-                      type="number"
+                      type="text"
                       name="ContactNo"
                       id="ContactNo"
                       placeholder="Your Contact No."
@@ -601,6 +602,9 @@ export default {
     ...mapGetters({
       getSingleCarrierData: "carrier/getSingleCarrierData",
     }),
+    isDropdownDisabled() {
+      return this.getSingleCarrierData.companyFormationType !== "";
+    },
   },
   methods: {
     ...mapActions({

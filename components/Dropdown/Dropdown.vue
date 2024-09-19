@@ -3,10 +3,12 @@
     <button
       @click="toggleDropdown"
       class="dropdown-list relative bg-white mx-0 text-[#5B638B] font-semibold rounded-lg text-base py-[17px] w-full xl:w-[382px] text-center inline-flex justify-between px-2"
-      :class="
-        isDropdown ? ' border-t border-r border-l rounded-t-lg' : 'border'
-      "
+      :class="[
+        isDropdown ? ' border-t border-r border-l rounded-t-lg' : 'border',
+        !isDisabled ? 'bg-white' : 'bg-[#efefef4d]',
+      ]"
       type="button"
+      :disabled="isDisabled"
     >
       <span class="flex gap-2 justify-between">
         <span>{{ selectedLabel || "Select option" }}</span>
@@ -16,12 +18,14 @@
           v-if="isDropdown"
           class="absolute right-3 top-5"
         />
-        <img
-          src="@/static/svg/down-arrow.svg"
-          alt=""
-          v-else
-          class="absolute right-4 top-6"
-        />
+        <div v-else>
+          <img
+            v-if="!isDisabled"
+            src="@/static/svg/down-arrow.svg"
+            alt=""
+            class="absolute right-4 top-6"
+          />
+        </div>
       </span>
     </button>
     <div
@@ -54,6 +58,10 @@ export default {
       required: true,
     },
     isSvg: {
+      type: Boolean,
+      default: false,
+    },
+    isDisabled: {
       type: Boolean,
       default: false,
     },

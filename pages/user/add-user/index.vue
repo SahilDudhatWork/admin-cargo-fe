@@ -410,7 +410,7 @@
                       class="border-r border-gray-400 h-[40%] absolute left-20 top-4"
                     ></div>
                     <input
-                      type="number"
+                      type="text"
                       name="ContactNo"
                       :class="
                         errors[`commercialReference[${key}].contactNo`]

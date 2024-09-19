@@ -185,6 +185,7 @@
                 :items="countriesList"
                 :selectedLabel="selectedLabel"
                 @getValue="getValue"
+                :isDisabled="isDropdownDisabled"
               />
             </div>
             <div v-if="selectedLabel == 'USA'">
@@ -412,7 +413,7 @@
                       class="border-r border-gray-400 h-[40%] absolute left-20 top-4"
                     ></div>
                     <input
-                      type="number"
+                      type="text"
                       name="ContactNo"
                       id="ContactNo"
                       :class="
@@ -524,6 +525,9 @@ export default {
     ...mapGetters({
       getSingleUserData: "user/getSingleUserData",
     }),
+    isDropdownDisabled() {
+      return this.getSingleUserData.companyFormationType !== "";
+    },
   },
   methods: {
     ...mapActions({
