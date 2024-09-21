@@ -17,7 +17,7 @@
               <label
                 for="Company name"
                 class="block mb-2 text-sm font-normal text-[#4B4B4B]"
-                >Company name</label
+                >Company name *</label
               >
               <input
                 type="text"
@@ -40,7 +40,7 @@
               <label
                 for="ContactName"
                 class="block mb-2 text-sm font-normal text-[#4B4B4B]"
-                >Contact name</label
+                >Contact name *</label
               >
               <input
                 type="text"
@@ -63,7 +63,7 @@
               <label
                 for="email"
                 class="block mb-2 text-sm font-normal text-[#4B4B4B]"
-                >Email Address</label
+                >Email Address *</label
               >
               <input
                 type="email"
@@ -88,7 +88,7 @@
                 for="createPassword"
                 class="block mb-2 text-sm font-normal text-[#4B4B4B]"
               >
-                Password</label
+                Password *</label
               >
               <label class="xl:w-[382px] relative flex cursor-pointer flex-col">
                 <div class="flex justify-between">
@@ -143,7 +143,7 @@
               <label
                 for="ContactNo"
                 class="block mb-2 text-sm font-normal text-[#4B4B4B]"
-                >Contact No.</label
+                >Contact *</label
               >
               <label class="xl:w-[382px] relative flex cursor-pointer flex-col">
                 <div class="flex justify-between">
@@ -163,6 +163,7 @@
                     placeholder="Your Contact No."
                     class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[15px] bg-white pl-24 focus:outline-none mb-3"
                     v-model="formData.contactNumber"
+                    @input="validateContactInput"
                     :class="
                       errors.contactNumber
                         ? 'border border-red-600'
@@ -497,6 +498,7 @@
                       placeholder="Your Contact No."
                       class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[15px] bg-white pl-24 focus:outline-none mb-3"
                       v-model="reference.contactNo"
+                      @input="validateReferrenceInput(reference)"
                       :class="
                         errors[`commercialReference[${key}].contactNo`]
                           ? 'border border-red-600'
@@ -603,7 +605,10 @@ export default {
       getSingleCarrierData: "carrier/getSingleCarrierData",
     }),
     isDropdownDisabled() {
-      return this.getSingleCarrierData.companyFormationType !== "";
+      return (
+        this.getSingleCarrierData.companyFormationType !== "" &&
+        this.getSingleCarrierData.companyFormationType !== null
+      );
     },
   },
   methods: {
@@ -713,20 +718,65 @@ export default {
         console.log(error);
       }
     },
+    async validateContactInput(event) {
+      this.formData.contactNumber = await this.$validateNumber(
+        event.target.value
+      );
+    },
+    async validateReferrenceInput(reference) {
+      reference.contactNo = await this.$validateNumber(reference.contactNo);
+    },
+    async formatCommercialReference() {
+      if (
+        !this.getSingleCarrierData?.commercialReference ||
+        this.getSingleCarrierData?.commercialReference?.length === 0
+      ) {
+        this.formData.commercialReference = [
+          {
+            companyName: "",
+            contactName: "",
+            emailAddress: "",
+            countryCode: 1,
+            contactNo: "",
+          },
+          {
+            companyName: "",
+            contactName: "",
+            emailAddress: "",
+            countryCode: 1,
+            contactNo: "",
+          },
+        ];
+      } else if (this.getSingleCarrierData?.commercialReference?.length === 1) {
+        this.formData.commercialReference = [
+          this.getSingleCarrierData?.commercialReference[0],
+          {
+            companyName: "",
+            contactName: "",
+            emailAddress: "",
+            countryCode: 1,
+            contactNo: "",
+          },
+        ];
+      } else {
+        this.formData.commercialReference =
+          this.getSingleCarrierData?.commercialReference;
+      }
+    },
     async editCarrier() {
       try {
-        // this.errors = await this.$validateCarrierForm({
-        //   form: this.formData,
-        //   isEdit: true,
-        // });
+        this.errors = await this.$validateCarrierForm({
+          form: this.formData,
+          isEdit: true,
+        });
 
-        // if (Object.keys(this.errors).length > 0) {
-        //   this.$toast.open({
-        //     message: "Please fix the errors before submitting.",
-        //     type: "error",
-        //   });
-        //   return;
-        // }
+        if (Object.keys(this.errors).length > 0) {
+          this.$toast.open({
+            message: "Please fix the errors before submitting.",
+            type: "error",
+          });
+          return;
+        }
 
         const formData = new FormData();
         formData.append("accountId", this.formData.accountId);
@@ -736,10 +786,15 @@ export default {
         formData.append("countryCode", this.formData.countryCode);
         formData.append("email", this.formData.email);
         formData.append("password", this.formData.password);
-        formData.append(
-          "companyFormationType",
-          this.formData?.companyFormationType
-        );
+        if (
+          this.formData.companyFormationType &&
+          this.formData.companyFormationType != null
+        ) {
+          formData.append(
+            "companyFormationType",
+            this.formData.companyFormationType
+          );
+        }
         if (typeof this.formData?.scac == "object") {
           formData.append("scac", this.formData?.scac);
         }
@@ -838,23 +893,28 @@ export default {
           }
         }
         this.formData.commercialReference.forEach((ref, index) => {
-          for (let key in ref) {
-            let value = ref[key];
+          let hasValidValue = Object.keys(ref).some(
+            (key) => key !== "countryCode" && ref[key] && ref[key] !== ""
+          );
+          if (hasValidValue) {
+            for (let key in ref) {
+              let value = ref[key];
 
-            if (key === "contactNo") {
-              value = value ? `${value}` : "";
-            }
-            if (key === "countryCode") {
-              value = `${value}`;
-            }
-            if (
-              value &&
-              value != "" &&
-              value != null &&
-              key != "accountId" &&
-              key != "_id"
-            ) {
-              formData.append(`commercialReference[${index}][${key}]`, value);
+              if (key === "contactNo") {
+                value = value ? `${value}` : "";
+              }
+              if (key === "countryCode") {
+                value = `${value}`;
+              }
+              if (
+                value &&
+                value != "" &&
+                value != null &&
+                key != "accountId" &&
+                key != "_id"
+              ) {
+                formData.append(`commercialReference[${index}][${key}]`, value);
+              }
             }
           }
         });
@@ -885,6 +945,7 @@ export default {
     this.selectedLabel = this.formData.companyFormationType
       ? this.formData.companyFormationType
       : "Select option";
+    await this.formatCommercialReference();
   },
 };
 </script>

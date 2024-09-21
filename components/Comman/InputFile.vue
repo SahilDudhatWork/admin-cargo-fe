@@ -45,9 +45,25 @@
     </p>
     <div v-if="fileData" class="mt-4">
       <img
+        v-if="fileType === 'application/pdf' || fileType === 'pdf'"
+        src="@/static/svg/pdf.svg"
+        alt="Image Preview"
+        class="w-20 object-contain h-12 rounded-lg"
+        @click="downloadFileItem"
+      />
+      <img
+        v-else-if="fileType === 'application/msword' || fileType === 'doc'"
+        src="@/static/svg/doc.svg"
+        alt="Image Preview"
+        class="w-20 object-contain h-12 rounded-lg"
+        @click="downloadFileItem"
+      />
+      <img
+        v-else
         :src="fileUrl"
         alt="Image Preview"
         class="w-20 object-contain h-12 rounded-lg"
+        @click="downloadFileItem"
       />
     </div>
   </div>
@@ -80,20 +96,45 @@ export default {
       default: "",
     },
   },
+  data() {
+    return {
+      fileType: null,
+    };
+  },
+  watch: {
+    fileData: {
+      deep: true,
+      handler(item) {
+        this.fileType = item ? item.type : null;
+      },
+    },
+  },
   computed: {
     fileUrl() {
       const baseUrl = "https://cargo-storage-bucket.s3.us-east-1.amazonaws.com";
       if (this.file.startsWith(baseUrl)) {
+        this.fileType = this.getFileType;
         return this.file;
       } else {
         let url = this.fileData ? URL.createObjectURL(this.fileData) : "";
+        this.fileType = this.fileData ? this.fileData.type : null;
         return url;
       }
+    },
+    getFileType() {
+      return this.file.split(".").pop();
     },
   },
   methods: {
     handleFileChange(event) {
       this.$emit("handleFileChange", event);
+    },
+    downloadFileItem() {
+      const baseUrl = "https://cargo-storage-bucket.s3.us-east-1.amazonaws.com";
+      if (this.fileUrl.startsWith(baseUrl)) {
+        const fileName = this.fileUrl.split("/").pop();
+        this.$downloadFile({ src: this.fileUrl, name: fileName });
+      }
     },
   },
 };

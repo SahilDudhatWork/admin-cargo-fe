@@ -17,7 +17,7 @@
               <label
                 for="Company name"
                 class="block mb-2 text-sm font-normal text-[#4B4B4B]"
-                >Company name</label
+                >Company name *</label
               >
               <input
                 type="text"
@@ -40,7 +40,7 @@
               <label
                 for="ContactName"
                 class="block mb-2 text-sm font-normal text-[#4B4B4B]"
-                >Contact name</label
+                >Contact name *</label
               >
               <input
                 type="text"
@@ -63,7 +63,7 @@
               <label
                 for="email"
                 class="block mb-2 text-sm font-normal text-[#4B4B4B]"
-                >Email Address</label
+                >Email Address *</label
               >
               <input
                 type="email"
@@ -86,7 +86,7 @@
               <label
                 for="createPassword"
                 class="block mb-2 text-sm font-normal text-[#4B4B4B]"
-                >Create Password</label
+                >Create Password *</label
               >
               <label class="xl:w-[382px] relative flex cursor-pointer flex-col">
                 <div class="flex justify-between">
@@ -141,7 +141,7 @@
               <label
                 for="ContactNo"
                 class="block mb-2 text-sm font-normal text-[#4B4B4B]"
-                >Contact No.</label
+                >Contact *</label
               >
               <label class="xl:w-[382px] relative flex cursor-pointer flex-col">
                 <div class="flex justify-between">
@@ -166,6 +166,7 @@
                     placeholder="Your Contact No."
                     class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[15px] bg-white pl-24 focus:outline-none mb-1"
                     v-model="formData.contactNumber"
+                    @input="validateContactInput"
                   />
                 </div>
                 <span class="error-msg" v-if="errors.contactNumber">{{
@@ -421,6 +422,7 @@
                       placeholder="Your Contact No."
                       class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[15px] bg-white pl-24 focus:outline-none mb-1"
                       v-model="reference.contactNo"
+                      @input="validateReferrenceInput(reference)"
                     />
                   </div>
                 </label>
@@ -533,6 +535,14 @@ export default {
     togglePassword() {
       this.isPassword = !this.isPassword;
     },
+    async validateContactInput(event) {
+      this.formData.contactNumber = await this.$validateNumber(
+        event.target.value
+      );
+    },
+    async validateReferrenceInput(reference) {
+      reference.contactNo = await this.$validateNumber(reference.contactNo);
+    },
     async uploadW9Form(event) {
       try {
         const file = event.target.files[0];
@@ -601,12 +611,17 @@ export default {
         formData.append("contactName", this.formData.contactName);
         formData.append("contactNumber", this.formData.contactNumber);
         formData.append("countryCode", this.formData.countryCode);
-        formData.append("email", this.formData.email);
+        formData.append("email", this.formData.email.toLowerCase());
         formData.append("password", this.formData.password);
-        formData.append(
-          "companyFormationType",
-          this.formData.companyFormationType
-        );
+        if (
+          this.formData.companyFormationType &&
+          this.formData.companyFormationType != null
+        ) {
+          formData.append(
+            "companyFormationType",
+            this.formData.companyFormationType
+          );
+        }
 
         if (this.selectedLabel === "USA") {
           delete this.formData?.companyFormation?.maxico;
@@ -645,17 +660,22 @@ export default {
           );
         }
         this.formData.commercialReference.forEach((ref, index) => {
-          for (let key in ref) {
-            let value = ref[key];
+          let hasValidValue = Object.keys(ref).some(
+            (key) => key !== "countryCode" && ref[key] && ref[key] !== ""
+          );
+          if (hasValidValue) {
+            for (let key in ref) {
+              let value = ref[key];
 
-            if (key === "contactNo") {
-              value = `${value}`;
-            }
-            if (key === "countryCode") {
-              value = `${value}`;
-            }
-            if (value && value != "") {
-              formData.append(`commercialReference[${index}][${key}]`, value);
+              if (key === "contactNo") {
+                value = `${value}`;
+              }
+              if (key === "countryCode") {
+                value = `${value}`;
+              }
+              if (value && value != "") {
+                formData.append(`commercialReference[${index}][${key}]`, value);
+              }
             }
           }
         });

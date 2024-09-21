@@ -30,6 +30,7 @@ export default {
     "~/plugins/js-cookie.js",
     "~/plugins/lodash.js",
     "~/plugins/validation.js",
+    "~/plugins/downloadFile.js",
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

@@ -127,6 +127,7 @@ export default {
             type: "error",
           });
         } else {
+          this.formData.email = this.formData.email.toLowerCase();
           const res = await this.signin(this.formData);
           this.$toast.open({
             message: this.$i18n.t("loginMessage"),
