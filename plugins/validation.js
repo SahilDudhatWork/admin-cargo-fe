@@ -232,8 +232,35 @@ export default async (ctx, inject) => {
 
     return errors;
   };
+  const validateBannerForm = async ({ form, selectedUserLabel }) => {
+    const errors = [];
+
+    const isEmpty = (value) => {
+      return typeof value === "string" ? value.trim() === "" : !value;
+    };
+
+    const setError = (fieldName, message) => {
+      errors[fieldName] = message;
+    };
+
+    const validateField = (field, fieldName, errorLabel) => {
+      if (isEmpty(field)) {
+        setError(fieldName, `${errorLabel} is required`);
+      }
+    };
+
+    if (selectedUserLabel === "Select option") {
+      errors.push({ selectedUserLabel: "Please select an option" });
+    }
+    form.forEach((item, index) => {
+      validateField(item.bannerImage, "bannerImage", "Banner Image", index);
+    });
+
+    return errors;
+  };
 
   inject("validateUserForm", validateUserForm);
   inject("validateCarrierForm", validateCarrierForm);
+  inject("validateBannerForm", validateBannerForm);
   inject("validateNumber", validateNumber);
 };

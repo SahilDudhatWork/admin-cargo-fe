@@ -220,6 +220,13 @@ export default {
           blackSvg: blackCarrierSvg,
         },
         {
+          name: "Banners",
+          href: "/banners",
+          isActive: false,
+          svg: carrierSvg,
+          blackSvg: blackCarrierSvg,
+        },
+        {
           name: "Setting",
           href: "/setting",
           isActive: false,
