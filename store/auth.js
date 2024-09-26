@@ -25,7 +25,6 @@ export const actions = {
         secure: true,
         sameSite: "Strict",
       });
-      ctx.commit("getuserData", response.data);
       return response;
     } catch (error) {
       throw error;

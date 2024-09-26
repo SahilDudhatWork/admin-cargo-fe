@@ -10,6 +10,74 @@
           EDIT CARRIER
         </p>
       </div>
+      <div class="grid grid-cols-2 w-[65%]">
+        <div class="w-[370px] cursor-pointer" @click="getOperator">
+          <h1 class="text-[#151515] font-normal text-xs mb-3">Operators</h1>
+          <div class="border border-[#E6E6E6] rounded-lg p-3">
+            <div class="flex justify-between">
+              <h1 class="text-[#1E1E1E] font-medium text-sm">
+                {{ operatorDetails.totalOperator }} Operators
+              </h1>
+              <span
+                class="text-transparent bg-clip-text bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] text-xs font-medium"
+                >+ Add operator</span
+              >
+            </div>
+            <div class="grid grid-cols-2 mt-3">
+              <div>
+                <p class="text-[#686868] font-light text-xs mb-1.5">
+                  Active operators
+                </p>
+                <p class="text-[#151515] font-medium text-sm">
+                  {{ operatorDetails.activeOperators }}
+                </p>
+              </div>
+              <div>
+                <p class="text-[#686868] font-light text-xs mb-1.5">
+                  Out of duty operators
+                </p>
+                <p class="text-[#151515] font-medium text-sm">
+                  {{ operatorDetails.outOfDutyOperators }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="w-[370px] cursor-pointer" @click="getVehicle">
+          <h1 class="text-[#151515] font-normal text-xs mb-3">Vehicles</h1>
+          <div class="border border-[#E6E6E6] rounded-lg p-3">
+            <div class="flex justify-between">
+              <h1 class="text-[#1E1E1E] font-medium text-sm">
+                {{ vehicleDetails?.totalVehicles }} Vehicles
+              </h1>
+              <span
+                class="text-transparent bg-clip-text bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] text-xs font-medium"
+                >+ Add vehicle</span
+              >
+            </div>
+            <div class="grid grid-cols-2 mt-3">
+              <div>
+                <p class="text-[#686868] font-light text-xs mb-1.5">
+                  Active vehicles
+                </p>
+                <p class="text-[#151515] font-medium text-sm">
+                  {{ vehicleDetails.activeVehicles }}
+                </p>
+              </div>
+              <div>
+                <p class="text-[#686868] font-light text-xs mb-1.5">
+                  Out of duty vehicles
+                </p>
+                <p class="text-[#151515] font-medium text-sm">
+                  {{ vehicleDetails.outOfDutyVehicles }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <form class="space-y-4 md:space-y-6 mt-6" @submit.prevent="editCarrier">
         <div class="w-[65%]">
           <div class="grid grid-cols-2 gap-y-2">
@@ -610,12 +678,52 @@ export default {
         this.getSingleCarrierData.companyFormationType !== null
       );
     },
+    vehicleDetails() {
+      const totalVehicles = this.getSingleCarrierData.vehiclesDetails?.length;
+      const activeVehicles = this.getSingleCarrierData?.vehiclesDetails.filter(
+        (vehicle) => vehicle.status === "Active"
+      ).length;
+      const outOfDutyVehicles =
+        this.getSingleCarrierData?.vehiclesDetails.filter(
+          (vehicle) => vehicle.status === "Deactive"
+        ).length;
+
+      return {
+        totalVehicles,
+        activeVehicles,
+        outOfDutyVehicles,
+      };
+    },
+    operatorDetails() {
+      const totalOperator = this.getSingleCarrierData.operatorDetails?.length;
+      const activeOperators = this.getSingleCarrierData?.operatorDetails.filter(
+        (vehicle) => vehicle.status === "Active"
+      ).length;
+      const outOfDutyOperators =
+        this.getSingleCarrierData?.operatorDetails.filter(
+          (vehicle) => vehicle.status === "Deactive"
+        ).length;
+
+      return {
+        totalOperator,
+        activeOperators,
+        outOfDutyOperators,
+      };
+    },
   },
   methods: {
     ...mapActions({
       fetchSingleCarrier: "carrier/fetchSingleUser",
       updateCarrier: "carrier/updateCarrier",
     }),
+    getVehicle() {
+      const carrierId = this.getSingleCarrierData?.accountId;
+      this.$router.push(`/carrier/${carrierId}/vehicles`);
+    },
+    getOperator() {
+      const carrierId = this.getSingleCarrierData?.accountId;
+      this.$router.push(`/carrier/${carrierId}/operators`);
+    },
     getCountry(item) {
       this.formData.countryCode = item.value;
     },

@@ -109,11 +109,13 @@
                 class="cursor-pointer sm:block hidden"
                 @click="toggleSidebarWidth"
               />
-              <img
-                src="@/static/Images/header-logo.webp"
-                alt=""
-                v-if="isShow"
-              />
+              <nuxt-link to="/dashboard">
+                <img
+                  src="@/static/Images/header-logo.webp"
+                  alt=""
+                  v-if="isShow"
+                />
+              </nuxt-link>
             </div>
             <div class="flex justify-center mt-12">
               <ul

@@ -1,11 +1,8 @@
 import local_en from "./config/lang/en.json";
-// import global_en from "./node_modules/@bizinbox/bib-ui-lib/dist/lang/global_en.json";
 
 export default {
-  // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
 
-  // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: "Admin-Cargo-Connect-FE",
     htmlAttrs: {
@@ -20,10 +17,8 @@ export default {
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
   },
 
-  // Global CSS: https://go.nuxtjs.dev/config-css
   css: ["@/assets/css/tailwind.css", "@/assets/css/global.css"],
 
-  // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     { src: "~/plugins/v-click-outside.js", mode: "client" },
     { src: "~/plugins/toast-notification.js", mode: "client" },
@@ -31,12 +26,11 @@ export default {
     "~/plugins/lodash.js",
     "~/plugins/validation.js",
     "~/plugins/downloadFile.js",
+    "~/plugins/moment.js",
   ],
 
-  // Auto import components: https://go.nuxtjs.dev/config-components
   components: [{ path: "~/components/", pathPrefix: false }],
 
-  // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     [
       "nuxt-i18n",
@@ -59,16 +53,29 @@ export default {
     ],
   ],
 
-  // Modules: https://go.nuxtjs.dev/config-modules
   modules: [],
 
-  // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     postcss: {
       plugins: {
         tailwindcss: {},
         autoprefixer: {},
       },
+    },
+  },
+  router: {
+    prefetchLinks: true,
+    extendRoutes(routes, resolve) {
+      routes.push({
+        name: "operators",
+        path: "/carrier/:id/operators",
+        component: resolve(__dirname, "pages/carrier/operators/_.vue"),
+      });
+      routes.push({
+        name: "vehicles",
+        path: "/carrier/:id/vehicles",
+        component: resolve(__dirname, "pages/carrier/vehicles/_.vue"),
+      });
     },
   },
 };
