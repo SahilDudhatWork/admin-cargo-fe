@@ -26,12 +26,12 @@
       />
     </div>
     <div>
-      <OptionList
+      <!-- <OptionList
         labelText="Vehicle list"
         buttonText="Add Vehicle"
         listWidth="85%"
         @add="addVehicle"
-      />
+      /> -->
     </div>
     <div class="mt-6">
       <VehicleActionButton @add="allActionButtons" />

@@ -41,12 +41,12 @@
               >
                 Status
               </th>
-              <th
+              <!-- <th
                 scope="col"
                 class="px-3 py-3 rounded-tr-lg text-[#000000] font-normal text-[12px]"
               >
                 Actions
-              </th>
+              </th> -->
             </tr>
           </thead>
           <tbody v-if="allData?.length > 0">
@@ -103,7 +103,7 @@
               >
                 {{ item?.status }}
               </td>
-              <td class="flex items-center gap-2 py-8">
+              <!-- <td class="flex items-center gap-2 py-8">
                 <img
                   src="@/static/svg/edit-icon.svg"
                   alt=""
@@ -116,7 +116,7 @@
                   class="w-[20px] h-[20px]"
                   @click="$emit('deleteItem', item._id)"
                 />
-              </td>
+              </td> -->
             </tr>
           </tbody>
           <tbody v-else>

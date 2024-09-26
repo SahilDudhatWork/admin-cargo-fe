@@ -26,12 +26,12 @@
       />
     </div>
     <div>
-      <OptionList
+      <!-- <OptionList
         labelText="Operator list"
         buttonText="Add Operator"
         listWidth="85%"
         @add="addOperator"
-      />
+      /> -->
     </div>
     <div class="mt-6">
       <OperatorActionButton @add="allActionButtons" />
