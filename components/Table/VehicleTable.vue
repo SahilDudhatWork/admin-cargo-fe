@@ -41,12 +41,6 @@
               >
                 Status
               </th>
-              <!-- <th
-                scope="col"
-                class="px-3 py-3 rounded-tr-lg text-[#000000] font-normal text-[12px]"
-              >
-                Actions
-              </th> -->
             </tr>
           </thead>
           <tbody v-if="allData?.length > 0">
@@ -103,20 +97,6 @@
               >
                 {{ item?.status }}
               </td>
-              <!-- <td class="flex items-center gap-2 py-8">
-                <img
-                  src="@/static/svg/edit-icon.svg"
-                  alt=""
-                  class="w-[17px] h-[17px]"
-                  @click="editOperator(item)"
-                />
-                <img
-                  src="@/static/svg/delete-icon.svg"
-                  alt=""
-                  class="w-[20px] h-[20px]"
-                  @click="$emit('deleteItem', item._id)"
-                />
-              </td> -->
             </tr>
           </tbody>
           <tbody v-else>
@@ -261,16 +241,6 @@ export default {
     ...mapGetters({
       vehiclePaginationData: "vehicle/getVehiclePaginationData",
     }),
-    // formattedMxPlatesExpirationDate() {
-    //   return this.$moment(this.allData?.mxPlatesExpirationDate).format(
-    //     "DD-MM-YYYY"
-    //   );
-    // },
-    // formattedUsPlatesExpirationDate() {
-    //   return this.$moment(this.allData?.usPlatesExpirationDate).format(
-    //     "DD-MM-YYYY"
-    //   );
-    // },
   },
   methods: {
     editOperator(item) {

@@ -16,12 +16,8 @@
           <div class="border border-[#E6E6E6] rounded-lg p-3">
             <div class="flex justify-between">
               <h1 class="text-[#1E1E1E] font-medium text-sm">
-                {{ operatorDetails.totalOperator }} Operators
+                {{ formData?.operator?.total }} Operators
               </h1>
-              <span
-                class="text-transparent bg-clip-text bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] text-xs font-medium"
-                >+ Add operator</span
-              >
             </div>
             <div class="grid grid-cols-2 mt-3">
               <div>
@@ -29,7 +25,7 @@
                   Active operators
                 </p>
                 <p class="text-[#151515] font-medium text-sm">
-                  {{ operatorDetails.activeOperators }}
+                  {{ formData?.operator?.active }}
                 </p>
               </div>
               <div>
@@ -37,7 +33,7 @@
                   Out of duty operators
                 </p>
                 <p class="text-[#151515] font-medium text-sm">
-                  {{ operatorDetails.outOfDutyOperators }}
+                  {{ formData?.operator?.deactive }}
                 </p>
               </div>
             </div>
@@ -49,12 +45,8 @@
           <div class="border border-[#E6E6E6] rounded-lg p-3">
             <div class="flex justify-between">
               <h1 class="text-[#1E1E1E] font-medium text-sm">
-                {{ vehicleDetails?.totalVehicles }} Vehicles
+                {{ formData?.vehicle?.total }} Vehicles
               </h1>
-              <span
-                class="text-transparent bg-clip-text bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] text-xs font-medium"
-                >+ Add vehicle</span
-              >
             </div>
             <div class="grid grid-cols-2 mt-3">
               <div>
@@ -62,7 +54,7 @@
                   Active vehicles
                 </p>
                 <p class="text-[#151515] font-medium text-sm">
-                  {{ vehicleDetails.activeVehicles }}
+                  {{ formData?.vehicle?.active }}
                 </p>
               </div>
               <div>
@@ -70,7 +62,7 @@
                   Out of duty vehicles
                 </p>
                 <p class="text-[#151515] font-medium text-sm">
-                  {{ vehicleDetails.outOfDutyVehicles }}
+                  {{ formData?.vehicle?.deactive }}
                 </p>
               </div>
             </div>
@@ -677,38 +669,6 @@ export default {
         this.getSingleCarrierData.companyFormationType !== "" &&
         this.getSingleCarrierData.companyFormationType !== null
       );
-    },
-    vehicleDetails() {
-      const totalVehicles = this.getSingleCarrierData.vehiclesDetails?.length;
-      const activeVehicles = this.getSingleCarrierData?.vehiclesDetails.filter(
-        (vehicle) => vehicle.status === "Active"
-      ).length;
-      const outOfDutyVehicles =
-        this.getSingleCarrierData?.vehiclesDetails.filter(
-          (vehicle) => vehicle.status === "Deactive"
-        ).length;
-
-      return {
-        totalVehicles,
-        activeVehicles,
-        outOfDutyVehicles,
-      };
-    },
-    operatorDetails() {
-      const totalOperator = this.getSingleCarrierData.operatorDetails?.length;
-      const activeOperators = this.getSingleCarrierData?.operatorDetails.filter(
-        (vehicle) => vehicle.status === "Active"
-      ).length;
-      const outOfDutyOperators =
-        this.getSingleCarrierData?.operatorDetails.filter(
-          (vehicle) => vehicle.status === "Deactive"
-        ).length;
-
-      return {
-        totalOperator,
-        activeOperators,
-        outOfDutyOperators,
-      };
     },
   },
   methods: {

@@ -41,12 +41,6 @@
               >
                 Status
               </th>
-              <!-- <th
-                scope="col"
-                class="px-3 py-3 rounded-tr-lg text-[#000000] font-normal text-[12px]"
-              >
-                Actions
-              </th> -->
             </tr>
           </thead>
           <tbody v-if="allData?.length > 0">
@@ -90,20 +84,6 @@
               >
                 {{ item?.status }}
               </td>
-              <!-- <td class="flex items-center gap-2">
-                <img
-                  src="@/static/svg/edit-icon.svg"
-                  alt=""
-                  class="w-[17px] h-[17px] mt-6"
-                  @click="editOperator(item)"
-                />
-                <img
-                  src="@/static/svg/delete-icon.svg"
-                  alt=""
-                  class="w-[20px] h-[20px] mt-6"
-                  @click="$emit('deleteItem', item.accountId)"
-                />
-              </td> -->
             </tr>
           </tbody>
           <tbody v-else>
@@ -248,11 +228,6 @@ export default {
     ...mapGetters({
       operatorPaginationData: "operator/getOperatorPaginationData",
     }),
-    // formattedmxDriversLicenseExpirationDate() {
-    //   return this.$moment(this.allData?.mxDriversLicenseExpirationDate).format(
-    //     "DD-MM-YYYY"
-    //   );
-    // },
   },
   methods: {
     editOperator(item) {
