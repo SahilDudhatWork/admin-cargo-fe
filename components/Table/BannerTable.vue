@@ -23,12 +23,12 @@
               >
                 Role
               </th>
-              <!-- <th
+              <th
                 scope="col"
-                class="px-3 py-3 rounded-tr-lg text-[#000000] font-normal text-[12px]"
+                class="py-3 rounded-tr-lg text-[#000000] font-normal text-[12px]"
               >
                 Actions
-              </th> -->
+              </th>
             </tr>
           </thead>
           <tbody v-if="allData?.length > 0">
@@ -60,20 +60,22 @@
               <td class="px-6 text-[#000000] font-normal text-xs">
                 {{ item?.role }}
               </td>
-              <!-- <td class="flex items-center gap-2">
-                <img
-                  src="@/static/svg/edit-icon.svg"
-                  alt=""
-                  class="w-[17px] h-[17px] mt-6"
-                  @click="editUser(item)"
-                />
-                <img
-                  src="@/static/svg/delete-icon.svg"
-                  alt=""
-                  class="w-[20px] h-[20px] mt-6"
-                  @click="$emit('deleteItem', item.accountId)"
-                />
-              </td> -->
+              <td>
+                <div class="flex items-center gap-2">
+                  <img
+                    src="@/static/svg/edit-icon.svg"
+                    alt=""
+                    class="w-[17px] h-[17px]"
+                    @click="editUser(item)"
+                  />
+                  <!-- <img
+                    src="@/static/svg/delete-icon.svg"
+                    alt=""
+                    class="w-[20px] h-[20px]"
+                    @click="$emit('deleteItem', item?._id)"
+                  /> -->
+                </div>
+              </td>
             </tr>
           </tbody>
           <tbody v-else>

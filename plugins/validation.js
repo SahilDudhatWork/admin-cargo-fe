@@ -243,9 +243,9 @@ export default async (ctx, inject) => {
       errors[fieldName] = message;
     };
 
-    const validateField = (field, fieldName, errorLabel) => {
+    const validateField = (field, fieldName, errorLabel, index) => {
       if (isEmpty(field)) {
-        setError(fieldName, `${errorLabel} is required`);
+        setError(`${fieldName}${index}`, `${errorLabel} is required`);
       }
     };
 
@@ -253,7 +253,7 @@ export default async (ctx, inject) => {
       errors.push({ selectedUserLabel: "Please select an option" });
     }
     form.forEach((item, index) => {
-      validateField(item.bannerImage, "bannerImage", "Banner Image", index);
+      validateField(item.image, "image", "Banner Image", index);
     });
 
     return errors;

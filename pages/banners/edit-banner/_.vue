@@ -7,10 +7,10 @@
         </h1>
         <img src="@/static/svg/right-arrow.svg" alt="" />
         <p class="text-[#1E1E1E] font-normal text-[12px] cursor-pointer">
-          ADD BANNER
+          EDIT BANNER
         </p>
       </div>
-      <form class="space-y-4 md:space-y-6 mt-6" @submit.prevent="addBanner">
+      <form class="space-y-4 md:space-y-6 mt-6" @submit.prevent="editBanner">
         <div class="w-full">
           <div class="flex gap-8 gap-y-2">
             <div>
@@ -31,20 +31,20 @@
             </div>
             <div class="flex flex-col gap-y-2">
               <div
-                v-for="(banner, index) in banner"
+                v-for="(item, index) in banner"
                 :key="index"
                 class="grid grid-cols-3 gap-y-4 gap-6"
               >
                 <div>
                   <inputFile
                     item-label="Banner file *"
-                    :fileData="banner.image"
+                    :fileData="item.image"
                     :errors="errors[`image${index}`]"
                     :itemPlaceholder="''"
                     :file="
-                      typeof banner.image == 'object'
-                        ? banner.image?.name
-                        : banner.image
+                      typeof item.image == 'object'
+                        ? item.image?.name
+                        : item.image
                     "
                     @handleFileChange="
                       (event) => uploadBannerImage(event, index)
@@ -66,14 +66,14 @@
                     id="banner-link"
                     placeholder="Banner link"
                     class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[15px] focus:outline-none border border-gray-300"
-                    v-model="banner.link"
+                    v-model="item.link"
                   />
                 </div>
                 <div>
                   <div
                     v-if="index == 0"
                     class="mt-9 cursor-pointer"
-                    @click="newBanner"
+                    @click="addNewBanner"
                   >
                     <span
                       class="text-3xl font-bold bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] text-white rounded-full pb-1.5 w-10 flex items-center justify-center"
@@ -83,7 +83,7 @@
                   <div
                     v-else
                     class="mt-6 cursor-pointer"
-                    @click="removeBanner(banner)"
+                    @click="removeBanner(item)"
                   >
                     <span
                       class="text-3xl font-bold bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] text-white rounded-full pb-1.5 w-10 flex items-center justify-center"
@@ -98,7 +98,7 @@
             <button
               class="text-white bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] font-medium rounded-lg text-[16px] px-8 py-[15px] text-center mt-8 mr-40"
             >
-              Add Banner
+              Update Banner
             </button>
           </div>
         </div>
@@ -125,18 +125,20 @@ export default {
         },
       ],
       errors: {},
+      bannerId: "",
       selectedUserLabel: "Select option",
       banner: [
         {
           link: "",
-          image: "",
+          image: null,
         },
       ],
     };
   },
   methods: {
     ...mapActions({
-      createBanner: "banner/createBanner",
+      updateBanner: "banner/createBanner",
+      fetchSingleBanner: "banner/fetchSingleBanner",
     }),
     getBannerValue(item) {
       this.selectedUserLabel = item.label;
@@ -145,12 +147,14 @@ export default {
     async uploadBannerImage(event, index) {
       try {
         const file = event.target.files[0];
-        this.banner[index].image = file;
+        if (file) {
+          this.$set(this.banner, index, { ...this.banner[index], image: file });
+        }
       } catch (error) {
         console.log(error);
       }
     },
-    newBanner() {
+    addNewBanner() {
       this.banner.push({
         link: "",
         image: null,
@@ -162,7 +166,7 @@ export default {
         this.banner.splice(index, 1);
       }
     },
-    async addBanner() {
+    async editBanner() {
       try {
         this.errors = await this.$validateBannerForm({
           form: this.banner,
@@ -182,11 +186,39 @@ export default {
         }
         const formData = new FormData();
         formData.append("role", this.selectedUserLabel);
-        this.banner.forEach((item, index) => {
-          formData.append(`banners[${index}].image`, item.image);
-          formData.append(`banners[${index}].link`, item.link);
-        });
-        const res = await this.createBanner(formData);
+
+        const fetchImageAsBlob = async (url) => {
+          const response = await fetch(url);
+          const blob = await response.blob();
+          return blob;
+        };
+
+        await Promise.all(
+          this.banner.map(async (item, index) => {
+            if (typeof item.image === "string") {
+              const imageBlob = await fetchImageAsBlob(item.image);
+
+              const fileName = item.image.split("/").pop();
+
+              formData.append(`banners[${index}].image`, imageBlob, fileName);
+            } else if (item.image instanceof File) {
+              formData.append(`banners[${index}].image`, item.image);
+            } else {
+              console.error(
+                `Expected a string (URL) or File for item.image but received:`,
+                item.image
+              );
+              return;
+            }
+            formData.append(`banners[${index}].link`, item.link);
+          })
+        );
+
+        for (const [key, value] of formData.entries()) {
+          console.log(`${key}:`, value);
+        }
+
+        const res = await this.updateBanner(formData);
         this.$toast.open({
           message: res.msg,
         });
@@ -199,6 +231,20 @@ export default {
         });
       }
     },
+    async getSingleBanner() {
+      try {
+        const res = await this.fetchSingleBanner({ id: this.bannerId });
+        this.banner = res?.data?.banners || [];
+        this.selectedUserLabel = res?.data?.role || "";
+      } catch (error) {}
+    },
+  },
+  async beforeMount() {
+    this.bannerId = this.$route.params?.pathMatch || null;
+    if (!this.bannerId) {
+      this.$router.push("/banners");
+    }
+    await this.getSingleBanner();
   },
 };
 </script>

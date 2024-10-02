@@ -6,6 +6,7 @@
       :class="[
         isDropdown ? ' border-t border-r border-l rounded-t-lg' : 'border',
         !isDisabled ? 'bg-white' : 'bg-[#efefef4d]',
+        errors ? 'border border-red-600' : 'border',
       ]"
       type="button"
       :disabled="isDisabled"
@@ -64,6 +65,11 @@ export default {
     isDisabled: {
       type: Boolean,
       default: false,
+    },
+    errors: {
+      type: String,
+      required: false,
+      default: "",
     },
   },
   data() {

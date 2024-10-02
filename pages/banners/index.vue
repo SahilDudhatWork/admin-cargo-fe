@@ -13,16 +13,16 @@
         @add="addBanner"
       />
     </div>
-    <div class="mt-6">
+    <!-- <div class="mt-6">
       <BannersActionButton @add="allActionButtons" />
-    </div>
+    </div> -->
     <div>
-      <BannerTable :allData="bannerData" />
-      <DeleteAlertModal
+      <BannerTable :allData="bannerData" @handleClick="editBanner" />
+      <!-- <DeleteAlertModal
         :isModal="isModal"
-        @handleSubmit="handleSubmit"
+        @handleSubmit="handleDelete"
         @close="closeModal"
-      />
+      /> -->
     </div>
   </div>
 </template>
@@ -45,30 +45,26 @@ export default {
     ...mapActions({
       fetchBanners: "banner/fetchBanners",
     }),
-    handleSubmit() {
-      console.log("handleSubmit");
+    // handleDelete() {
+    //   console.log("handleSubmit");
+    //   this.isModal = false;
+    // },
+    editBanner(item) {
+      this.$router.push(`banners/edit-banner/${item._id}`);
     },
-    async getAllBanners(payload) {
-      let { sortBy, page, limit, keyWord } = payload;
-      sortBy = sortBy || "";
-      page = page || 1;
-      limit = limit || 10;
-      keyWord = keyWord || "";
-      const res = await this.fetchBanners({
-        sortBy: sortBy,
-        page: page,
-        limit: limit,
-        keyWord: keyWord,
-      });
+    // removeBannerItem(id) {
+    //   console.log("delete", id);
+    //   this.isModal = true;
+    //   this.selectedId = id;
+    // },
+    async getAllBanners() {
+      const res = await this.fetchBanners();
       this.bannerData = res.data;
     },
     async allActionButtons(type) {
       try {
         this.sortBy = type;
-        const res = await this.getAllBanners({
-          keyWord: this.search,
-          sortBy: this.sortBy,
-        });
+        await this.getAllBanners();
       } catch (error) {
         console.log(error);
         this.$toast.open({
@@ -86,10 +82,7 @@ export default {
   },
   async mounted() {
     try {
-      const res = await this.getAllBanners({
-        keyWord: this.search,
-        sortBy: this.sortBy,
-      });
+      await this.getAllBanners();
     } catch (error) {
       console.log(error);
       this.$toast.open({

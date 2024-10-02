@@ -96,7 +96,7 @@ export default {
     },
     async firstPage() {
       try {
-        const res = await this.getAllOperator({
+        await this.getAllOperator({
           sortBy: this.sortBy,
           keyWord: this.search,
           page: 1,
@@ -112,7 +112,7 @@ export default {
     },
     async lastPage() {
       try {
-        const res = await this.getAllOperator({
+        await this.getAllOperator({
           sortBy: this.sortBy,
           keyWord: this.search,
           page: this.operatorPaginationData?.total_page,
@@ -128,7 +128,7 @@ export default {
     },
     async prevPage() {
       try {
-        const res = await this.getAllOperator({
+        await this.getAllOperator({
           sortBy: this.sortBy,
           keyWord: this.search,
           page: this.operatorPaginationData.current_page - 1,
@@ -144,7 +144,7 @@ export default {
     },
     async nextPage() {
       try {
-        const res = await this.getAllOperator({
+        await this.getAllOperator({
           sortBy: this.sortBy,
           keyWord: this.search,
           page: this.operatorPaginationData.current_page + 1,
@@ -208,7 +208,7 @@ export default {
     async allActionButtons(type) {
       try {
         this.sortBy = type;
-        const res = await this.getAllOperator({
+        await this.getAllOperator({
           keyWord: this.search,
           sortBy: this.sortBy,
         });

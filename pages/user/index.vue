@@ -142,7 +142,7 @@ export default {
     },
     async firstPage() {
       try {
-        const res = await this.getAllUser({
+        await this.getAllUser({
           sortBy: this.sortBy,
           keyWord: this.search,
           page: 1,
@@ -158,7 +158,7 @@ export default {
     },
     async lastPage() {
       try {
-        const res = await this.getAllUser({
+        await this.getAllUser({
           sortBy: this.sortBy,
           keyWord: this.search,
           page: this.userPaginationData?.total_page,
@@ -174,7 +174,7 @@ export default {
     },
     async prevPage() {
       try {
-        const res = await this.getAllUser({
+        await this.getAllUser({
           sortBy: this.sortBy,
           keyWord: this.search,
           page: this.userPaginationData.current_page - 1,
@@ -190,7 +190,7 @@ export default {
     },
     async nextPage() {
       try {
-        const res = await this.getAllUser({
+        await this.getAllUser({
           sortBy: this.sortBy,
           keyWord: this.search,
           page: this.userPaginationData.current_page + 1,
@@ -253,7 +253,7 @@ export default {
   },
   async mounted() {
     try {
-      const res = await this.getAllUser({
+      await this.getAllUser({
         keyWord: this.search,
         sortBy: this.sortBy,
       });

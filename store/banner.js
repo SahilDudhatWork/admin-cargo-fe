@@ -19,4 +19,15 @@ export const actions = {
       throw error;
     }
   },
+  async fetchSingleBanner(ctx, payload) {
+    try {
+      const response = await $axios.get(
+        `v1/admin/banners/${payload.id}`,
+        payload
+      );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  },
 };
