@@ -466,7 +466,8 @@
                       : 'border border-gray-300'
                   "
                   name="CompanyName"
-                  id="CompanyName"
+                  :id="`CompanyName-${key}`"
+                  :key="`CompanyName-${key}`"
                   class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[14px]"
                   placeholder="Your company name"
                   v-model="reference.companyName"
@@ -487,7 +488,8 @@
                 <input
                   type="text"
                   name="ContactName"
-                  id="ContactName"
+                  :id="`ContactName-${key}`"
+                  :key="`ContactName-${key}`"
                   :class="
                     errors[`commercialReference[${key}].contactName`]
                       ? 'border border-red-600'
@@ -518,7 +520,8 @@
                       ? 'border border-red-600'
                       : 'border border-gray-300'
                   "
-                  id="email"
+                  :id="`Email-${key}`"
+                  :key="`Email-${key}`"
                   placeholder="Your Email Address"
                   class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[14px]"
                   v-model="reference.emailAddress"
@@ -554,7 +557,8 @@
                     <input
                       type="text"
                       name="ContactNo"
-                      id="ContactNo"
+                      :id="`ContactNo-${key}`"
+                      :key="`ContactNo-${key}`"
                       placeholder="Your Contact No."
                       class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[15px] bg-white pl-24 focus:outline-none mb-3"
                       v-model="reference.contactNo"
@@ -974,13 +978,7 @@ export default {
               if (key === "countryCode") {
                 value = `${value}`;
               }
-              if (
-                value &&
-                value != "" &&
-                value != null &&
-                key != "accountId" &&
-                key != "_id"
-              ) {
+              if (value && value != "" && value != null) {
                 formData.append(`commercialReference[${index}][${key}]`, value);
               }
             }
