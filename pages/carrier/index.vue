@@ -2,7 +2,7 @@
   <div>
     <div>
       <h1 class="text-[#4B4B4B] font-normal text-[12px] mb-5 cursor-pointer">
-        <nuxt-link to="/carrier">CARRIER</nuxt-link>
+        CARRIER
       </h1>
     </div>
     <div class="relative w-[71%]">
@@ -46,11 +46,10 @@
       />
       <DeleteAlertModal
         :isModal="isModal"
-        @handleSubmit="handleSubmit"
+        @handleSubmit="handleDelete"
         @close="closeModal"
       />
     </div>
-    <!-- <CarrierList /> -->
   </div>
 </template>
 
@@ -192,7 +191,7 @@ export default {
         });
       }
     },
-    async handleSubmit() {
+    async handleDelete() {
       try {
         const response = await this.deleteCarrier({
           accountId: this.selectedId,

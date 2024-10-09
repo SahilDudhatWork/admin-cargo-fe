@@ -117,19 +117,22 @@
                 />
               </nuxt-link>
             </div>
-            <div class="flex justify-center mt-12">
+            <div class="flex justify-center mt-12 sidebar">
               <ul
-                class="flex flex-col text-white text-xl font-medium cursor-pointer w-full justify-center"
+                class="flex flex-col text-white text-xl font-medium cursor-pointer w-full list-none"
               >
                 <li
                   v-for="(tab, key) in sideBarItems"
                   :key="key"
-                  @click="toggleSidebarItems"
+                  @click="toggleSidebarItems(tab)"
                   :class="
-                    previousPath == tab.href ? 'bg-[#3683D5] text-white' : ''
+                    previousPath == tab.href
+                      ? 'bg-[#3683D5] text-white'
+                      : 'text-[#686868]'
                   "
                 >
                   <Nuxt-link
+                    v-if="!tab.subItems"
                     :to="tab.href"
                     class="flex items-center gap-2 ml-5 py-[20px]"
                   >
@@ -137,9 +140,10 @@
                       :src="previousPath == tab.href ? tab.svg : tab.blackSvg"
                       alt=""
                     />
+
                     <span
                       v-if="isShow"
-                      class="flex gap-4 font-medium text-sm text-justify"
+                      class="flex gap-4 font-medium text-sm"
                       :class="
                         previousPath == tab.href
                           ? 'text-white'
@@ -148,6 +152,81 @@
                       >{{ tab.name }}</span
                     >
                   </Nuxt-link>
+                  <div
+                    v-if="tab.subItems"
+                    class="flex items-center gap-2 ml-5 py-[20px]"
+                  >
+                    <img
+                      :src="
+                        previousPath == tab.href ||
+                        tab.subItems.some(
+                          (subItem) => previousPath == subItem.href
+                        )
+                          ? tab.svg
+                          : tab.blackSvg
+                      "
+                      alt=""
+                    />
+                    <div class="flex gap-10 items-center">
+                      <span
+                        v-if="isShow"
+                        class="flex gap-4 font-medium text-sm"
+                      >
+                        {{ tab.name }}
+                      </span>
+                      <img
+                        src="@/static/svg/black-down-arrow.svg"
+                        alt=""
+                        class="w-5"
+                        v-if="tab.isOpenSubMenu"
+                      />
+                      <img
+                        src="@/static/svg/black-right-arrow.svg"
+                        class="w-5"
+                        alt=""
+                        v-else
+                      />
+                    </div>
+                  </div>
+                  <div class="">
+                    <transition name="fade" mode="out-in">
+                      <ul class="slide-in-top" v-if="tab.isOpenSubMenu">
+                        <li
+                          v-for="subItem in tab.subItems"
+                          :key="subItem.href"
+                          :class="
+                            previousPath == subItem.href
+                              ? 'bg-[#3683D5] text-white'
+                              : 'text-[#686868]'
+                          "
+                          class="pl-12"
+                        >
+                          <Nuxt-link
+                            :to="subItem.href"
+                            class="flex items-center gap-2 py-[10px]"
+                          >
+                            <span
+                              :class="
+                                previousPath == subItem.href
+                                  ? 'bg-white'
+                                  : ' bg-black'
+                              "
+                              class="w-1.5 h-1.5 rounded-full"
+                            ></span>
+                            <span
+                              :class="
+                                previousPath == subItem.href
+                                  ? 'text-white'
+                                  : 'text-[#686868]'
+                              "
+                              class="flex gap-4 font-medium text-sm"
+                              >{{ subItem.name }}</span
+                            >
+                          </Nuxt-link>
+                        </li>
+                      </ul>
+                    </transition>
+                  </div>
                 </li>
               </ul>
             </div>
@@ -179,6 +258,10 @@ import carrierSvg from "@/static/svg/carrier.svg";
 import blackCarrierSvg from "@/static/svg/black-carrier.svg";
 import settingsSvg from "@/static/svg/settings.svg";
 import blackSettingsSvg from "@/static/svg/black-settings.svg";
+import bannerSvg from "@/static/svg/banner.svg";
+import blackBannerSvg from "@/static/svg/black-banner.svg";
+// import manageServiceSvg from "@/static/svg/manage-service.svg";
+import blackManageServiceSvg from "@/static/svg/black-manage-services.svg";
 import Cookies from "js-cookie";
 import { mapGetters } from "vuex";
 
@@ -188,6 +271,7 @@ export default {
     return {
       isSidebarOpen: false,
       isDropdown: false,
+      expandedMenu: false,
       isShow: true,
       sidebarWidth: "14rem",
       contentLeft: "15rem",
@@ -197,6 +281,7 @@ export default {
           name: "Dashboard",
           href: "/dashboard",
           isActive: true,
+          isOpenSubMenu: false,
           svg: dashboardSvg,
           blackSvg: blackDashboardSvg,
         },
@@ -204,6 +289,7 @@ export default {
           name: "Services",
           href: "/services",
           isActive: false,
+          isOpenSubMenu: false,
           svg: servicesSvg,
           blackSvg: blackServicesSvg,
         },
@@ -211,6 +297,7 @@ export default {
           name: "User",
           href: "/user",
           isActive: false,
+          isOpenSubMenu: false,
           svg: userSvg,
           blackSvg: blackUserSvg,
         },
@@ -218,6 +305,7 @@ export default {
           name: "Carrier",
           href: "/carrier",
           isActive: false,
+          isOpenSubMenu: false,
           svg: carrierSvg,
           blackSvg: blackCarrierSvg,
         },
@@ -225,20 +313,43 @@ export default {
           name: "Banners",
           href: "/banners",
           isActive: false,
-          svg: carrierSvg,
-          blackSvg: blackCarrierSvg,
+          isOpenSubMenu: false,
+          svg: bannerSvg,
+          blackSvg: blackBannerSvg,
+        },
+        {
+          name: "Manage Services",
+          isActive: false,
+          isOpenSubMenu: false,
+          svg: blackManageServiceSvg,
+          blackSvg: blackManageServiceSvg,
+          subItems: [
+            { name: "Service", href: "/manage-services" },
+            { name: "Transportation", href: "/manage-transportation" },
+            {
+              name: "Mode Of Transportation",
+              href: "/manage-mode-of-transportation",
+            },
+            {
+              name: "Port & Bridge",
+              href: "/port-bridge",
+            },
+            {
+              name: "Securing Equipment",
+              href: "/securing-equipment",
+            },
+          ],
         },
         {
           name: "Setting",
           href: "/setting",
           isActive: false,
+          isOpenSubMenu: false,
           svg: settingsSvg,
           blackSvg: blackSettingsSvg,
         },
       ],
-      activeTab: "",
       previousPath: "/dashboard",
-      userName: "",
     };
   },
   watch: {
@@ -259,16 +370,17 @@ export default {
     closeDropdown() {
       this.isDropdown = false;
     },
+    toggleSidebarItems(tab) {
+      if (tab?.name == "Manage Services") {
+        tab.isOpenSubMenu = !tab.isOpenSubMenu;
+      }
+    },
     async logOut() {
       Cookies.remove("token");
       this.$router.push("/login");
     },
     toggleSidebar() {
       this.isSidebarOpen = !this.isSidebarOpen;
-    },
-    toggleSidebarItems(href) {
-      this.previousPath = this.$router.history.current.fullPath;
-      this.isSidebarOpen = false;
     },
     toggleSidebarWidth() {
       this.sidebarWidth = this.sidebarWidth === "14rem" ? "3.5rem" : "14rem";
@@ -277,16 +389,23 @@ export default {
       this.isShow = !this.isShow;
     },
     updateActiveTab(path) {
-      const previousPath = this.sideBarItems.find((tab) =>
-        path.startsWith(tab.href)
-      );
-      if (previousPath) {
-        this.previousPath = previousPath.href;
-        this.sideBarItems = this.sideBarItems.map((item) => ({
-          ...item,
-          isActive: path.startsWith(item.href),
-        }));
-      }
+      this.sideBarItems.forEach((tab) => {
+        if (tab.subItems) {
+          const activeSubItem = tab.subItems.find((subItem) =>
+            path.startsWith(subItem.href)
+          );
+          tab.isActive = !!activeSubItem;
+          if (activeSubItem) {
+            this.previousPath = activeSubItem.href;
+            this.expandedMenu = this.sideBarItems.indexOf(tab);
+          }
+        } else if (path.startsWith(tab.href)) {
+          tab.isActive = true;
+          this.previousPath = tab.href;
+        } else {
+          tab.isActive = false;
+        }
+      });
     },
   },
 };
@@ -304,5 +423,23 @@ export default {
 }
 .slide-in-right {
   animation: slideInRight 0.5s ease-in-out forwards;
+}
+@keyframes slideInTop {
+  from {
+    opacity: 0;
+    transform: translateY(-3%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-in-top {
+  animation: slideInTop 0.5s ease-in-out forwards;
+}
+.rotate-86 {
+  transform: rotate(-86deg);
+  transition: transform 0.3s ease;
 }
 </style>

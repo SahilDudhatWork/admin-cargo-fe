@@ -2,7 +2,7 @@
   <div>
     <div>
       <h1 class="text-[#4B4B4B] font-normal text-[12px] mb-5 cursor-pointer">
-        <nuxt-link to="/user">USERS</nuxt-link>
+        USERS
       </h1>
     </div>
     <div class="relative w-[71%]">
@@ -46,7 +46,7 @@
       />
       <DeleteAlertModal
         :isModal="isModal"
-        @handleSubmit="handleSubmit"
+        @handleSubmit="handleDelete"
         @close="closeModal"
       />
     </div>
@@ -117,7 +117,7 @@ export default {
     addUser() {
       this.$router.push("/user/add-user");
     },
-    async handleSubmit() {
+    async handleDelete() {
       try {
         const response = await this.deleteUser({ accountId: this.selectedId });
         this.$toast.open({

@@ -14,6 +14,10 @@ export default async (ctx, inject) => {
     }
     return number;
   };
+  const validatePrice = async (value) => {
+    let number = value.replace(/\D/g, "");
+    return number;
+  };
   const validateUserForm = async ({ form, isEdit = false }) => {
     const errors = {};
     const isEmpty = (value) => {
@@ -259,8 +263,87 @@ export default async (ctx, inject) => {
     return errors;
   };
 
+  const validateServices = async ({
+    form,
+    selectedModeOfTransportationLabel,
+  }) => {
+    const errors = [];
+
+    const isEmpty = (value) => {
+      return typeof value === "string" ? value.trim() === "" : !value;
+    };
+
+    const setError = (fieldName, message) => {
+      errors[fieldName] = message;
+    };
+    if (selectedModeOfTransportationLabel === "Select option") {
+      setError("selectedModeOfTransportationLabel", "Please select an option");
+    }
+    if (isEmpty(form.title)) {
+      setError("title", "title is required");
+    }
+    if (isEmpty(form.price)) {
+      setError("price", "price is required");
+    }
+
+    return errors;
+  };
+
+  const validatePortBridge = async ({ form }) => {
+    const errors = [];
+
+    const isEmpty = (value) => {
+      return typeof value === "string" ? value.trim() === "" : !value;
+    };
+
+    const setError = (fieldName, message) => {
+      errors[fieldName] = message;
+    };
+    if (isEmpty(form.post_bridge)) {
+      setError("post_bridge", "Post & Bridge is required");
+    }
+
+    form.requirements.forEach((item, index) => {
+      if (isEmpty(item.type)) {
+        setError(`type${index}`, "Type is required");
+      }
+      if (isEmpty(item.price)) {
+        setError(`price${index}`, "Price is required");
+      }
+    });
+
+    return errors;
+  };
+
+  const validateSecuringEquipment = async ({ form }) => {
+    const errors = [];
+
+    const isEmpty = (value) => {
+      return typeof value === "string" ? value.trim() === "" : !value;
+    };
+
+    const setError = (fieldName, message) => {
+      errors[fieldName] = message;
+    };
+    if (isEmpty(form.chains)) {
+      setError("chains", "chains is required");
+    }
+    if (isEmpty(form.tarps)) {
+      setError("tarps", "tarps is required");
+    }
+    if (isEmpty(form.straps)) {
+      setError("straps", "straps is required");
+    }
+
+    return errors;
+  };
+
   inject("validateUserForm", validateUserForm);
   inject("validateCarrierForm", validateCarrierForm);
   inject("validateBannerForm", validateBannerForm);
+  inject("validateServices", validateServices);
+  inject("validatePortBridge", validatePortBridge);
+  inject("validateSecuringEquipment", validateSecuringEquipment);
   inject("validateNumber", validateNumber);
+  inject("validatePrice", validatePrice);
 };

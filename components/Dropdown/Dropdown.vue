@@ -32,7 +32,7 @@
     <div
       v-if="isDropdown"
       v-click-outside="closeDropdown"
-      class="!z-[999] bg-white rounded-lg shadow-md xl:w-[382px] w-full dark:bg-gray-700"
+      class="!z-[999] bg-white rounded-lg shadow-md xl:w-[382px] w-full dark:bg-gray-700 absolute"
     >
       <ul class="text-sm text-gray-700 dark:text-gray-200 cursor-pointer mb-2">
         <li v-for="(item, index) in items" :key="index">
@@ -83,14 +83,14 @@ export default {
     },
     toggleDropdown() {
       this.isDropdown = !this.isDropdown;
-      if (this.isDropdown) {
-        this.$nextTick(() => {
-          this.$el.querySelector(".dropdown-list").scrollIntoView({
-            behavior: "smooth",
-            block: "start",
-          });
-        });
-      }
+      // if (this.isDropdown) {
+      //   this.$nextTick(() => {
+      //     this.$el.querySelector(".dropdown-list").scrollIntoView({
+      //       behavior: "smooth",
+      //       block: "start",
+      //     });
+      //   });
+      // }
     },
     selectItem(item) {
       this.isDropdown = false;

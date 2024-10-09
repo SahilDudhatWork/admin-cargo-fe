@@ -81,7 +81,6 @@ export const actions = {
         `v1/admin/operator/${accountId}`,
         payload
       );
-      console.log(accountId, "accountId");
       return response;
     } catch (error) {
       throw error;
