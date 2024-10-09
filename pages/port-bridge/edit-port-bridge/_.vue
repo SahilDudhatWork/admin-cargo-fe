@@ -49,11 +49,11 @@
                 <label
                   for="type"
                   class="block mb-2 text-sm font-normal text-[#4B4B4B]"
-                  >Type *
+                  >Requirement *
                 </label>
                 <input
                   type="text"
-                  placeholder="Your Type"
+                  placeholder="Your Requirement"
                   class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[14px] border border-gray-300"
                   v-model="formData.requirements[index].type"
                   :class="

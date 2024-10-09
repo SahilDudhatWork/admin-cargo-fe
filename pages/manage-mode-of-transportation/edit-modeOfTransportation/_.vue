@@ -29,6 +29,7 @@
               :selectedLabel="selectedModeOfTransportationLabel"
               @getValue="getModeOfTransportionValue"
               :errors="errors?.selectedModeOfTransportationLabel"
+              :isDisabled="true"
             />
             <span
               class="error-msg"
