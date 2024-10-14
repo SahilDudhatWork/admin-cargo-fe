@@ -17,7 +17,7 @@
         class="space-y-4 md:space-y-6 mt-6"
         @submit.prevent="addModeOfTransportation"
       >
-        <div class="flex gap-y-2 gap-5">
+        <div class="grid grid-cols-4 !gap-y-4 gap-5">
           <div>
             <label
               for="email"
@@ -36,66 +36,62 @@
               >{{ errors?.selectedModeOfTransportationLabel }}</span
             >
           </div>
-          <div class="flex flex-col gap-y-4">
-            <div class="grid grid-cols-3 !gap-y-4 gap-5">
-              <div>
-                <label
-                  for="title"
-                  class="block mb-2 text-sm font-normal text-[#4B4B4B]"
-                  >Title *</label
-                >
-                <input
-                  type="text"
-                  placeholder="Your Title"
-                  class="xl:w-[370px] text-gray-900 rounded-lg block w-full px-3 py-[17px]"
-                  v-model="modeOfTransportation.title"
-                  :class="
-                    errors?.title
-                      ? 'border border-red-600'
-                      : 'border border-gray-300'
-                  "
-                />
-                <span class="error-msg" v-if="errors?.title">{{
-                  errors?.title
-                }}</span>
-              </div>
+          <div>
+            <label
+              for="title"
+              class="block mb-2 text-sm font-normal text-[#4B4B4B]"
+              >Title *</label
+            >
+            <input
+              type="text"
+              placeholder="Your Title"
+              class="xl:w-[370px] text-gray-900 rounded-lg block w-full px-3 py-[17px]"
+              v-model="modeOfTransportation.title"
+              :class="
+                errors?.title
+                  ? 'border border-red-600'
+                  : 'border border-gray-300'
+              "
+            />
+            <span class="error-msg" v-if="errors?.title">{{
+              errors?.title
+            }}</span>
+          </div>
 
-              <div>
-                <label
-                  for="price"
-                  class="block mb-2 text-sm font-normal text-[#4B4B4B]"
-                  >Price *</label
-                >
-                <input
-                  type="text"
-                  placeholder="Your Price"
-                  class="xl:w-[370px] text-gray-900 rounded-lg block w-full px-3 py-[17px]"
-                  v-model="modeOfTransportation.price"
-                  @input="validatePriceInput($event)"
-                  :class="
-                    errors?.price
-                      ? 'border border-red-600'
-                      : 'border border-gray-300'
-                  "
-                />
-                <span class="error-msg" v-if="errors?.price">{{
-                  errors?.price
-                }}</span>
-              </div>
-              <div>
-                <label
-                  for="email"
-                  class="block mb-2 text-sm font-normal text-[#4B4B4B]"
-                  >Description
-                </label>
-                <input
-                  type="text"
-                  placeholder="Your Description"
-                  class="xl:w-[370px] text-gray-900 rounded-lg block w-full px-3 py-[17px] border border-gray-300"
-                  v-model="modeOfTransportation.description"
-                />
-              </div>
-            </div>
+          <div>
+            <label
+              for="price"
+              class="block mb-2 text-sm font-normal text-[#4B4B4B]"
+              >Price *</label
+            >
+            <input
+              type="text"
+              placeholder="Your Price"
+              class="xl:w-[370px] text-gray-900 rounded-lg block w-full px-3 py-[17px]"
+              v-model="modeOfTransportation.price"
+              @input="validatePriceInput($event)"
+              :class="
+                errors?.price
+                  ? 'border border-red-600'
+                  : 'border border-gray-300'
+              "
+            />
+            <span class="error-msg" v-if="errors?.price">{{
+              errors?.price
+            }}</span>
+          </div>
+          <div>
+            <label
+              for="email"
+              class="block mb-2 text-sm font-normal text-[#4B4B4B]"
+              >Description
+            </label>
+            <input
+              type="text"
+              placeholder="Your Description"
+              class="xl:w-[370px] text-gray-900 rounded-lg block w-full px-3 py-[17px] border border-gray-300"
+              v-model="modeOfTransportation.description"
+            />
           </div>
         </div>
         <div class="flex justify-center">

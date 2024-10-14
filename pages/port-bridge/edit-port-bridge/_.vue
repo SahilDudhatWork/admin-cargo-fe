@@ -15,7 +15,7 @@
         class="space-y-4 md:space-y-6 mt-6"
         @submit.prevent="editPortBridge"
       >
-        <div class="flex gap-4">
+        <div class="flex gap-[6rem]">
           <div>
             <div>
               <label
@@ -43,7 +43,7 @@
             <div
               v-for="(item, index) in formData?.requirements"
               :key="index"
-              class="grid grid-cols-3 !gap-y-4 gap-5"
+              class="grid grid-cols-3 !gap-y-4 gap-[14rem]"
             >
               <div>
                 <label

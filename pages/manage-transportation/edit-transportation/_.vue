@@ -15,7 +15,7 @@
         class="space-y-4 md:space-y-6 mt-6"
         @submit.prevent="editTransportation"
       >
-        <div class="grid grid-cols-4 !gap-y-4 gap-5">
+        <div class="grid grid-cols-3 !gap-y-4 gap-5">
           <div>
             <label
               for="title"

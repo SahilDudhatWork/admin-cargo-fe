@@ -5,7 +5,7 @@
         USERS
       </h1>
     </div>
-    <div class="relative w-[71%]">
+    <div class="relative">
       <img
         src="@/static/svg/search.svg"
         alt=""
@@ -25,7 +25,7 @@
       <OptionList
         labelText="User list"
         buttonText="Add User"
-        listWidth="88%"
+        listWidth="92%"
         @add="addUser"
       />
     </div>

@@ -9,7 +9,7 @@
       <OptionList
         labelText="Securing Equipment list"
         buttonText="Add Securing Equipment"
-        listWidth="70%"
+        listWidth="81%"
         @add="addsecuringEquipment"
       />
     </div>

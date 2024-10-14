@@ -9,7 +9,7 @@
         OPERATOR
       </h1>
     </div>
-    <div class="relative w-[71%]">
+    <div class="relative">
       <img
         src="@/static/svg/search.svg"
         alt=""
@@ -25,14 +25,7 @@
         @keyup="searchText"
       />
     </div>
-    <div>
-      <!-- <OptionList
-        labelText="Operator list"
-        buttonText="Add Operator"
-        listWidth="85%"
-        @add="addOperator"
-      /> -->
-    </div>
+    <div></div>
     <div class="mt-6">
       <OperatorActionButton @add="allActionButtons" />
     </div>

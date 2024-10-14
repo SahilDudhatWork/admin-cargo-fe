@@ -9,7 +9,7 @@
       <OptionList
         labelText="Service list"
         buttonText="Add Service"
-        listWidth="86%"
+        listWidth="90%"
         @add="addService"
       />
     </div>

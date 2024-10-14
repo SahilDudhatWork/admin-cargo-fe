@@ -9,7 +9,7 @@
         VEHICLE
       </h1>
     </div>
-    <div class="relative w-[71%]">
+    <div class="relative">
       <img
         src="@/static/svg/search.svg"
         alt=""
@@ -25,14 +25,7 @@
         @keyup="searchText"
       />
     </div>
-    <div>
-      <!-- <OptionList
-        labelText="Vehicle list"
-        buttonText="Add Vehicle"
-        listWidth="85%"
-        @add="addVehicle"
-      /> -->
-    </div>
+    <div></div>
     <div class="mt-6">
       <VehicleActionButton @add="allActionButtons" />
     </div>

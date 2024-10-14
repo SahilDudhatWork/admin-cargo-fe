@@ -20,6 +20,7 @@ export default {
   css: ["@/assets/css/tailwind.css", "@/assets/css/global.css"],
 
   plugins: [
+    { src: "~/plugins/vue-slick-carousel.js", mode: "client" },
     { src: "~/plugins/v-click-outside.js", mode: "client" },
     { src: "~/plugins/toast-notification.js", mode: "client" },
     "~/plugins/js-cookie.js",
@@ -27,6 +28,7 @@ export default {
     "~/plugins/validation.js",
     "~/plugins/downloadFile.js",
     "~/plugins/moment.js",
+    { src: "~/plugins/vue2-google-maps.js", ssr: false },
   ],
 
   components: [{ path: "~/components/", pathPrefix: false }],

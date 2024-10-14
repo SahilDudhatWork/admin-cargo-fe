@@ -12,7 +12,7 @@
       </div>
       <form class="space-y-4 md:space-y-6 mt-6" @submit.prevent="addBanner">
         <div class="w-full">
-          <div class="flex gap-8 gap-y-2">
+          <div class="flex gap-[5rem] gap-y-2">
             <div>
               <label
                 for="email"
@@ -33,7 +33,7 @@
               <div
                 v-for="(banner, index) in banner"
                 :key="index"
-                class="grid grid-cols-3 gap-y-4 gap-6"
+                class="grid grid-cols-3 gap-y-4 gap-[13rem]"
               >
                 <div>
                   <inputFile

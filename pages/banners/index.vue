@@ -9,20 +9,12 @@
       <OptionList
         labelText="Banner list"
         buttonText="Add Banner"
-        listWidth="87%"
+        listWidth="91%"
         @add="addBanner"
       />
     </div>
-    <!-- <div class="mt-6">
-      <BannersActionButton @add="allActionButtons" />
-    </div> -->
     <div>
       <BannerTable :allData="bannerData" @handleClick="editBanner" />
-      <!-- <DeleteAlertModal
-        :isModal="isModal"
-        @handleSubmit="handleDelete"
-        @close="closeModal"
-      /> -->
     </div>
   </div>
 </template>

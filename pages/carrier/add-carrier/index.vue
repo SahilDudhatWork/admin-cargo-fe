@@ -11,8 +11,8 @@
         </p>
       </div>
       <form class="space-y-4 md:space-y-6 mt-6" @submit.prevent="addCarrier">
-        <div class="w-[65%]">
-          <div class="grid grid-cols-2 gap-y-2">
+        <div>
+          <div class="grid grid-cols-3 gap-y-4">
             <div>
               <label
                 for="Company name"
@@ -69,7 +69,7 @@
                 type="email"
                 name="email"
                 id="email"
-                placeholder="Your Email Address"
+                placeholder="Your email address"
                 class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[14px]"
                 v-model="formData.email"
                 :class="
@@ -128,7 +128,7 @@
                     name="createPassword"
                     id="createPassword"
                     class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[13px]"
-                    placeholder="Type your email address"
+                    placeholder="Type your password"
                     v-model="formData.password"
                   />
                 </div>
@@ -377,145 +377,144 @@
             </div>
           </div>
 
-          <div
-            v-if="selectedLabel != 'Select option'"
-            class="grid grid-cols-2 mt-1"
-          >
+          <div v-if="selectedLabel != 'Select option'" class="mt-1">
             <div
               v-for="(reference, key) in formData.commercialReference"
               :key="key"
               class="grid gap-y-2"
             >
-              <div>
-                <h1 class="text-[#1E1E1E] font-medium text-base">
-                  Commercial Reference {{ key + 1 }}
-                </h1>
-                <label
-                  for="Company name"
-                  class="block mb-2 text-sm font-normal text-[#4B4B4B]"
-                  >Company name</label
-                >
-                <input
-                  :class="
-                    errors[`commercialReference[${key}].companyName`]
-                      ? 'border border-red-600'
-                      : 'border border-gray-300'
-                  "
-                  type="text"
-                  name="CompanyName"
-                  id="CompanyName"
-                  class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[14px]"
-                  placeholder="Your company name"
-                  v-model="reference.companyName"
-                />
-                <span
-                  class="error-msg"
-                  v-if="errors[`commercialReference[${key}].companyName`]"
-                >
-                  {{ errors[`commercialReference[${key}].companyName`] }}
-                </span>
-              </div>
-              <div>
-                <label
-                  for="ContactName"
-                  class="block mb-2 text-sm font-normal text-[#4B4B4B]"
-                  >Contact name</label
-                >
-                <input
-                  type="text"
-                  :class="
-                    errors[`commercialReference[${key}].contactName`]
-                      ? 'border border-red-600'
-                      : 'border border-gray-300'
-                  "
-                  name="ContactName"
-                  id="ContactName"
-                  placeholder="Your contact name"
-                  class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[14px]"
-                  v-model="reference.contactName"
-                />
-                <span
-                  class="error-msg"
-                  v-if="errors[`commercialReference[${key}].contactName`]"
-                >
-                  {{ errors[`commercialReference[${key}].contactName`] }}
-                </span>
-              </div>
-              <div>
-                <label
-                  for="email"
-                  class="block mb-2 text-sm font-normal text-[#4B4B4B]"
-                  >Email Address</label
-                >
-                <input
-                  type="email"
-                  :class="
-                    errors[`commercialReference[${key}].emailAddress`]
-                      ? 'border border-red-600'
-                      : 'border border-gray-300'
-                  "
-                  name="email"
-                  id="email"
-                  placeholder="Your Email Address"
-                  class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[14px]"
-                  v-model="reference.emailAddress"
-                />
-                <span
-                  class="error-msg"
-                  v-if="errors[`commercialReference[${key}].emailAddress`]"
-                >
-                  {{ errors[`commercialReference[${key}].emailAddress`] }}
-                </span>
-              </div>
-              <div>
-                <label
-                  for="ContactNo"
-                  class="block mb-2 text-sm font-normal text-[#4B4B4B]"
-                  >Contact No.</label
-                >
-                <label
-                  class="xl:w-[382px] relative flex cursor-pointer flex-col"
-                >
-                  <div class="flex justify-between">
-                    <CountryDropdown
-                      :items="countries"
-                      :selectedLabel="reference?.countryCode"
-                      @getValue="
-                        (value) => getReferenceCountry(value, reference)
-                      "
-                      class="absolute mb-3 mr-4"
-                    />
-                    <div
-                      class="border-r border-gray-400 h-[40%] absolute left-20 top-4"
-                    ></div>
-                    <input
-                      type="text"
-                      name="ContactNo"
-                      :class="
-                        errors[`commercialReference[${key}].contactNo`]
-                          ? 'border border-red-600'
-                          : 'border border-gray-300'
-                      "
-                      id="ContactNo"
-                      placeholder="Your Contact No."
-                      class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[15px] bg-white pl-24 focus:outline-none mb-3"
-                      v-model="reference.contactNo"
-                      @input="validateReferrenceInput(reference)"
-                    />
-                  </div>
+              <div class="grid grid-cols-3 gap-y-4">
+                <div>
+                  <h1 class="text-[#1E1E1E] font-medium text-base">
+                    Commercial Reference {{ key + 1 }}
+                  </h1>
+                  <label
+                    for="Company name"
+                    class="block mb-2 text-sm font-normal text-[#4B4B4B]"
+                    >Company name</label
+                  >
+                  <input
+                    :class="
+                      errors[`commercialReference[${key}].companyName`]
+                        ? 'border border-red-600'
+                        : 'border border-gray-300'
+                    "
+                    type="text"
+                    name="CompanyName"
+                    id="CompanyName"
+                    class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[14px]"
+                    placeholder="Your company name"
+                    v-model="reference.companyName"
+                  />
                   <span
                     class="error-msg"
-                    v-if="errors[`commercialReference[${key}].contactNo`]"
+                    v-if="errors[`commercialReference[${key}].companyName`]"
                   >
-                    {{ errors[`commercialReference[${key}].contactNo`] }}
+                    {{ errors[`commercialReference[${key}].companyName`] }}
                   </span>
-                </label>
+                </div>
+                <div>
+                  <label
+                    for="ContactName"
+                    class="block mb-2 text-sm font-normal text-[#4B4B4B]"
+                    >Contact name</label
+                  >
+                  <input
+                    type="text"
+                    :class="
+                      errors[`commercialReference[${key}].contactName`]
+                        ? 'border border-red-600'
+                        : 'border border-gray-300'
+                    "
+                    name="ContactName"
+                    id="ContactName"
+                    placeholder="Your contact name"
+                    class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[14px]"
+                    v-model="reference.contactName"
+                  />
+                  <span
+                    class="error-msg"
+                    v-if="errors[`commercialReference[${key}].contactName`]"
+                  >
+                    {{ errors[`commercialReference[${key}].contactName`] }}
+                  </span>
+                </div>
+                <div>
+                  <label
+                    for="email"
+                    class="block mb-2 text-sm font-normal text-[#4B4B4B]"
+                    >Email Address</label
+                  >
+                  <input
+                    type="email"
+                    :class="
+                      errors[`commercialReference[${key}].emailAddress`]
+                        ? 'border border-red-600'
+                        : 'border border-gray-300'
+                    "
+                    name="email"
+                    id="email"
+                    placeholder="Your Email Address"
+                    class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[14px]"
+                    v-model="reference.emailAddress"
+                  />
+                  <span
+                    class="error-msg"
+                    v-if="errors[`commercialReference[${key}].emailAddress`]"
+                  >
+                    {{ errors[`commercialReference[${key}].emailAddress`] }}
+                  </span>
+                </div>
+                <div>
+                  <label
+                    for="ContactNo"
+                    class="block mb-2 text-sm font-normal text-[#4B4B4B]"
+                    >Contact No.</label
+                  >
+                  <label
+                    class="xl:w-[382px] relative flex cursor-pointer flex-col"
+                  >
+                    <div class="flex justify-between">
+                      <CountryDropdown
+                        :items="countries"
+                        :selectedLabel="reference?.countryCode"
+                        @getValue="
+                          (value) => getReferenceCountry(value, reference)
+                        "
+                        class="absolute mb-3 mr-4"
+                      />
+                      <div
+                        class="border-r border-gray-400 h-[40%] absolute left-20 top-4"
+                      ></div>
+                      <input
+                        type="text"
+                        name="ContactNo"
+                        :class="
+                          errors[`commercialReference[${key}].contactNo`]
+                            ? 'border border-red-600'
+                            : 'border border-gray-300'
+                        "
+                        id="ContactNo"
+                        placeholder="Your Contact No."
+                        class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[15px] bg-white pl-24 focus:outline-none mb-3"
+                        v-model="reference.contactNo"
+                        @input="validateReferrenceInput(reference)"
+                      />
+                    </div>
+                    <span
+                      class="error-msg"
+                      v-if="errors[`commercialReference[${key}].contactNo`]"
+                    >
+                      {{ errors[`commercialReference[${key}].contactNo`] }}
+                    </span>
+                  </label>
+                </div>
               </div>
             </div>
           </div>
           <div class="flex justify-center mt-4">
             <button
-              class="mb-5 w-[20%] text-white bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] font-medium rounded-lg text-[16px] px-5 py-[15px] text-center"
+              class="mb-5 text-white bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] font-medium rounded-lg text-[16px] px-5 py-[15px] text-center"
             >
               Add Carrier
             </button>

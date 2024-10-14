@@ -338,6 +338,10 @@ export default {
               name: "Securing Equipment",
               href: "/securing-equipment",
             },
+            {
+              name: "Manage Area",
+              href: "/manage-area",
+            },
           ],
         },
         {

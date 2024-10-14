@@ -5,7 +5,7 @@
         CARRIER
       </h1>
     </div>
-    <div class="relative w-[71%]">
+    <div class="relative">
       <img
         src="@/static/svg/search.svg"
         alt=""
@@ -15,7 +15,7 @@
         type="text"
         name="search"
         id="search"
-        placeholder="Search by user name/ID"
+        placeholder="Search by carrier name/ID"
         class="border border-gray-300 text-gray-900 rounded-lg block px-3 py-[14px] focus:outline-none mb-4 w-full"
         v-model="search"
         @keyup="searchText"
@@ -25,7 +25,7 @@
       <OptionList
         labelText="Carrier list"
         buttonText="Add Carrier"
-        listWidth="86%"
+        listWidth="91%"
         @add="addCarrier"
       />
     </div>

@@ -7,7 +7,7 @@
         </h1>
         <img src="@/static/svg/right-arrow.svg" alt="" />
         <p class="text-[#1E1E1E] font-normal text-[12px] cursor-pointer">
-          ADD SECURING EQUIPMENT
+          EDIT SECURING EQUIPMENT
         </p>
       </div>
 
@@ -15,7 +15,7 @@
         class="space-y-4 md:space-y-6 mt-6"
         @submit.prevent="addSecuringEquipment"
       >
-        <div class="grid grid-cols-4 !gap-y-4 gap-5">
+        <div class="grid grid-cols-3 !gap-y-4 gap-5">
           <div>
             <label
               for="chains"

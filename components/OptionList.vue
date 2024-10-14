@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex justify-between w-[71%] items-center">
+    <div class="flex justify-between items-center">
       <p class="text-sm text-[#151515] font-normal">{{ labelText }}</p>
       <div
         class="h-full mx-1 border border-[#E6E6E6]"

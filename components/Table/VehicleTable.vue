@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="mt-6">
-      <div class="relative overflow-x-auto w-[71%]">
+      <div class="relative overflow-x-auto">
         <table class="w-full text-left rtl:text-right">
           <thead class="bg-[#F4F4F4]">
             <tr>

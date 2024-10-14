@@ -338,6 +338,46 @@ export default async (ctx, inject) => {
     return errors;
   };
 
+  const validateServicesModal = async ({ form, fieldsToValidate }) => {
+    const errors = [];
+    const isEmpty = (value) => {
+      return typeof value === null || value === "string"
+        ? value.trim() === ""
+        : !value;
+    };
+
+    const setError = (fieldName, message) => {
+      errors[fieldName] = message;
+    };
+
+    const validateField = (field, fieldName, errorLabel) => {
+      if (isEmpty(field)) {
+        setError(`${fieldName}`, `${errorLabel} is required`);
+      }
+    };
+    if (fieldsToValidate.includes("selectedCarrierReference")) {
+      validateField(
+        form.selectedCarrierReference,
+        "selectedCarrierReference",
+        "Please select an option"
+      );
+    }
+    if (fieldsToValidate.includes("selectedOperator")) {
+      validateField(
+        form.selectedOperator,
+        "selectedOperator",
+        "selectedOperator"
+      );
+    }
+    if (fieldsToValidate.includes("selectedVehicle")) {
+      validateField(form.selectedVehicle, "selectedVehicle", "selectedVehicle");
+    }
+    if (fieldsToValidate.includes("selectedCarrier")) {
+      validateField(form.selectedCarrier, "selectedCarrier", "selectedCarrier");
+    }
+    return errors;
+  };
+
   inject("validateUserForm", validateUserForm);
   inject("validateCarrierForm", validateCarrierForm);
   inject("validateBannerForm", validateBannerForm);
@@ -346,4 +386,5 @@ export default async (ctx, inject) => {
   inject("validateSecuringEquipment", validateSecuringEquipment);
   inject("validateNumber", validateNumber);
   inject("validatePrice", validatePrice);
+  inject("validateServicesModal", validateServicesModal);
 };

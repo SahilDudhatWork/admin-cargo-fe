@@ -9,7 +9,7 @@
       <OptionList
         labelText="Mode Of Transportation list"
         buttonText="Add Mode Of Transportation"
-        listWidth="70%"
+        listWidth="78%"
         @add="addModeOfTransportation"
       />
     </div>

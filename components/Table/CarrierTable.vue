@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="mt-6">
-      <div class="relative overflow-x-auto w-[71%]">
+      <div class="relative overflow-x-auto">
         <table class="w-full text-left rtl:text-right">
           <thead class="bg-[#F4F4F4]">
             <tr>
@@ -15,7 +15,7 @@
                 scope="col"
                 class="px-6 py-3 text-[#000000] font-normal text-[12px]"
               >
-                User ID
+                Carrier ID
               </th>
               <!-- <th
                 scope="col"
@@ -27,7 +27,7 @@
                 scope="col"
                 class="px-6 py-3 text-[#000000] font-normal text-[12px]"
               >
-                User Info
+                Carrier Info
               </th>
               <th
                 scope="col"
@@ -114,7 +114,7 @@
                   src="@/static/svg/edit-icon.svg"
                   alt=""
                   class="w-[17px] h-[17px] mt-6"
-                  @click="editUser(item)"
+                  @click="editCarrier(item)"
                 />
                 <img
                   src="@/static/svg/delete-icon.svg"
@@ -269,7 +269,7 @@ export default {
     }),
   },
   methods: {
-    editUser(item) {
+    editCarrier(item) {
       this.$emit("handleClick", item);
     },
     async handleVerify(item) {

@@ -119,6 +119,17 @@ export const actions = {
       throw error;
     }
   },
+  async fetchCarrierReferences(ctx, payload) {
+    try {
+      const response = await $axios.get(
+        `/v1/admin/module/references/carrier/${payload.carrierAccountId}`,
+        payload
+      );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  },
   //   async userAddToBlock(ctx, payload) {
   //     try {
   //       ctx.commit("toggleBlock", payload);

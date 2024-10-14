@@ -9,7 +9,7 @@
       <OptionList
         labelText="Port & Bridge list"
         buttonText="Add Port & Bridge"
-        listWidth="80%"
+        listWidth="86%"
         @add="addPortBridge"
       />
     </div>
