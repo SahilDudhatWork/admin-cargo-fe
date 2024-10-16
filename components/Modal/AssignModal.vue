@@ -28,8 +28,14 @@
             </button>
             <button
               type="submit"
+              :disabled="isDisabled || !isSelected"
               @click="$emit('handleAssign')"
-              class="text-white bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] font-medium rounded-lg text-[20px] w-[120px] py-[7px] text-center focus:outline-none"
+              :class="
+                isDisabled || !isSelected
+                  ? 'bg-[#82b5d4] cursor-not-allowed'
+                  : 'bg-gradient-to-r from-[#0464CB] to-[#2AA1EB]'
+              "
+              class="text-white font-medium rounded-lg text-[20px] w-[120px] py-[7px] text-center focus:outline-none"
             >
               {{ buttonText }}
             </button>
@@ -43,6 +49,14 @@
 <script>
 export default {
   props: {
+    isDisabled: {
+      type: Boolean,
+      default: false,
+    },
+    isSelected: {
+      type: Object,
+      default: false,
+    },
     isModal: {
       type: Boolean,
       required: true,

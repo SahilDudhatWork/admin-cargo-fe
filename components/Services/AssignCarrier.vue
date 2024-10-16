@@ -17,6 +17,19 @@
               <h1 class="text-[#1E1E1E] font-medium text-sm">
                 {{ allCarrierData?.contactName }}
               </h1>
+              <div>
+                <h1
+                  @click.stop="$emit('handleVerify', allCarrierData)"
+                  :class="
+                    allCarrierData?.verifyByAdmin
+                      ? 'bg-[#3ECC48]'
+                      : 'bg-[#D1D1D1]'
+                  "
+                  class="text-[#FEFEFE] font-medium text-[10px] px-2.5 rounded py-[1px]"
+                >
+                  {{ allCarrierData?.verifyByAdmin ? "Verified" : "Verify" }}
+                </h1>
+              </div>
             </div>
             <p class="text-[#414141] font-light text-xs">
               {{ allCarrierData?.email }}

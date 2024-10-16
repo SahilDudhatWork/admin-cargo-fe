@@ -21,7 +21,7 @@
               <label
                 for="title"
                 class="block mb-2 text-sm font-normal text-[#4B4B4B]"
-                >Post & Bridge *</label
+                >Port & Bridge *</label
               >
               <input
                 type="text"

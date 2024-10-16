@@ -110,6 +110,14 @@ export default {
     },
     async addArea() {
       try {
+        this.errors = await this.$validateAreaPrice({ form: this.area });
+        if (Object.keys(this.errors).length > 0) {
+          this.$toast.open({
+            message: "Please fix the errors before submitting.",
+            type: "error",
+          });
+          return;
+        }
         let data = {
           price: this.area.price,
           coordinates: this.area.coordinates.map((location) => [

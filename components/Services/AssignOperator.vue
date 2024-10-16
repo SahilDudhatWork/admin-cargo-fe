@@ -35,9 +35,6 @@
               </div>
             </div>
             <p class="text-[#414141] font-light text-xs">
-              louisvenom07@example.work
-            </p>
-            <p class="text-[#414141] font-light text-xs">
               + {{ allOperatorData?.countryCode }}
               {{ allOperatorData?.operatorNumber }}
             </p>

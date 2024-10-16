@@ -32,6 +32,7 @@
         @prevPage="prevPage"
         @nextPage="nextPage"
         @lastPage="lastPage"
+        :sortBy="sortBy"
         @handleSeeMoreClick="handleSeeMoreClick"
         :servicesPaginationData="servicesPaginationData"
       />

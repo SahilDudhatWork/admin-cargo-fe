@@ -35,7 +35,7 @@
               >
                 User Info
               </th>
-              <template v-if="isPending">
+              <template v-if="sortBy === 'Pending'">
                 <th
                   scope="col"
                   class="ml-6 pr-6 py-3 text-[#000000] font-normal text-[12px]"
@@ -43,7 +43,7 @@
                   Actions
                 </th>
               </template>
-              <template v-else>
+              <template v-if="sortBy !== 'Pending'">
                 <th
                   scope="col"
                   class="ml-6 pr-6 py-3 text-[#000000] font-normal text-[12px]"
@@ -271,108 +271,35 @@
       </div>
     </div>
     <div>
-      <AssignModal
-        :isModal="isAssignCarrierModal"
-        @handleAssign="handleAssignCarrier"
-        @close="closeAssignCarrierModal"
-        :buttonText="'Next'"
-      >
-        <template #content>
-          <div>
-            <h1 class="font-semibold text-lg text-[#3683D5]">Assign Carrier</h1>
-            <div
-              class="mt-5 grid grid-cols-2 gap-y-5 overflow-y-auto h-[480px]"
-            >
-              <AssignCarrier
-                v-for="item in filteredCarrierData"
-                :key="item._id"
-                :allCarrierData="item"
-                :isSelected="
-                  selectedCarrier && selectedCarrier._id === item._id
-                "
-                @selectCarrier="selectCarrier(item)"
-              />
-            </div>
-          </div>
-        </template>
-      </AssignModal>
-      <AssignModal
-        :isModal="isAssignOperatorModal"
-        @handleAssign="handleAssignOperator"
-        @close="closeAssignOperatorModal"
-        :buttonText="'Next'"
-        @backAssign="backAssignOperator"
-        :isBackAssign="true"
-      >
-        <template #content>
-          <div>
-            <div class="mb-3">
-              <label
-                for="email"
-                class="block mb-1 text-sm font-medium text-[#3683D5]"
-                >Carrier Reference</label
-              >
-              <Dropdown
-                :items="formatRef"
-                :selectedLabel="selectedCarrierReference?.label || ''"
-                @getValue="getCarrierReferenceValue"
-                :errors="errors?.selectedCarrierReference"
-              />
-              <span class="error-msg" v-if="errors?.selectedCarrierReference">{{
-                errors?.selectedCarrierReference
-              }}</span>
-            </div>
-            <h1 class="font-semibold text-lg text-[#3683D5]">
-              Assign Operator
-            </h1>
-            <div
-              class="mt-5 grid grid-cols-2 gap-y-5 overflow-y-auto h-[480px]"
-            >
-              <AssignOperator
-                v-for="item in allOperatorData"
-                :key="item._id"
-                :allOperatorData="item"
-                :isSelected="
-                  selectedOperator && selectedOperator._id === item._id
-                "
-                @selectOperator="selectOperator(item)"
-              />
-            </div>
-          </div>
-        </template>
-      </AssignModal>
-      <AssignModal
-        :isModal="isAssignVehicleModal"
-        @handleAssign="handleAssignVehicle"
-        @close="closeAssignVehicleModal"
-        @backAssign="backAssignVehicle"
-        :isBackAssign="true"
-      >
-        <template #content>
-          <div>
-            <h1 class="font-semibold text-lg text-[#3683D5]">Assign Vehicle</h1>
-            <div
-              class="mt-5 grid grid-cols-2 gap-y-5 overflow-y-auto h-[480px]"
-            >
-              <AssignVehicle
-                v-for="item in allVehicleData"
-                :key="item._id"
-                :allVehicleData="item"
-                :isSelected="
-                  selectedVehicle && selectedVehicle._id === item._id
-                "
-                @selectVehicle="selectVehicle(item)"
-              />
-            </div>
-          </div>
-        </template>
-      </AssignModal>
+      <CarrierAssignModal
+        v-if="isAssignCarrierModal"
+        :isAssignCarrierModal="isAssignCarrierModal"
+        @handleAssignCarrier="handleAssignCarrier"
+        @closeAssignCarrierModal="closeAssignCarrierModal"
+      />
+      <OperatorAssignModal
+        v-if="isAssignOperatorModal"
+        :isAssignOperatorModal="isAssignOperatorModal"
+        @handleAssignOperator="handleAssignOperator"
+        @closeAssignOperatorModal="closeAssignOperatorModal"
+        @backAssignOperator="backAssignOperator"
+        :selectedCarrirId="selectedCarrirId"
+        :errors="errors"
+      />
+      <VehicleAssignModal
+        v-if="isAssignVehicleModal"
+        :isAssignVehicleModal="isAssignVehicleModal"
+        @handleAssignVehicle="handleAssignVehicle"
+        @closeAssignVehicleModal="closeAssignVehicleModal"
+        @backAssignVehicle="backAssignVehicle"
+        :selectedCarrirId="selectedCarrirId"
+      />
     </div>
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   props: {
@@ -388,43 +315,20 @@ export default {
       type: String,
       default: "",
     },
+    sortBy: {
+      type: String,
+      default: "Pending",
+    },
   },
   data() {
     return {
       isAssignOperatorModal: false,
       isAssignVehicleModal: false,
       isAssignCarrierModal: false,
-      selectedOperator: null,
-      selectedCarrier: null,
-      selectedVehicle: null,
-      selectedCarrierReference: "",
       errors: {},
-      carrierReferenceData: [],
     };
   },
   computed: {
-    ...mapGetters({
-      allOperatorData: "operator/getAllOperatorData",
-      allVehicleData: "vehicle/getAllVehicleData",
-      allCarrierData: "carrier/getAllCarrierData",
-      profileData: "auth/getUserProfile",
-    }),
-    filteredCarrierData() {
-      return this.allCarrierData?.filter(
-        (carrier) => carrier.verifyByAdmin === true
-      );
-    },
-    formatRef() {
-      return this.carrierReferenceData?.map((user) => {
-        return {
-          key: user._id,
-          label: user?.contactName,
-        };
-      });
-    },
-    isPending() {
-      return this.allData.some((item) => item.status === "Pending");
-    },
     formatStatus() {
       return (item) => {
         if (!item) return "";
@@ -443,43 +347,24 @@ export default {
   },
   methods: {
     ...mapActions({
-      fetchAllOperator: "operator/fetchAllOperator",
-      fetchAllCarrier: "carrier/fetchAllCarrier",
-      fetchAllVehicle: "vehicle/fetchAllVehicle",
       updateService: "services/updateService",
-      fetchCarrierReferences: "carrier/fetchCarrierReferences",
     }),
-    prevPage() {
-      if (this.currentPage > 1) {
-        this.currentPage--;
-      }
+
+    generateCarrierPaginationText(pagination) {
+      const { current_page, limit, total } = pagination;
+
+      const start = (current_page - 1) * limit + 1;
+      const end = Math.min(current_page * limit, total);
+      return `${start}-${end} of ${total}`;
     },
-    nextPage() {
-      if (this.currentPage < this.totalPages) {
-        this.currentPage++;
-      }
-    },
+
     async acceptRequest(id) {
       this.movementId = id;
       this.isAssignCarrierModal = true;
-      await this.getAllCarrier();
       this.selectedCarrier = null;
       this.selectedCarrierReference = null;
       this.selectedOperator = null;
       this.selectedVehicle = null;
-    },
-    getCarrierReferenceValue(item) {
-      this.selectedCarrierReference = item;
-    },
-    selectCarrier(carrier) {
-      this.selectedCarrier = carrier;
-      this.selectedCarrirId = this.selectedCarrier?.accountId;
-    },
-    selectOperator(operator) {
-      this.selectedOperator = operator;
-    },
-    selectVehicle(vehicle) {
-      this.selectedVehicle = vehicle;
     },
     closeAssignCarrierModal() {
       this.isAssignCarrierModal = false;
@@ -496,15 +381,15 @@ export default {
     async backAssignVehicle() {
       this.isAssignOperatorModal = true;
       this.isAssignVehicleModal = false;
-      await this.getAllOperator();
     },
     async backAssignOperator() {
       this.isAssignCarrierModal = true;
       this.isAssignOperatorModal = false;
-      await this.getAllCarrier();
     },
-    async handleAssignCarrier() {
+    async handleAssignCarrier(item) {
       try {
+        this.selectedCarrier = item;
+        this.selectedCarrirId = this.selectedCarrier?.accountId;
         const form = {
           selectedCarrier: this.selectedCarrier,
         };
@@ -521,14 +406,14 @@ export default {
         }
         this.isAssignCarrierModal = false;
         this.isAssignOperatorModal = true;
-        await this.getAllOperator();
-        await this.getCarrierReference();
       } catch (error) {
         console.log(error);
       }
     },
-    async handleAssignOperator() {
+    async handleAssignOperator(selectedOperator, selectedCarrierReference) {
       try {
+        this.selectedCarrierReference = selectedCarrierReference;
+        this.selectedOperator = selectedOperator;
         const form = {
           selectedCarrierReference: this.selectedCarrierReference,
           selectedOperator: this.selectedOperator,
@@ -552,13 +437,13 @@ export default {
         }
         this.isAssignVehicleModal = true;
         this.isAssignOperatorModal = false;
-        await this.getAllVehicle();
       } catch (error) {
         console.log(error);
       }
     },
-    async handleAssignVehicle() {
+    async handleAssignVehicle(selectedVehicle) {
       try {
+        this.selectedVehicle = selectedVehicle;
         const form = {
           selectedVehicle: this.selectedVehicle,
         };
@@ -601,39 +486,6 @@ export default {
           message: error?.response?.data?.msg || this.$i18n.t("errorMessage"),
           type: "error",
         });
-      }
-    },
-    async getAllOperator() {
-      try {
-        await this.fetchAllOperator({
-          carrierAccountId: this.selectedCarrirId,
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    async getAllVehicle() {
-      try {
-        await this.fetchAllVehicle({ carrierAccountId: this.selectedCarrirId });
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    async getCarrierReference() {
-      try {
-        const res = await this.fetchCarrierReferences({
-          carrierAccountId: this.selectedCarrirId,
-        });
-        this.carrierReferenceData = res?.data;
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    async getAllCarrier() {
-      try {
-        await this.fetchAllCarrier();
-      } catch (error) {
-        console.log(error);
       }
     },
   },

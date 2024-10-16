@@ -129,7 +129,7 @@ export default {
     },
     async prevPage() {
       try {
-        const res = await this.getAllCarrier({
+        await this.getAllCarrier({
           sortBy: this.sortBy,
           keyWord: this.search,
           page: this.carrierPaginationData.current_page - 1,
@@ -145,7 +145,7 @@ export default {
     },
     async nextPage() {
       try {
-        const res = await this.getAllCarrier({
+        await this.getAllCarrier({
           sortBy: this.sortBy,
           keyWord: this.search,
           page: this.carrierPaginationData.current_page + 1,
@@ -161,7 +161,7 @@ export default {
     },
     async firstPage() {
       try {
-        const res = await this.getAllCarrier({
+        await this.getAllCarrier({
           sortBy: this.sortBy,
           keyWord: this.search,
           page: 1,
@@ -177,7 +177,7 @@ export default {
     },
     async lastPage() {
       try {
-        const res = await this.getAllCarrier({
+        await this.getAllCarrier({
           sortBy: this.sortBy,
           keyWord: this.search,
           page: this.carrierPaginationData?.total_page,
@@ -254,7 +254,7 @@ export default {
   },
   async mounted() {
     try {
-      const res = await this.getAllCarrier({
+      await this.getAllCarrier({
         sortBy: this.sortBy,
         keyWord: this.search,
       });

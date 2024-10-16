@@ -112,6 +112,14 @@ export default {
     },
     async editArea() {
       try {
+        this.errors = await this.$validateAreaPrice({ form: this.area });
+        if (Object.keys(this.errors).length > 0) {
+          this.$toast.open({
+            message: "Please fix the errors before submitting.",
+            type: "error",
+          });
+          return;
+        }
         let data = {
           id: this.areaId,
           price: this.area.price,

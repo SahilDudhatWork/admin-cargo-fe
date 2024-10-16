@@ -378,6 +378,21 @@ export default async (ctx, inject) => {
     return errors;
   };
 
+  const validateAreaPrice = async ({ form }) => {
+    const errors = [];
+    const isEmpty = (value) => {
+      return typeof value === "string" ? value.trim() === "" : !value;
+    };
+
+    const setError = (fieldName, message) => {
+      errors[fieldName] = message;
+    };
+    if (isEmpty(form.price)) {
+      setError("price", "Price is required");
+    }
+    return errors;
+  };
+
   inject("validateUserForm", validateUserForm);
   inject("validateCarrierForm", validateCarrierForm);
   inject("validateBannerForm", validateBannerForm);
@@ -386,5 +401,6 @@ export default async (ctx, inject) => {
   inject("validateSecuringEquipment", validateSecuringEquipment);
   inject("validateNumber", validateNumber);
   inject("validatePrice", validatePrice);
+  inject("validateAreaPrice", validateAreaPrice);
   inject("validateServicesModal", validateServicesModal);
 };

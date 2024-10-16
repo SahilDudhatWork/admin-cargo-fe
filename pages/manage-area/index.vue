@@ -9,7 +9,7 @@
       <OptionList
         labelText="Area list"
         buttonText="Add Area"
-        listWidth="86%"
+        listWidth="92%"
         @add="addArea"
       />
     </div>
@@ -18,6 +18,12 @@
         :allData="allArea"
         @deleteItem="deleteAreaConfirm"
         @handleClick="editArea"
+        :paginationText="paginationText"
+        :areaPaginationData="areaPaginationData"
+        @firstPage="firstPage"
+        @prevPage="prevPage"
+        @nextPage="nextPage"
+        @lastPage="lastPage"
       />
       <DeleteAlertModal
         :isModal="isModal"
@@ -36,14 +42,28 @@ export default {
     return {
       isModal: false,
       allArea: [],
+      areaPaginationData: {},
       selectedId: "",
     };
+  },
+  computed: {
+    paginationText() {
+      return this.generatePaginationText(this.areaPaginationData);
+    },
   },
   methods: {
     ...mapActions({
       fetchAreas: "coordinate/fetchAreas",
       deleteArea: "coordinate/deleteArea",
     }),
+    generatePaginationText(pagination) {
+      const { current_page, limit, total } = pagination;
+
+      const start = (current_page - 1) * limit + 1;
+      const end = Math.min(current_page * limit, total);
+
+      return `${start}-${end} of ${total}`;
+    },
     editArea(id) {
       this.$router.push(`manage-area/edit-area/${id}`);
     },
@@ -75,17 +95,88 @@ export default {
       this.isModal = true;
       this.selectedId = id;
     },
-    async getAreas() {
+    async getAreas(payload = {}) {
       try {
-        const res = await this.fetchAreas();
-        this.allArea = res?.data.response;
+        let { page, limit } = payload;
+        page = page || 1;
+        limit = limit || 10;
+        const res = await this.fetchAreas({
+          page: page,
+          limit: limit,
+        });
+        this.allArea = res.data.response;
+        this.areaPaginationData = res.data.pagination;
       } catch (error) {
         console.log(error);
       }
     },
+    async prevPage() {
+      try {
+        await this.getAreas({
+          page: this.areaPaginationData.current_page - 1,
+          limit: this.areaPaginationData.limit,
+        });
+      } catch (error) {
+        console.log(error);
+        this.$toast.open({
+          message: error?.response?.data?.msg || this.$i18n.t("errorMessage"),
+          type: "error",
+        });
+      }
+    },
+    async nextPage() {
+      try {
+        await this.getAreas({
+          page: this.areaPaginationData.current_page + 1,
+          limit: this.areaPaginationData.limit,
+        });
+      } catch (error) {
+        console.log(error);
+        this.$toast.open({
+          message: error?.response?.data?.msg || this.$i18n.t("errorMessage"),
+          type: "error",
+        });
+      }
+    },
+    async firstPage() {
+      try {
+        await this.getAreas({
+          page: 1,
+          limit: this.areaPaginationData.limit,
+        });
+      } catch (error) {
+        console.log(error);
+        this.$toast.open({
+          message: error?.response?.data?.msg || this.$i18n.t("errorMessage"),
+          type: "error",
+        });
+      }
+    },
+    async lastPage() {
+      try {
+        await this.getAreas({
+          page: this.areaPaginationData?.total_page,
+          limit: this.areaPaginationData.limit,
+        });
+      } catch (error) {
+        console.log(error);
+        this.$toast.open({
+          message: error?.response?.data?.msg || this.$i18n.t("errorMessage"),
+          type: "error",
+        });
+      }
+    },
   },
   async mounted() {
-    await this.getAreas();
+    try {
+      await this.getAreas();
+    } catch (error) {
+      console.log(error);
+      this.$toast.open({
+        message: error?.response?.data?.msg || this.$i18n.t("errorMessage"),
+        type: "error",
+      });
+    }
   },
 };
 </script>
