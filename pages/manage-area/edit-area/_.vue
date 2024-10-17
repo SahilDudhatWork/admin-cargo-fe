@@ -44,7 +44,7 @@
           @click="editArea"
           class="text-white bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] font-medium rounded-lg text-[16px] px-8 py-[15px] text-center mt-8 mr-40"
         >
-          Edit Area
+          Update Area
         </button>
       </div>
     </div>

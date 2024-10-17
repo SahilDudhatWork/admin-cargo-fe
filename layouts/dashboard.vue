@@ -119,7 +119,7 @@
             </div>
             <div class="flex justify-center mt-12 sidebar">
               <ul
-                class="flex flex-col text-white text-xl font-medium cursor-pointer w-full list-none"
+                class="flex flex-col text-white text-xl font-medium cursor-pointer w-full list-none relative"
               >
                 <li
                   v-for="(tab, key) in sideBarItems"
@@ -134,13 +134,17 @@
                   <Nuxt-link
                     v-if="!tab.subItems"
                     :to="tab.href"
-                    class="flex items-center gap-2 ml-5 py-[20px]"
+                    class="flex items-center gap-2 ml-5 py-[20px] relative group"
                   >
                     <img
                       :src="previousPath == tab.href ? tab.svg : tab.blackSvg"
                       alt=""
                     />
-
+                    <div v-if="!isShow" :class="['tooltip', 'visible-tooltip']">
+                      <span>
+                        {{ tab?.name }}
+                      </span>
+                    </div>
                     <span
                       v-if="isShow"
                       class="flex gap-4 font-medium text-sm"
@@ -154,7 +158,7 @@
                   </Nuxt-link>
                   <div
                     v-if="tab.subItems"
-                    class="flex items-center gap-2 ml-5 py-[20px]"
+                    class="flex items-center gap-2 ml-5 py-[20px] group"
                   >
                     <img
                       :src="
@@ -169,23 +173,46 @@
                     />
                     <div class="flex gap-10 items-center">
                       <span
+                        v-if="!isShow"
+                        :class="['sideitem-tooltip', 'visible-tooltip']"
+                        class=""
+                      >
+                        <span class="mb-2"> Manage Serivces </span>
+                        <span
+                          v-for="(subItem, subIndex) in tab.subItems"
+                          :key="subIndex"
+                        >
+                          <Nuxt-link
+                            :to="subItem.href"
+                            class="flex items-center gap-1"
+                          >
+                            <div
+                              class="bg-white !w-1.5 !h-1.5 rounded-full"
+                            ></div>
+                            {{ subItem?.name }}
+                          </Nuxt-link>
+                        </span>
+                      </span>
+                      <span
                         v-if="isShow"
                         class="flex gap-4 font-medium text-sm"
                       >
                         {{ tab.name }}
                       </span>
-                      <img
-                        src="@/static/svg/black-down-arrow.svg"
-                        alt=""
-                        class="w-5"
-                        v-if="tab.isOpenSubMenu"
-                      />
-                      <img
-                        src="@/static/svg/black-right-arrow.svg"
-                        class="w-5"
-                        alt=""
-                        v-else
-                      />
+                      <div v-if="isShow">
+                        <img
+                          src="@/static/svg/black-down-arrow.svg"
+                          alt=""
+                          class="w-5"
+                          v-if="tab.isOpenSubMenu"
+                        />
+                        <img
+                          src="@/static/svg/black-right-arrow.svg"
+                          class="w-5"
+                          alt=""
+                          v-else
+                        />
+                      </div>
                     </div>
                   </div>
                   <div class="">
@@ -214,6 +241,7 @@
                               class="w-1.5 h-1.5 rounded-full"
                             ></span>
                             <span
+                              v-if="isShow"
                               :class="
                                 previousPath == subItem.href
                                   ? 'text-white'
@@ -273,6 +301,7 @@ export default {
       isDropdown: false,
       expandedMenu: false,
       isShow: true,
+      tooltipVisible: null,
       sidebarWidth: "14rem",
       contentLeft: "15rem",
       contentWidth: "87%",
@@ -375,7 +404,9 @@ export default {
       this.isDropdown = false;
     },
     toggleSidebarItems(tab) {
-      if (tab?.name == "Manage Services") {
+      if (!this.isShow) {
+        tab.isOpenSubMenu = false;
+      } else {
         tab.isOpenSubMenu = !tab.isOpenSubMenu;
       }
     },
@@ -385,6 +416,12 @@ export default {
     },
     toggleSidebar() {
       this.isSidebarOpen = !this.isSidebarOpen;
+    },
+    showTooltip(index) {
+      this.tooltipVisible = index;
+    },
+    hideTooltip() {
+      this.tooltipVisible = null;
     },
     toggleSidebarWidth() {
       this.sidebarWidth = this.sidebarWidth === "14rem" ? "3.5rem" : "14rem";
@@ -445,5 +482,44 @@ export default {
 .rotate-86 {
   transform: rotate(-86deg);
   transition: transform 0.3s ease;
+}
+.tooltip {
+  position: absolute;
+  z-index: 999;
+  left: 36px;
+  top: 32px;
+  transform: translateY(-50%);
+  background-color: #3683d5;
+  color: white;
+  font-size: 16px;
+  padding: 5px 35px;
+  border-radius: 4px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease;
+}
+.sideitem-tooltip {
+  position: absolute;
+  z-index: 999;
+  left: 56px;
+  top: 440px;
+  transform: translateY(-50%);
+  background-color: #3683d5;
+  color: white;
+  font-size: 16px;
+  padding: 18px 24px;
+  border-radius: 4px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease;
+  width: 235px;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.group:hover .visible-tooltip {
+  opacity: 1;
+  visibility: visible;
+  display: block;
 }
 </style>

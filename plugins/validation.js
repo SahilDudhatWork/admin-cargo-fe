@@ -300,12 +300,12 @@ export default async (ctx, inject) => {
       errors[fieldName] = message;
     };
     if (isEmpty(form.post_bridge)) {
-      setError("post_bridge", "Post & Bridge is required");
+      setError("post_bridge", "Port & Bridge is required");
     }
 
     form.requirements.forEach((item, index) => {
       if (isEmpty(item.type)) {
-        setError(`type${index}`, "Type is required");
+        setError(`type${index}`, "Requirement is required");
       }
       if (isEmpty(item.price)) {
         setError(`price${index}`, "Price is required");

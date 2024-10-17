@@ -5,7 +5,8 @@
       @handleAssign="$emit('handleAssignVehicle', selectedVehicle)"
       @close="$emit('closeAssignVehicleModal')"
       @backAssign="$emit('backAssignVehicle')"
-      :isSelected="selectedVehicle"
+      :isSelected="selectedVehicle && selectedVehicle != null ? true : false"
+      selectedOperator
       :isBackAssign="true"
       :isDisabled="allVehicleData.length > 0 ? false : true"
     >
@@ -159,14 +160,13 @@ export default {
     },
   },
   data() {
-    return {
-      selectedVehicle: null,
-    };
+    return {};
   },
   computed: {
     ...mapGetters({
       allVehicleData: "vehicle/getAllVehicleData",
       vehiclePaginationData: "vehicle/getVehiclePaginationData",
+      selectedVehicle: "services/getSelectedVehicleData",
     }),
     vehiclePaginationText() {
       return this.generateVehiclePaginationText(this.vehiclePaginationData);
@@ -184,9 +184,10 @@ export default {
     ...mapActions({
       fetchAllVehicle: "vehicle/fetchAllVehicle",
       fetchCarrierReferences: "vehicle/fetchCarrierReferences",
+      updateSelectedVehicle: "services/updateSelectedVehicle",
     }),
     selectVehicle(vehicle) {
-      this.selectedVehicle = vehicle;
+      this.updateSelectedVehicle(vehicle);
     },
     async prevPage() {
       try {

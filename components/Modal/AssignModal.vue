@@ -54,7 +54,7 @@ export default {
       default: false,
     },
     isSelected: {
-      type: Object,
+      type: Boolean,
       default: false,
     },
     isModal: {

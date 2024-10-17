@@ -1,12 +1,57 @@
 import $axios from "@/plugins/axios";
 
-export const state = () => ({});
+export const state = () => ({
+  temporarySelected: {
+    selectedCarrierData: null,
+    selectedOperatorData: null,
+    selectedCarrierReferenceData: "",
+    selectedVehicleData: null,
+  },
+});
 
-export const getters = {};
+export const getters = {
+  getSelectedCarrierData(state) {
+    return state.temporarySelected.selectedCarrierData;
+  },
+  getSelectedOperatorData(state) {
+    return state.temporarySelected.selectedOperatorData;
+  },
+  getSelectedVehicleData(state) {
+    return state.temporarySelected.selectedVehicleData;
+  },
+  getSelectedCarrierReferenceData(state) {
+    return state.temporarySelected.selectedCarrierReferenceData;
+  },
+};
 
-export const mutations = {};
+export const mutations = {
+  setSelectedCarrierData(state, payload) {
+    state.temporarySelected.selectedCarrierData = payload;
+  },
+  setSelectedOperatorData(state, payload) {
+    state.temporarySelected.selectedOperatorData = payload;
+  },
+  setSelectedVehicleData(state, payload) {
+    state.temporarySelected.selectedVehicleData = payload;
+  },
+  setSelectedCarrierReferenceData(state, payload) {
+    state.temporarySelected.selectedCarrierReferenceData = payload;
+  },
+};
 
 export const actions = {
+  updateSelectedCarrier({ commit }, operatorData) {
+    commit("setSelectedCarrierData", operatorData);
+  },
+  updateSelectedOperator({ commit }, operatorData) {
+    commit("setSelectedOperatorData", operatorData);
+  },
+  updateSelectedVehicle({ commit }, vehicleData) {
+    commit("setSelectedVehicleData", vehicleData);
+  },
+  updateSelectedCarrierReference({ commit }, carrierReferenceData) {
+    commit("setSelectedCarrierReferenceData", carrierReferenceData);
+  },
   async fetchAllServices(ctx, payload) {
     try {
       const sortBy = payload?.sortBy || "";

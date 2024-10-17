@@ -348,6 +348,11 @@ export default {
   methods: {
     ...mapActions({
       updateService: "services/updateService",
+      updateSelectedCarrier: "services/updateSelectedCarrier",
+      updateSelectedOperator: "services/updateSelectedOperator",
+      updateSelectedCarrierReference: "services/updateSelectedCarrierReference",
+      updateSelectedVehicle: "services/updateSelectedVehicle",
+      fetchAllServices: "services/fetchAllServices",
     }),
 
     generateCarrierPaginationText(pagination) {
@@ -361,22 +366,26 @@ export default {
     async acceptRequest(id) {
       this.movementId = id;
       this.isAssignCarrierModal = true;
-      this.selectedCarrier = null;
-      this.selectedCarrierReference = null;
-      this.selectedOperator = null;
-      this.selectedVehicle = null;
+      document.body.style.overflow = "hidden";
+      this.updateSelectedCarrier({});
+      this.updateSelectedOperator({});
+      this.updateSelectedCarrierReference("");
+      this.updateSelectedVehicle({});
     },
     closeAssignCarrierModal() {
       this.isAssignCarrierModal = false;
       this.selectedOperator = null;
+      document.body.style.overflow = "";
     },
     closeAssignOperatorModal() {
       this.isAssignOperatorModal = false;
       this.selectedOperator = null;
+      document.body.style.overflow = "";
     },
     closeAssignVehicleModal() {
       this.isAssignVehicleModal = false;
       this.isAssignOperatorModal = false;
+      document.body.style.overflow = "";
     },
     async backAssignVehicle() {
       this.isAssignOperatorModal = true;
@@ -480,6 +489,7 @@ export default {
         this.isAssignCarrierModal = false;
         this.isAssignVehicleModal = false;
         this.isAssignOperatorModal = false;
+        await this.getAllServices();
       } catch (error) {
         console.log(error);
         this.$toast.open({
@@ -488,13 +498,19 @@ export default {
         });
       }
     },
+    async getAllServices() {
+      try {
+        let page = 1;
+        let limit = 10;
+        await this.fetchAllServices({
+          sortBy: this.sortBy,
+          page: page,
+          limit: limit,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
 };
 </script>
-<style scoped>
-.error-msg {
-  font-size: 14px;
-  font-weight: 400;
-  color: red;
-}
-</style>

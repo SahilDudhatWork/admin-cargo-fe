@@ -14,7 +14,7 @@
       @backAssign="$emit('backAssignOperator')"
       :isBackAssign="true"
       :isDisabled="allOperatorData.length > 0 ? false : true"
-      :isSelected="selectedOperator"
+      :isSelected="selectedOperator && selectedOperator != null ? true : false"
     >
       <template #content>
         <div>
@@ -201,8 +201,6 @@ export default {
   },
   data() {
     return {
-      selectedOperator: null,
-      selectedCarrierReference: "",
       carrierReferenceData: [],
     };
   },
@@ -210,6 +208,8 @@ export default {
     ...mapGetters({
       allOperatorData: "operator/getAllOperatorData",
       operatorPaginationData: "operator/getOperatorPaginationData",
+      selectedOperator: "services/getSelectedOperatorData",
+      selectedCarrierReference: "services/getSelectedCarrierReferenceData",
     }),
     operatorPaginationText() {
       return this.generateOperatorPaginationText(this.operatorPaginationData);
@@ -227,12 +227,14 @@ export default {
     ...mapActions({
       fetchAllOperator: "operator/fetchAllOperator",
       fetchCarrierReferences: "carrier/fetchCarrierReferences",
+      updateSelectedOperator: "services/updateSelectedOperator",
+      updateSelectedCarrierReference: "services/updateSelectedCarrierReference",
     }),
     getCarrierReferenceValue(item) {
-      this.selectedCarrierReference = item;
+      this.updateSelectedCarrierReference(item);
     },
     selectOperator(operator) {
-      this.selectedOperator = operator;
+      this.updateSelectedOperator(operator);
     },
     async prevPage() {
       try {

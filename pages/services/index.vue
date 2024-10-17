@@ -159,7 +159,7 @@ export default {
     async allActionButtons(type) {
       try {
         this.sortBy = type;
-        const res = await this.getAllServices({
+        await this.getAllServices({
           keyWord: this.search,
           sortBy: this.sortBy,
         });
@@ -174,7 +174,7 @@ export default {
   },
   async mounted() {
     try {
-      const res = await this.getAllServices({
+      await this.getAllServices({
         keyWord: this.search,
         sortBy: this.sortBy,
       });

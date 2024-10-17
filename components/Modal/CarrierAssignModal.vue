@@ -6,7 +6,7 @@
       @close="$emit('closeAssignCarrierModal')"
       :isDisabled="allCarrierData.length > 0 ? false : true"
       :buttonText="'Next'"
-      :isSelected="selectedCarrier"
+      :isSelected="selectedCarrier && selectedCarrier != null ? true : false"
     >
       <template #content>
         <div>
@@ -156,14 +156,13 @@ export default {
     },
   },
   data() {
-    return {
-      selectedCarrier: null,
-    };
+    return {};
   },
   computed: {
     ...mapGetters({
       allCarrierData: "carrier/getAllCarrierData",
       carrierPaginationData: "carrier/getCarrierPaginationData",
+      selectedCarrier: "services/getSelectedCarrierData",
     }),
     carrierPaginationText() {
       return this.generateCarrierPaginationText(this.carrierPaginationData);
@@ -174,6 +173,7 @@ export default {
       fetchAllCarrier: "carrier/fetchAllCarrier",
       carrierUnVerify: "carrier/carrierUnVerify",
       carrierVerified: "carrier/carrierVerified",
+      updateSelectedCarrier: "services/updateSelectedCarrier",
     }),
     async handleVerify(item) {
       try {
@@ -215,7 +215,7 @@ export default {
       }
     },
     selectCarrier(carrier) {
-      this.selectedCarrier = carrier;
+      this.updateSelectedCarrier(carrier);
       this.selectedCarrirId = this.selectedCarrier?.accountId;
     },
     async carrierPrevPage() {
