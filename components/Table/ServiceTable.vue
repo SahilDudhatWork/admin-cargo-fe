@@ -489,26 +489,14 @@ export default {
         this.isAssignCarrierModal = false;
         this.isAssignVehicleModal = false;
         this.isAssignOperatorModal = false;
-        await this.getAllServices();
+        document.body.style.overflow = "";
+        this.$emit("serviceUpdated");
       } catch (error) {
         console.log(error);
         this.$toast.open({
           message: error?.response?.data?.msg || this.$i18n.t("errorMessage"),
           type: "error",
         });
-      }
-    },
-    async getAllServices() {
-      try {
-        let page = 1;
-        let limit = 10;
-        await this.fetchAllServices({
-          sortBy: this.sortBy,
-          page: page,
-          limit: limit,
-        });
-      } catch (error) {
-        console.log(error);
       }
     },
   },

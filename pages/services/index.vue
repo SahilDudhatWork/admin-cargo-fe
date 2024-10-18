@@ -35,6 +35,7 @@
         :sortBy="sortBy"
         @handleSeeMoreClick="handleSeeMoreClick"
         :servicesPaginationData="servicesPaginationData"
+        @serviceUpdated="handleServiceUpdate"
       />
     </div>
   </div>
@@ -76,7 +77,7 @@ export default {
     },
     async firstPage() {
       try {
-        const res = await this.getAllServices({
+        await this.getAllServices({
           sortBy: this.sortBy,
           keyWord: this.search,
           page: 1,
@@ -92,7 +93,7 @@ export default {
     },
     async lastPage() {
       try {
-        const res = await this.getAllServices({
+        await this.getAllServices({
           sortBy: this.sortBy,
           keyWord: this.search,
           page: this.servicesPaginationData?.total_page,
@@ -108,7 +109,7 @@ export default {
     },
     async prevPage() {
       try {
-        const res = await this.getAllServices({
+        await this.getAllServices({
           sortBy: this.sortBy,
           keyWord: this.search,
           page: this.servicesPaginationData?.current_page - 1,
@@ -124,7 +125,7 @@ export default {
     },
     async nextPage() {
       try {
-        const res = await this.getAllServices({
+        await this.getAllServices({
           sortBy: this.sortBy,
           keyWord: this.search,
           page: this.servicesPaginationData?.current_page + 1,
@@ -138,8 +139,8 @@ export default {
         });
       }
     },
-    closeModal() {
-      this.isModal = false;
+    async handleServiceUpdate() {
+      await this.getAllServices({ sortBy: this.sortBy, page: 1, limit: 10 });
     },
     async getAllServices(payload) {
       let { sortBy, page, limit, keyWord } = payload;

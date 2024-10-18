@@ -99,7 +99,7 @@ export default {
     async allActionButtons(type) {
       try {
         this.sortBy = type;
-        const res = await this.getAllUser({
+        await this.getAllUser({
           keyWord: this.search,
           sortBy: this.sortBy,
         });
