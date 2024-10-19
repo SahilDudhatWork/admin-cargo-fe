@@ -2,14 +2,14 @@
   <div>
     <header>
       <nav
-        class="!fixed z-50 bg-white sm:ml-[15rem] w-full"
-        :style="{ marginLeft: contentLeft }"
+        class="!fixed z-50 bg-white ml-0 w-full"
+        :class="isShow ? 'sm:ml-[14rem]' : 'sm:ml-[3.5rem]'"
       >
         <div class="flex justify-between items-center w-full">
           <button
             @click="toggleSidebar"
             type="button"
-            class="inline-flex items-center ms-3 display-block text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none"
+            class="inline-flex items-center ms-3 display-block text-sm text-gray-500 rounded-lg sm:hidden focus:outline-none"
           >
             <span class="sr-only">Open sidebar</span>
             <svg
@@ -27,20 +27,28 @@
               ></path>
             </svg>
           </button>
-          <div
-            class="flex justify-between gap-5 items-center py-5 px-4"
-            :style="{ width: contentWidth }"
-          >
+          <div class="flex justify-between gap-5 items-center py-5 px-4 w-full">
             <div>
               <div class="flex gap-1 items-center">
-                <p class="font-semibold text-[20px] text-[#414141]">
+                <p
+                  class="sm:font-semibold font-normal sm:text-[20px] text-[10px] text-[#414141] sm:block hidden"
+                >
                   Hi Welcome!
                 </p>
-                <img src="@/static/Images/slap.webp" alt="" />
+                <img
+                  src="@/static/Images/slap.webp"
+                  alt=""
+                  class="sm:block hidden"
+                />
               </div>
-              <p class="text-[#575757] text-sm font-light">Login as Admin</p>
+              <p class="text-[#575757] text-sm font-light sm:block hidden">
+                Login as Admin
+              </p>
             </div>
-            <div class="flex gap-4 items-center">
+            <div
+              class="flex gap-4 items-center"
+              :class="isShow ? 'sm:!mr-[15rem]' : 'sm:!mr-[4rem]'"
+            >
               <img src="@/static/svg/moon.svg" alt="" />
               <img src="@/static/svg/bell.svg" alt="" />
               <h1 class="text-[#11263C] font-semibold text-[16px] capitalize">
@@ -59,7 +67,8 @@
             <div
               v-if="isDropdown"
               v-click-outside="closeDropdown"
-              class="z-50 absolute right-[16rem] top-8 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
+              :class="isShow ? 'sm:right-[16rem] right-2' : 'sm:right-[5rem]'"
+              class="z-50 absolute top-8 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
             >
               <ul
                 class="py-2 text-sm text-gray-700 dark:text-gray-200 cursor-pointer"
@@ -262,7 +271,7 @@
         </div>
       </aside>
     </transition>
-    <div class="p-4 sm:ml-[15rem]" :style="{ marginLeft: contentLeft }">
+    <div class="p-4 ml-0" :class="isShow ? 'sm:ml-[14rem]' : 'sm:ml-[3.5rem]'">
       <div
         v-if="isSidebarOpen"
         @click="isSidebarOpen = false"
@@ -288,7 +297,8 @@ import settingsSvg from "@/static/svg/settings.svg";
 import blackSettingsSvg from "@/static/svg/black-settings.svg";
 import bannerSvg from "@/static/svg/banner.svg";
 import blackBannerSvg from "@/static/svg/black-banner.svg";
-// import manageServiceSvg from "@/static/svg/manage-service.svg";
+import blackCityManagementSvg from "@/static/svg/black-city-management.svg";
+import cityManagementSvg from "@/static/svg/city-management.svg";
 import blackManageServiceSvg from "@/static/svg/black-manage-services.svg";
 import Cookies from "js-cookie";
 import { mapGetters } from "vuex";
@@ -303,8 +313,6 @@ export default {
       isShow: true,
       tooltipVisible: null,
       sidebarWidth: "14rem",
-      contentLeft: "15rem",
-      contentWidth: "87%",
       sideBarItems: [
         {
           name: "Dashboard",
@@ -315,7 +323,7 @@ export default {
           blackSvg: blackDashboardSvg,
         },
         {
-          name: "Services",
+          name: "Order Management",
           href: "/services",
           isActive: false,
           isOpenSubMenu: false,
@@ -367,11 +375,15 @@ export default {
               name: "Securing Equipment",
               href: "/securing-equipment",
             },
-            {
-              name: "Manage Area",
-              href: "/manage-area",
-            },
           ],
+        },
+        {
+          name: "City Management",
+          href: "/manage-area",
+          isActive: false,
+          isOpenSubMenu: false,
+          svg: cityManagementSvg,
+          blackSvg: blackCityManagementSvg,
         },
         {
           name: "Setting",
@@ -408,6 +420,7 @@ export default {
         tab.isOpenSubMenu = false;
       } else {
         tab.isOpenSubMenu = !tab.isOpenSubMenu;
+        this.isSidebarOpen = false;
       }
     },
     async logOut() {
@@ -425,8 +438,6 @@ export default {
     },
     toggleSidebarWidth() {
       this.sidebarWidth = this.sidebarWidth === "14rem" ? "3.5rem" : "14rem";
-      this.contentLeft = this.contentLeft === "15rem" ? "3.5rem" : "15rem";
-      this.contentWidth = this.contentWidth === "87%" ? "97%" : "87%";
       this.isShow = !this.isShow;
     },
     updateActiveTab(path) {

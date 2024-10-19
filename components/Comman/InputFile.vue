@@ -7,7 +7,7 @@
     >
     <label
       :class="errors ? 'border border-red-600' : 'border border-gray-300'"
-      class="xl:w-[382px] relative flex w-full max-w-md px-6 py-[17px] rounded-lg cursor-pointer hover:border-blue-500 transition-all duration-150"
+      class="xxxl:w-[382px] relative flex w-full max-w-md px-6 py-[17px] rounded-lg cursor-pointer hover:border-blue-500 transition-all duration-150"
     >
       <div class="flex justify-between">
         <p class="text-sm text-[#686868] font-normal">

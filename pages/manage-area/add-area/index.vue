@@ -27,7 +27,7 @@
           <input
             type="text"
             placeholder="Your Price"
-            class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[14px]"
+            class="sm:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[14px]"
             v-model="area.price"
             @input="validatePriceInput($event)"
             :class="
@@ -42,7 +42,7 @@
       <div class="flex justify-center">
         <button
           @click="addArea"
-          class="text-white bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] font-medium rounded-lg text-[16px] px-8 py-[15px] text-center mt-8 mr-40"
+          class="text-white bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] font-medium rounded-lg text-[16px] px-8 py-[15px] text-center mt-8 sm:mr-40"
         >
           Add Area
         </button>

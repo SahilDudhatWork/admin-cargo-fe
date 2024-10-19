@@ -12,7 +12,9 @@
       </div>
       <form class="space-y-4 md:space-y-6 mt-6" @submit.prevent="addCarrier">
         <div>
-          <div class="grid grid-cols-3 gap-y-4">
+          <div
+            class="grid lg:grid-cols-3 sm:grid-cols-2 :grid-cols-1 gap-y-4 sm:gap-4 lg:gap-4"
+          >
             <div>
               <label
                 for="Company name"
@@ -383,7 +385,9 @@
               :key="key"
               class="grid gap-y-2"
             >
-              <div class="grid grid-cols-3 gap-y-4">
+              <div
+                class="grid lg:grid-cols-3 sm:grid-cols-2 :grid-cols-1 gap-y-4 sm:gap-4 lg:gap-4"
+              >
                 <div>
                   <h1 class="text-[#1E1E1E] font-medium text-base">
                     Commercial Reference {{ key + 1 }}

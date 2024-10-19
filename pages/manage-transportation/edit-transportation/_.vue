@@ -15,7 +15,9 @@
         class="space-y-4 md:space-y-6 mt-6"
         @submit.prevent="editTransportation"
       >
-        <div class="grid grid-cols-3 !gap-y-4 gap-5">
+        <div
+          class="grid grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 !gap-y-4 gap-5"
+        >
           <div>
             <label
               for="title"
@@ -76,7 +78,7 @@
         </div>
         <div class="flex justify-center">
           <button
-            class="text-white bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] font-medium rounded-lg text-[16px] px-8 py-[15px] text-center mt-8 mr-40"
+            class="text-white bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] font-medium rounded-lg text-[16px] px-8 py-[15px] text-center mt-8 sm:mr-40"
           >
             Update Transportation
           </button>

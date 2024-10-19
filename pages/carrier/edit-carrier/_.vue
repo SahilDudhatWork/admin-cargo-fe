@@ -10,8 +10,8 @@
           EDIT CARRIER
         </p>
       </div>
-      <div class="grid grid-cols-3">
-        <div class="w-[370px] cursor-pointer" @click="getOperator">
+      <div class="grid xl:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
+        <div class="xl:w-[370px] cursor-pointer" @click="getOperator">
           <h1 class="text-[#151515] font-normal text-xs mb-3">Operators</h1>
           <div class="border border-[#E6E6E6] rounded-lg p-3">
             <div class="flex justify-between">
@@ -40,7 +40,7 @@
           </div>
         </div>
 
-        <div class="w-[370px] cursor-pointer" @click="getVehicle">
+        <div class="xl:w-[370px] cursor-pointer" @click="getVehicle">
           <h1 class="text-[#151515] font-normal text-xs mb-3">Vehicles</h1>
           <div class="border border-[#E6E6E6] rounded-lg p-3">
             <div class="flex justify-between">
@@ -72,7 +72,9 @@
 
       <form class="space-y-4 md:space-y-6 mt-6" @submit.prevent="editCarrier">
         <div>
-          <div class="grid grid-cols-3 gap-y-4">
+          <div
+            class="grid lg:grid-cols-3 sm:grid-cols-2 :grid-cols-1 gap-y-4 sm:gap-4 lg:gap-4"
+          >
             <div>
               <label
                 for="Company name"
@@ -446,7 +448,9 @@
               :key="key"
               class="grid gap-y-2"
             >
-              <div class="grid grid-cols-3 gap-y-4">
+              <div
+                class="grid lg:grid-cols-3 sm:grid-cols-2 :grid-cols-1 gap-y-4 sm:gap-4 lg:gap-4"
+              >
                 <div>
                   <h1 class="text-[#1E1E1E] font-medium text-base">
                     Commercial Reference {{ key + 1 }}

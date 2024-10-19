@@ -13,7 +13,7 @@
               </th>
               <th
                 scope="col"
-                class="pr-4 py-3 text-[#000000] font-normal text-[12px]"
+                class="pr-4 px-6 py-3 text-[#000000] font-normal text-[12px]"
               >
                 Movement ID
               </th>
@@ -31,14 +31,14 @@
               </th>
               <th
                 scope="col"
-                class="px-6 py-3 text-[#000000] font-normal text-[12px]"
+                class="sm:px-6 py-3 text-[#000000] font-normal text-[12px]"
               >
                 User Info
               </th>
               <template v-if="sortBy === 'Pending'">
                 <th
                   scope="col"
-                  class="ml-6 pr-6 py-3 text-[#000000] font-normal text-[12px]"
+                  class="ml-6 px-6 sm:pr-6 py-3 text-[#000000] font-normal text-[12px]"
                 >
                   Actions
                 </th>
@@ -59,7 +59,7 @@
               </template>
               <th
                 scope="col"
-                class="px-3 py-3 rounded-tr-lg text-[#000000] font-normal text-[12px]"
+                class="sm:px-3 py-3 rounded-tr-lg text-[#000000] font-normal text-[12px]"
               >
                 Data Links
               </th>
@@ -98,7 +98,7 @@
                   }}</span>
                 </div>
               </td>
-              <td class="px-6 py-6">
+              <td class="sm:px-6 py-6">
                 <div class="flex flex-col">
                   <span class="text-[#000000] font-normal text-xs pt-1">{{
                     item?.userReference?.contactName
@@ -110,7 +110,7 @@
                 </div>
               </td>
               <template v-if="item?.status == 'Pending'">
-                <td class="py-6">
+                <td class="px-6 py-6">
                   <span
                     class="text-[#2AA1EB] font-normal text-xs border-b border-[#2AA1EB]"
                     @click="acceptRequest(item?.movementId)"

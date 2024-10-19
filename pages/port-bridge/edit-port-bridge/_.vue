@@ -15,9 +15,13 @@
         class="space-y-4 md:space-y-6 mt-6"
         @submit.prevent="editPortBridge"
       >
-        <div class="flex gap-[6rem]">
+        <div
+          v-for="(item, index) in formData?.requirements"
+          :key="index"
+          class="grid xxxl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-[2rem] gap-y-4"
+        >
           <div>
-            <div>
+            <div v-if="index === 0">
               <label
                 for="title"
                 class="block mb-2 text-sm font-normal text-[#4B4B4B]"
@@ -39,84 +43,75 @@
               }}</span>
             </div>
           </div>
-          <div class="flex gap-4 flex-col">
-            <div
-              v-for="(item, index) in formData?.requirements"
-              :key="index"
-              class="grid grid-cols-3 !gap-y-4 gap-[14rem]"
+          <div>
+            <label
+              for="type"
+              class="block mb-2 text-sm font-normal text-[#4B4B4B]"
+              >Requirement *
+            </label>
+            <input
+              type="text"
+              placeholder="Your Requirement"
+              class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[14px] border border-gray-300"
+              v-model="formData.requirements[index].type"
+              :class="
+                errors[`type${index}`]
+                  ? 'border border-red-600'
+                  : 'border border-gray-300'
+              "
+            />
+            <span class="error-msg" v-if="errors[`type${index}`]">{{
+              errors[`type${index}`]
+            }}</span>
+          </div>
+          <div>
+            <label
+              for="price"
+              class="block mb-2 text-sm font-normal text-[#4B4B4B]"
+              >Price *</label
             >
-              <div>
-                <label
-                  for="type"
-                  class="block mb-2 text-sm font-normal text-[#4B4B4B]"
-                  >Requirement *
-                </label>
-                <input
-                  type="text"
-                  placeholder="Your Requirement"
-                  class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[14px] border border-gray-300"
-                  v-model="formData.requirements[index].type"
-                  :class="
-                    errors[`type${index}`]
-                      ? 'border border-red-600'
-                      : 'border border-gray-300'
-                  "
-                />
-                <span class="error-msg" v-if="errors[`type${index}`]">{{
-                  errors[`type${index}`]
-                }}</span>
-              </div>
-              <div>
-                <label
-                  for="price"
-                  class="block mb-2 text-sm font-normal text-[#4B4B4B]"
-                  >Price *</label
-                >
-                <input
-                  type="text"
-                  placeholder="Your Price"
-                  class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[14px]"
-                  v-model="formData.requirements[index].price"
-                  @input="validatePriceInput($event, index)"
-                  :class="
-                    errors[`price${index}`]
-                      ? 'border border-red-600'
-                      : 'border border-gray-300'
-                  "
-                />
-                <span class="error-msg" v-if="errors[`price${index}`]">{{
-                  errors[`price${index}`]
-                }}</span>
-              </div>
-
-              <div>
-                <div
-                  v-if="index == 0"
-                  class="mt-9 cursor-pointer"
-                  @click="newPortBridge"
-                >
-                  <span
-                    class="text-3xl font-bold bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] text-white rounded-full pb-1.5 w-10 flex items-center justify-center"
-                    >+</span
-                  >
-                </div>
-                <div
-                  v-else
-                  class="mt-6 cursor-pointer"
-                  @click="removePortBridge(item)"
-                >
-                  <span
-                    class="text-3xl font-bold bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] text-white rounded-full pb-1.5 w-10 flex items-center justify-center"
-                    >-</span
-                  >
-                </div>
-              </div>
+            <input
+              type="text"
+              placeholder="Your Price"
+              class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[14px]"
+              v-model="formData.requirements[index].price"
+              @input="validatePriceInput($event, index)"
+              :class="
+                errors[`price${index}`]
+                  ? 'border border-red-600'
+                  : 'border border-gray-300'
+              "
+            />
+            <span class="error-msg" v-if="errors[`price${index}`]">{{
+              errors[`price${index}`]
+            }}</span>
+          </div>
+          <div class="flex sm:justify-normal justify-center">
+            <div
+              v-if="index == 0"
+              class="mt-9 cursor-pointer"
+              @click="newPortBridge"
+            >
+              <span
+                class="text-3xl font-bold bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] text-white rounded-full pb-1.5 w-10 flex items-center justify-center"
+                >+</span
+              >
+            </div>
+            <div
+              v-else
+              class="mt-6 cursor-pointer"
+              @click="removePortBridge(item)"
+            >
+              <span
+                class="text-3xl font-bold bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] text-white rounded-full pb-1.5 w-10 flex items-center justify-center"
+                >-</span
+              >
             </div>
           </div>
         </div>
         <div class="flex justify-center">
           <button
-            class="text-white bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] font-medium rounded-lg text-[16px] px-8 py-[15px] text-center mt-8 mr-40"
+            class="text-white bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] font-medium rounded-lg text-[16px] px-8 py-[15px] text-center mt-8 sm:mr-40"
           >
             Update Port & Bridge
           </button>

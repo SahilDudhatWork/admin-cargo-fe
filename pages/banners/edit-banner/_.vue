@@ -12,95 +12,90 @@
       </div>
       <form class="space-y-4 md:space-y-6 mt-6" @submit.prevent="editBanner">
         <div class="w-full">
-          <div class="flex gap-[5rem] gap-y-2">
+          <div
+            class="grid xxxl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-[5rem] gap-y-4"
+            v-for="(item, index) in banner"
+            :key="index"
+          >
+            <div>
+              <div v-if="index === 0">
+                <label
+                  for="email"
+                  class="block mb-2 text-sm font-normal text-[#4B4B4B]"
+                  >Banner *</label
+                >
+                <Dropdown
+                  :items="userList"
+                  :selectedLabel="selectedUserLabel"
+                  @getValue="getBannerValue"
+                  :errors="errors?.selectedUserLabel"
+                />
+                <span class="error-msg" v-if="errors?.selectedUserLabel">{{
+                  errors?.selectedUserLabel
+                }}</span>
+              </div>
+            </div>
+
+            <div>
+              <inputFile
+                item-label="Banner file *"
+                :fileData="item.image"
+                :errors="errors[`image${index}`]"
+                :itemPlaceholder="''"
+                :file="
+                  typeof item.image == 'object' ? item.image?.name : item.image
+                "
+                @handleFileChange="(event) => uploadBannerImage(event, index)"
+              />
+              <span v-if="errors[`image${index}`]" class="error-msg">
+                {{ errors[`image${index}`] }}
+              </span>
+            </div>
             <div>
               <label
-                for="email"
+                for="banner-link"
                 class="block mb-2 text-sm font-normal text-[#4B4B4B]"
-                >Banner *</label
+                >Banner link</label
               >
-              <Dropdown
-                :items="userList"
-                :selectedLabel="selectedUserLabel"
-                @getValue="getBannerValue"
-                :errors="errors?.selectedUserLabel"
+              <input
+                type="text"
+                name="banner-link"
+                id="banner-link"
+                placeholder="Banner link"
+                class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[15px] focus:outline-none border border-gray-300"
+                v-model="item.link"
               />
-              <span class="error-msg" v-if="errors?.selectedUserLabel">{{
-                errors?.selectedUserLabel
-              }}</span>
             </div>
-            <div class="flex flex-col gap-y-2">
+            <div class="flex sm:justify-normal justify-center">
               <div
-                v-for="(item, index) in banner"
-                :key="index"
-                class="grid grid-cols-3 gap-y-4 gap-[13rem]"
+                v-if="index == 0"
+                class="mt-9 cursor-pointer"
+                @click="addNewBanner"
               >
-                <div>
-                  <inputFile
-                    item-label="Banner file *"
-                    :fileData="item.image"
-                    :errors="errors[`image${index}`]"
-                    :itemPlaceholder="''"
-                    :file="
-                      typeof item.image == 'object'
-                        ? item.image?.name
-                        : item.image
-                    "
-                    @handleFileChange="
-                      (event) => uploadBannerImage(event, index)
-                    "
-                  />
-                  <span v-if="errors[`image${index}`]" class="error-msg">
-                    {{ errors[`image${index}`] }}
-                  </span>
-                </div>
-                <div>
-                  <label
-                    for="banner-link"
-                    class="block mb-2 text-sm font-normal text-[#4B4B4B]"
-                    >Banner link</label
-                  >
-                  <input
-                    type="text"
-                    name="banner-link"
-                    id="banner-link"
-                    placeholder="Banner link"
-                    class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[15px] focus:outline-none border border-gray-300"
-                    v-model="item.link"
-                  />
-                </div>
-                <div>
-                  <div
-                    v-if="index == 0"
-                    class="mt-9 cursor-pointer"
-                    @click="addNewBanner"
-                  >
-                    <span
-                      class="text-3xl font-bold bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] text-white rounded-full pb-1.5 w-10 flex items-center justify-center"
-                      >+</span
-                    >
-                  </div>
-                  <div
-                    v-else
-                    class="mt-6 cursor-pointer"
-                    @click="removeBanner(item)"
-                  >
-                    <span
-                      class="text-3xl font-bold bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] text-white rounded-full pb-1.5 w-10 flex items-center justify-center"
-                      >-</span
-                    >
-                  </div>
-                </div>
+                <span
+                  class="text-3xl font-bold bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] text-white rounded-full pb-1.5 w-10 flex items-center justify-center"
+                  >+</span
+                >
+              </div>
+              <div
+                v-else
+                class="mt-6 cursor-pointer"
+                @click="removeBanner(item)"
+              >
+                <span
+                  class="text-3xl font-bold bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] text-white rounded-full pb-1.5 w-10 flex items-center justify-center"
+                  >-</span
+                >
               </div>
             </div>
           </div>
-          <div class="flex justify-center">
-            <button
-              class="text-white bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] font-medium rounded-lg text-[16px] px-8 py-[15px] text-center mt-8 mr-40"
-            >
-              Update Banner
-            </button>
-          </div>
+        </div>
+        <div class="flex justify-center">
+          <button
+            class="text-white bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] font-medium rounded-lg text-[16px] px-8 py-[15px] text-center mt-8 sm:mr-40"
+          >
+            Update Banner
+          </button>
         </div>
       </form>
     </div>
