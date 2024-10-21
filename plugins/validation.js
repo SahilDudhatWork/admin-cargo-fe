@@ -355,11 +355,11 @@ export default async (ctx, inject) => {
         setError(`${fieldName}`, `${errorLabel} is required`);
       }
     };
-    if (fieldsToValidate.includes("selectedCarrierReference")) {
+    if (fieldsToValidate.includes("carrierReference")) {
       validateField(
-        form.selectedCarrierReference,
-        "selectedCarrierReference",
-        "Please select an option"
+        form.carrierReference,
+        "carrierReference",
+        "carrier reference"
       );
     }
     if (fieldsToValidate.includes("selectedOperator")) {
@@ -392,6 +392,23 @@ export default async (ctx, inject) => {
     }
     return errors;
   };
+  const validateSettingPrice = async ({ form }) => {
+    const errors = [];
+    const isEmpty = (value) => {
+      return typeof value === "string" ? value.trim() === "" : !value;
+    };
+
+    const setError = (fieldName, message) => {
+      errors[fieldName] = message;
+    };
+    if (isEmpty(form.basePrice)) {
+      setError("basePrice", "base-price is required");
+    }
+    if (isEmpty(form.additionalPrice)) {
+      setError("additionalPrice", "additional-price is required");
+    }
+    return errors;
+  };
 
   inject("validateUserForm", validateUserForm);
   inject("validateCarrierForm", validateCarrierForm);
@@ -400,6 +417,7 @@ export default async (ctx, inject) => {
   inject("validatePortBridge", validatePortBridge);
   inject("validateSecuringEquipment", validateSecuringEquipment);
   inject("validateNumber", validateNumber);
+  inject("validateSettingPrice", validateSettingPrice);
   inject("validatePrice", validatePrice);
   inject("validateAreaPrice", validateAreaPrice);
   inject("validateServicesModal", validateServicesModal);

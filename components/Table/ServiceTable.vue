@@ -350,7 +350,7 @@ export default {
       updateService: "services/updateService",
       updateSelectedCarrier: "services/updateSelectedCarrier",
       updateSelectedOperator: "services/updateSelectedOperator",
-      updateSelectedCarrierReference: "services/updateSelectedCarrierReference",
+      updateCarrierReference: "services/updateCarrierReference",
       updateSelectedVehicle: "services/updateSelectedVehicle",
       fetchAllServices: "services/fetchAllServices",
     }),
@@ -367,10 +367,10 @@ export default {
       this.movementId = id;
       this.isAssignCarrierModal = true;
       document.body.style.overflow = "hidden";
-      this.updateSelectedCarrier({});
-      this.updateSelectedOperator({});
-      this.updateSelectedCarrierReference("");
-      this.updateSelectedVehicle({});
+      this.updateSelectedCarrier(null);
+      this.updateSelectedOperator(null);
+      this.updateCarrierReference("");
+      this.updateSelectedVehicle(null);
     },
     closeAssignCarrierModal() {
       this.isAssignCarrierModal = false;
@@ -419,22 +419,22 @@ export default {
         console.log(error);
       }
     },
-    async handleAssignOperator(selectedOperator, selectedCarrierReference) {
+    async handleAssignOperator(selectedOperator, carrierReference) {
       try {
-        this.selectedCarrierReference = selectedCarrierReference;
+        this.updateCarrierReference(carrierReference);
+        this.carrierReference = carrierReference;
         this.selectedOperator = selectedOperator;
         const form = {
-          selectedCarrierReference: this.selectedCarrierReference,
+          carrierReference: this.carrierReference,
           selectedOperator: this.selectedOperator,
         };
         this.errors = await this.$validateServicesModal({
           form: form,
-          fieldsToValidate: ["selectedCarrierReference", "selectedOperator"],
+          fieldsToValidate: ["carrierReference", "selectedOperator"],
         });
         if (this.errors) {
           this.errors.forEach((item) => {
-            this.errors.selectedCarrierReference =
-              item.selectedCarrierReference;
+            this.errors.carrierReference = item.carrierReference;
           });
         }
         if (Object.keys(this.errors).length > 0) {
@@ -462,8 +462,7 @@ export default {
         });
         if (this.errors) {
           this.errors.forEach((item) => {
-            this.errors.selectedCarrierReference =
-              item.selectedCarrierReference;
+            this.errors.carrierReference = item.carrierReference;
           });
         }
         if (Object.keys(this.errors).length > 0) {
@@ -477,7 +476,7 @@ export default {
           carrierId: this.selectedCarrier?._id,
           operatorId: this.selectedOperator?._id,
           vehicleId: this.selectedVehicle?._id,
-          carrierReference: this.selectedCarrierReference?.key,
+          carrierReference: this.carrierReference,
         };
         const res = await this.updateService({
           formData: formData,

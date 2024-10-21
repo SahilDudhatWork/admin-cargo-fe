@@ -3,11 +3,7 @@
     <AssignModal
       :isModal="isAssignOperatorModal"
       @handleAssign="
-        $emit(
-          'handleAssignOperator',
-          selectedOperator,
-          selectedCarrierReference
-        )
+        $emit('handleAssignOperator', selectedOperator, carrierReferenceData)
       "
       @close="$emit('closeAssignOperatorModal')"
       :buttonText="'Next'"
@@ -19,12 +15,12 @@
       <template #content>
         <div>
           <div class="mb-3">
-            <label
+            <!-- <label
               for="email"
               class="block mb-1 font-semibold text-lg text-[#3683D5]"
               >Carrier Reference</label
-            >
-            <div v-if="formatRef?.length > 0">
+            > -->
+            <!-- <div v-if="formatRef?.length > 0">
               <Dropdown
                 :items="formatRef"
                 :selectedLabel="selectedCarrierReference?.label || ''"
@@ -34,22 +30,40 @@
               <span class="error-msg" v-if="errors?.selectedCarrierReference">{{
                 errors?.selectedCarrierReference
               }}</span>
+            </div> -->
+            <div>
+              <label
+                for="Carrier Reference"
+                class="block mb-2 text-sm font-normal text-[#4B4B4B]"
+                >Carrier Reference</label
+              >
+              <input
+                type="text"
+                placeholder="Carrier Reference"
+                class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[15px] focus:outline-none border border-gray-300"
+                v-model="carrierReferenceData"
+              />
+              <span class="error-msg" v-if="errors?.carrierReference">{{
+                errors?.carrierReference
+              }}</span>
             </div>
-            <div v-else>
+            <!-- <div v-else>
               <h1
                 class="font-semibold text-xl text-[#989898] mt-5 flex justify-center mb-5"
               >
                 This carrier doesn't have any reference.
               </h1>
-            </div>
+            </div> -->
           </div>
-          <div class="flex justify-between items-center mt-5 mb-6">
+          <div
+            class="flex justify-between items-center mt-5 mb-6 sm:flex-row flex-col"
+          >
             <h1 class="font-semibold text-lg text-[#3683D5]">
               Assign Operator
             </h1>
             <div
               v-if="allOperatorData?.length > 0"
-              class="flex justify-end gap-5 items-center"
+              class="flex justify-end sm:gap-5 gap-2 items-center sm:mt-0 mt-3"
             >
               <span>{{ operatorPaginationText }}</span>
               <button
@@ -156,7 +170,7 @@
           </div>
           <div
             v-if="allOperatorData.length > 0"
-            class="grid grid-cols-2 gap-y-5 overflow-y-auto h-[480px]"
+            class="grid sm:grid-cols-2 grid-cols-1 xxl:gap-0 gap-3 !gap-y-5 overflow-y-auto h-[480px]"
           >
             <AssignOperator
               v-for="item in allOperatorData"
@@ -201,7 +215,7 @@ export default {
   },
   data() {
     return {
-      carrierReferenceData: [],
+      carrierReferenceData: this.carrierReference,
     };
   },
   computed: {
@@ -209,30 +223,30 @@ export default {
       allOperatorData: "operator/getAllOperatorData",
       operatorPaginationData: "operator/getOperatorPaginationData",
       selectedOperator: "services/getSelectedOperatorData",
-      selectedCarrierReference: "services/getSelectedCarrierReferenceData",
+      carrierReference: "services/getCarrierReferenceData",
     }),
     operatorPaginationText() {
       return this.generateOperatorPaginationText(this.operatorPaginationData);
     },
-    formatRef() {
-      return this.carrierReferenceData?.map((user) => {
-        return {
-          key: user._id,
-          label: user?.contactName,
-        };
-      });
-    },
+    // formatRef() {
+    //   return this.carrierReferenceData?.map((user) => {
+    //     return {
+    //       key: user._id,
+    //       label: user?.contactName,
+    //     };
+    //   });
+    // },
   },
   methods: {
     ...mapActions({
       fetchAllOperator: "operator/fetchAllOperator",
-      fetchCarrierReferences: "carrier/fetchCarrierReferences",
+      // fetchCarrierReferences: "carrier/fetchCarrierReferences",
       updateSelectedOperator: "services/updateSelectedOperator",
-      updateSelectedCarrierReference: "services/updateSelectedCarrierReference",
+      // updateCarrierReference: "services/updateCarrierReference",
     }),
-    getCarrierReferenceValue(item) {
-      this.updateSelectedCarrierReference(item);
-    },
+    // getCarrierReferenceValue(item) {
+    //   this.updateCarrierReference(item);
+    // },
     selectOperator(operator) {
       this.updateSelectedOperator(operator);
     },
@@ -317,23 +331,23 @@ export default {
         console.log(error);
       }
     },
-    async getCarrierReference() {
-      try {
-        const res = await this.fetchCarrierReferences({
-          carrierAccountId: this.selectedCarrirId,
-        });
-        this.carrierReferenceData = res?.data;
-      } catch (error) {
-        console.log(error);
-      }
-    },
+    // async getCarrierReference() {
+    //   try {
+    //     const res = await this.fetchCarrierReferences({
+    //       carrierAccountId: this.selectedCarrirId,
+    //     });
+    //     this.carrierReferenceData = res?.data;
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // },
   },
   async mounted() {
     try {
       await this.getOperatorById({ carrierAccountId: this.selectedCarrirId });
-      await this.getCarrierReference({
-        carrierAccountId: this.selectedCarrirId,
-      });
+      // await this.getCarrierReference({
+      //   carrierAccountId: this.selectedCarrirId,
+      // });
     } catch (error) {
       console.log(error);
       this.$toast.open({

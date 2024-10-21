@@ -21,12 +21,6 @@
                 scope="col"
                 class="px-6 py-3 text-[#000000] font-normal text-[12px]"
               >
-                Coordinates
-              </th>
-              <th
-                scope="col"
-                class="px-6 py-3 text-[#000000] font-normal text-[12px]"
-              >
                 Price
               </th>
               <th
@@ -46,11 +40,6 @@
               <td class="px-6 py-6">#</td>
               <td scope="row" class="px-6 ftext-[#000000] font-normal text-xs">
                 <span class="border-b border-black">{{ item?._id }}</span>
-              </td>
-              <td class="px-6">
-                <span class="text-[#000000] font-normal text-xs pt-3">{{
-                  item?.coordinates
-                }}</span>
               </td>
               <td>
                 <span class="text-[#000000] font-normal text-xs pb-5 px-6">

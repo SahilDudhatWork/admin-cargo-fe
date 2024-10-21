@@ -10,11 +10,13 @@
     >
       <template #content>
         <div>
-          <div class="flex justify-between items-center mt-5 mb-6">
+          <div
+            class="flex justify-between items-center mt-5 mb-6 sm:flex-row flex-col"
+          >
             <h1 class="font-semibold text-lg text-[#3683D5]">Assign Carrier</h1>
             <div
               v-if="allCarrierData?.length > 0"
-              class="flex justify-end gap-5 items-center"
+              class="flex justify-end sm:gap-5 gap-2 sm:mt-0 mt-3 items-center"
             >
               <span>{{ carrierPaginationText }}</span>
               <button
@@ -120,7 +122,7 @@
             </div>
           </div>
           <div
-            class="grid grid-cols-2 gap-y-5 overflow-y-auto h-[480px]"
+            class="grid sm:grid-cols-2 grid-cols-1 !gap-y-5 xxl:gap-0 gap-3 overflow-y-auto h-[480px]"
             v-if="allCarrierData.length > 0"
           >
             <AssignCarrier

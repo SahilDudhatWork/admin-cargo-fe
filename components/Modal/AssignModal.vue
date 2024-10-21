@@ -6,7 +6,7 @@
           <div class="absolute inset-0 bg-black opacity-50"></div>
         </div>
         <div
-          class="max-w-4xl mx-auto z-50 bg-white rounded-lg w-[864px] py-3 px-6 h-auto"
+          class="max-w-4xl lg:mx-auto z-50 bg-white rounded-lg w-[864px] py-3 sm:px-6 px-2 mx-3 h-auto"
         >
           <div
             class="flex flex-col items-end mx-2 my-1 cursor-pointer"

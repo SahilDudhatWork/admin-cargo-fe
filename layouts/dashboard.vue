@@ -386,8 +386,8 @@ export default {
           blackSvg: blackCityManagementSvg,
         },
         {
-          name: "Setting",
-          href: "/setting",
+          name: "Settings",
+          href: "/settings",
           isActive: false,
           isOpenSubMenu: false,
           svg: settingsSvg,
