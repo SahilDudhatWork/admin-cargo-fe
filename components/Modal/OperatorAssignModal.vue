@@ -15,22 +15,6 @@
       <template #content>
         <div>
           <div class="mb-3">
-            <!-- <label
-              for="email"
-              class="block mb-1 font-semibold text-lg text-[#3683D5]"
-              >Carrier Reference</label
-            > -->
-            <!-- <div v-if="formatRef?.length > 0">
-              <Dropdown
-                :items="formatRef"
-                :selectedLabel="selectedCarrierReference?.label || ''"
-                @getValue="getCarrierReferenceValue"
-                :errors="errors?.selectedCarrierReference"
-              />
-              <span class="error-msg" v-if="errors?.selectedCarrierReference">{{
-                errors?.selectedCarrierReference
-              }}</span>
-            </div> -->
             <div>
               <label
                 for="Carrier Reference"
@@ -47,13 +31,6 @@
                 errors?.carrierReference
               }}</span>
             </div>
-            <!-- <div v-else>
-              <h1
-                class="font-semibold text-xl text-[#989898] mt-5 flex justify-center mb-5"
-              >
-                This carrier doesn't have any reference.
-              </h1>
-            </div> -->
           </div>
           <div
             class="flex justify-between items-center mt-5 mb-6 sm:flex-row flex-col"
@@ -228,25 +205,19 @@ export default {
     operatorPaginationText() {
       return this.generateOperatorPaginationText(this.operatorPaginationData);
     },
-    // formatRef() {
-    //   return this.carrierReferenceData?.map((user) => {
-    //     return {
-    //       key: user._id,
-    //       label: user?.contactName,
-    //     };
-    //   });
-    // },
+  },
+
+  watch: {
+    carrierReferenceData(value) {
+      this.updateCarrierReference(value);
+    },
   },
   methods: {
     ...mapActions({
       fetchAllOperator: "operator/fetchAllOperator",
-      // fetchCarrierReferences: "carrier/fetchCarrierReferences",
       updateSelectedOperator: "services/updateSelectedOperator",
-      // updateCarrierReference: "services/updateCarrierReference",
+      updateCarrierReference: "services/updateCarrierReference",
     }),
-    // getCarrierReferenceValue(item) {
-    //   this.updateCarrierReference(item);
-    // },
     selectOperator(operator) {
       this.updateSelectedOperator(operator);
     },
@@ -331,23 +302,11 @@ export default {
         console.log(error);
       }
     },
-    // async getCarrierReference() {
-    //   try {
-    //     const res = await this.fetchCarrierReferences({
-    //       carrierAccountId: this.selectedCarrirId,
-    //     });
-    //     this.carrierReferenceData = res?.data;
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // },
   },
   async mounted() {
+    this.carrierReferenceData = this.carrierReference || null;
     try {
       await this.getOperatorById({ carrierAccountId: this.selectedCarrirId });
-      // await this.getCarrierReference({
-      //   carrierAccountId: this.selectedCarrirId,
-      // });
     } catch (error) {
       console.log(error);
       this.$toast.open({

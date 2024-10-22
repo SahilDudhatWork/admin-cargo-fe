@@ -36,10 +36,18 @@
       <AmountDetails :serviceSingleData="serviceSingleData" />
     </div>
     <div class="bg-[#E6E6E6] h-[1px] w-full mt-6"></div>
-    <div class="mt-5">
-      <UserInfo :serviceSingleData="serviceSingleData" />
+    <div v-if="serviceSingleData?.status !== 'Pending'">
+      <div class="mt-5">
+        <UserInfo :serviceSingleData="serviceSingleData" />
+      </div>
+      <div class="bg-[#E6E6E6] h-[1px] w-full mt-6"></div>
     </div>
-    <div class="bg-[#E6E6E6] h-[1px] w-full mt-6"></div>
+    <div>
+      <div class="mt-5">
+        <CarrierInfo :serviceSingleData="serviceSingleData" />
+      </div>
+      <div class="bg-[#E6E6E6] h-[1px] w-full mt-6"></div>
+    </div>
     <div class="mt-5" v-if="serviceSingleData?.status !== 'Pending'">
       <div class="mt-5">
         <VehicleRequest :serviceSingleData="serviceSingleData" />
@@ -58,6 +66,9 @@
     </div>
     <div class="mt-5">
       <Locations :serviceSingleData="serviceSingleData" />
+    </div>
+    <div class="mt-5">
+      <ProofOfPhotography />
     </div>
   </div>
 </template>

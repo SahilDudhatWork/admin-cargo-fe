@@ -82,10 +82,12 @@
                   >
                 </li>
                 <li>
-                  <a
-                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                    >Settings</a
-                  >
+                  <nuxt-link to="/settings">
+                    <a
+                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      >Settings</a
+                    >
+                  </nuxt-link>
                 </li>
                 <li>
                   <a

@@ -83,7 +83,8 @@
 
               <td class="px-6 py-6">
                 <span
-                  class="text-[#FEFEFE] font-medium text-[10px] py-0.5 px-3.5 bg-[#FFAA00] rounded"
+                  :style="{ backgroundColor: buttonColor(item?.status) }"
+                  class="text-[#FEFEFE] font-medium text-[10px] py-0.5 px-3.5 rounded"
                   >{{ formatStatus(item) }}</span
                 >
               </td>
@@ -99,26 +100,34 @@
                 </div>
               </td>
               <td class="sm:px-6 py-6">
-                <div class="flex flex-col">
+                <div class="flex flex-col" v-if="item?.userData">
                   <span class="text-[#000000] font-normal text-xs pt-1">{{
-                    item?.userReference?.contactName
+                    item?.userData?.contactName
                   }}</span>
                   <span class="text-[#989898] font-normal text-[10px] pt-1"
-                    >+{{ item?.userReference?.countryCode }}
-                    {{ item?.userReference?.contactNo }}</span
+                    >+{{ item?.userData?.countryCode }}
+                    {{ item?.userData?.contactNumber }}</span
                   >
                 </div>
               </td>
-              <template v-if="item?.status == 'Pending'">
+              <template v-if="item?.status === 'NewAssignments'">
                 <td class="px-6 py-6">
                   <span
                     class="text-[#2AA1EB] font-normal text-xs border-b border-[#2AA1EB]"
                     @click="acceptRequest(item?.movementId)"
-                    >Accept Request</span
+                    >Assign to Carrier</span
                   >
                 </td>
               </template>
-              <template v-else>
+              <template v-if="item?.status === 'Pending'">
+                <td class="px-6 py-6">
+                  <span
+                    class="text-[#2AA1EB] font-normal text-xs border-b border-[#2AA1EB]"
+                    >Assigned</span
+                  >
+                </td>
+              </template>
+              <template v-if="item?.status === 'InProgress'">
                 <td>
                   <div class="flex flex-col">
                     <span class="text-[#000000] font-normal text-xs pt-1">{{
@@ -332,8 +341,9 @@ export default {
     formatStatus() {
       return (item) => {
         if (!item) return "";
-
-        if (item.status === "Pending") {
+        if (item?.status === "NewAssignments") {
+          return "NEW-ASSIGNMENTS";
+        } else if (item.status === "Pending") {
           return "PENDING";
         } else if (item.status === "InProgress") {
           return "IN-PROGRESS";
@@ -353,8 +363,21 @@ export default {
       updateCarrierReference: "services/updateCarrierReference",
       updateSelectedVehicle: "services/updateSelectedVehicle",
       fetchAllServices: "services/fetchAllServices",
+      validateCarrierReference: "services/validateCarrierReference",
     }),
-
+    buttonColor(status) {
+      if (status === "NewAssignments") {
+        return "#023770";
+      } else if (status === "Pending") {
+        return "#989898";
+      } else if (status === "InProgress") {
+        return "#FFAA00";
+      } else if (status === "Completed") {
+        return "#3ECC48";
+      } else {
+        return "#FFAA00";
+      }
+    },
     generateCarrierPaginationText(pagination) {
       const { current_page, limit, total } = pagination;
 
@@ -398,6 +421,7 @@ export default {
     async handleAssignCarrier(item) {
       try {
         this.selectedCarrier = item;
+        this.carrierId = item?._id;
         this.selectedCarrirId = this.selectedCarrier?.accountId;
         const form = {
           selectedCarrier: this.selectedCarrier,
@@ -420,34 +444,41 @@ export default {
       }
     },
     async handleAssignOperator(selectedOperator, carrierReference) {
-      try {
-        this.updateCarrierReference(carrierReference);
-        this.carrierReference = carrierReference;
-        this.selectedOperator = selectedOperator;
-        const form = {
-          carrierReference: this.carrierReference,
-          selectedOperator: this.selectedOperator,
-        };
-        this.errors = await this.$validateServicesModal({
-          form: form,
-          fieldsToValidate: ["carrierReference", "selectedOperator"],
+      this.carrierReference = carrierReference;
+      this.selectedOperator = selectedOperator;
+      const form = {
+        carrierReference: this.carrierReference,
+        selectedOperator: this.selectedOperator,
+      };
+      this.errors = await this.$validateServicesModal({
+        form: form,
+        fieldsToValidate: ["carrierReference", "selectedOperator"],
+      });
+      if (this.errors) {
+        this.errors.forEach((item) => {
+          this.errors.carrierReference = item.carrierReference;
         });
-        if (this.errors) {
-          this.errors.forEach((item) => {
-            this.errors.carrierReference = item.carrierReference;
-          });
-        }
-        if (Object.keys(this.errors).length > 0) {
-          this.$toast.open({
-            message: "Please fix the errors before submitting.",
-            type: "error",
-          });
-          return;
-        }
+      }
+      if (Object.keys(this.errors).length > 0) {
+        this.$toast.open({
+          message: "Please fix the errors before submitting.",
+          type: "error",
+        });
+        return;
+      }
+      try {
+        await this.validateCarrierReference({
+          carrierId: this.carrierId,
+          carrierReference: this.carrierReference,
+        });
         this.isAssignVehicleModal = true;
         this.isAssignOperatorModal = false;
       } catch (error) {
         console.log(error);
+        this.$toast.open({
+          message: error?.response?.data?.msg || this.$i18n.t("errorMessage"),
+          type: "error",
+        });
       }
     },
     async handleAssignVehicle(selectedVehicle) {

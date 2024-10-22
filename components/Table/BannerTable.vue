@@ -43,7 +43,7 @@
               >
                 <span class="">#</span>
               </th>
-              <div class="flex">
+              <div class="flex sm:flex-row flex-col">
                 <td
                   class="pr-6 py-3"
                   v-for="(banner, index) in item?.banners"
