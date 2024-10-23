@@ -13,7 +13,7 @@
               </th>
               <th
                 scope="col"
-                class="py-3 text-[#000000] font-normal text-[12px]"
+                class="py-3 px-6 text-[#000000] font-normal text-[12px]"
               >
                 Image
               </th>
@@ -45,7 +45,7 @@
               </th>
               <div class="flex sm:flex-row flex-col">
                 <td
-                  class="pr-6 py-3"
+                  class="py-3 px-6"
                   v-for="(banner, index) in item?.banners"
                   :key="`image-${index}`"
                 >

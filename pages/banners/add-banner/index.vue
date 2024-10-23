@@ -13,7 +13,7 @@
       <form class="space-y-4 md:space-y-6 mt-6" @submit.prevent="addBanner">
         <div class="w-full">
           <div
-            class="grid xxxl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-[5rem] gap-y-4"
+            class="grid xxxl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-3 sm:grid-cols-1 grid-cols-1 gap-5 gap-y-4"
             v-for="(banner, index) in banner"
             :key="index"
           >
@@ -52,41 +52,43 @@
                 {{ errors[`image${index}`] }}
               </span>
             </div>
-            <div>
-              <label
-                for="banner-link"
-                class="block mb-2 text-sm font-normal text-[#4B4B4B]"
-                >Banner link</label
-              >
-              <input
-                type="text"
-                name="banner-link"
-                id="banner-link"
-                placeholder="Banner link"
-                class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[15px] focus:outline-none border border-gray-300"
-                v-model="banner.link"
-              />
-            </div>
-            <div class="flex sm:justify-normal justify-center">
-              <div
-                v-if="index == 0"
-                class="mt-9 cursor-pointer"
-                @click="newBanner"
-              >
-                <span
-                  class="text-3xl font-bold bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] text-white rounded-full pb-1.5 w-10 flex items-center justify-center"
-                  >+</span
+            <div class="flex lg:flex-row flex-col gap-5 gap-y-5">
+              <div>
+                <label
+                  for="banner-link"
+                  class="block mb-2 text-sm font-normal text-[#4B4B4B]"
+                  >Banner link</label
                 >
+                <input
+                  type="text"
+                  name="banner-link"
+                  id="banner-link"
+                  placeholder="Banner link"
+                  class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[15px] focus:outline-none border border-gray-300"
+                  v-model="banner.link"
+                />
               </div>
-              <div
-                v-else
-                class="mt-6 cursor-pointer"
-                @click="removeBanner(banner)"
-              >
-                <span
-                  class="text-3xl font-bold bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] text-white rounded-full pb-1.5 w-10 flex items-center justify-center"
-                  >-</span
+              <div class="flex lg:justify-normal justify-center">
+                <div
+                  v-if="index == 0"
+                  class="mt-9 cursor-pointer"
+                  @click="newBanner"
                 >
+                  <span
+                    class="text-3xl font-bold bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] text-white rounded-full pb-1.5 w-10 flex items-center justify-center"
+                    >+</span
+                  >
+                </div>
+                <div
+                  v-else
+                  class="mt-6 cursor-pointer"
+                  @click="removeBanner(banner)"
+                >
+                  <span
+                    class="text-3xl font-bold bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] text-white rounded-full pb-1.5 w-10 flex items-center justify-center"
+                    >-</span
+                  >
+                </div>
               </div>
             </div>
           </div>

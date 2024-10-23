@@ -29,6 +29,7 @@ export default {
     "~/plugins/downloadFile.js",
     "~/plugins/moment.js",
     { src: "~/plugins/vue2-google-maps.js", ssr: false },
+    "~/plugins/statusPlugin.js",
   ],
 
   components: [{ path: "~/components/", pathPrefix: false }],

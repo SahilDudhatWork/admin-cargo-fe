@@ -9,19 +9,13 @@
         {{ serviceSingleData.movementId }}
       </h1>
     </div>
-    <div>
+    <div v-if="$checkUserUpload(serviceSingleData?.status)">
       <h1 class="text-[#B9B9B9] font-semibold text-[10px] mb-5">UPDATES</h1>
       <div class="flex items-center gap-4">
         <p class="text-[#1E1E1E] font-medium text-[10px]">
           User’s details info uploaded
         </p>
         <p class="text-[#3683D5] font-normal text-[10px]">view details</p>
-        <span class="bg-[#E6E6E6] w-[1px] h-2"></span>
-        <div class="flex gap-1 items-center">
-          <img src="@/static/svg/qr-code.svg" alt="" />
-          <p class="font-medium text-xs text-[#151515]">QR code uploaded</p>
-        </div>
-        <P class="text-[#3683D5] font-normal text-[10px]">Generate & Upload</P>
       </div>
       <div class="mt-4 mb-4">
         <button
@@ -36,19 +30,19 @@
       <AmountDetails :serviceSingleData="serviceSingleData" />
     </div>
     <div class="bg-[#E6E6E6] h-[1px] w-full mt-6"></div>
-    <div v-if="serviceSingleData?.status !== 'Pending'">
+    <div>
       <div class="mt-5">
         <UserInfo :serviceSingleData="serviceSingleData" />
       </div>
       <div class="bg-[#E6E6E6] h-[1px] w-full mt-6"></div>
     </div>
-    <div>
+    <div class="mt-5" v-if="$checkUserUpload(serviceSingleData?.status)">
       <div class="mt-5">
         <CarrierInfo :serviceSingleData="serviceSingleData" />
       </div>
       <div class="bg-[#E6E6E6] h-[1px] w-full mt-6"></div>
     </div>
-    <div class="mt-5" v-if="serviceSingleData?.status !== 'Pending'">
+    <div class="mt-5" v-if="$checkUserUpload(serviceSingleData?.status)">
       <div class="mt-5">
         <VehicleRequest :serviceSingleData="serviceSingleData" />
       </div>
@@ -58,7 +52,7 @@
       <ServiceDetails :serviceSingleData="serviceSingleData" />
     </div>
     <div class="bg-[#E6E6E6] h-[1px] w-full mt-6"></div>
-    <div class="mt-5" v-if="serviceSingleData?.status !== 'Pending'">
+    <div class="mt-5" v-if="$checkUserUpload(serviceSingleData?.status)">
       <div>
         <OperatorInfo :serviceSingleData="serviceSingleData" />
       </div>
@@ -67,7 +61,10 @@
     <div class="mt-5">
       <Locations :serviceSingleData="serviceSingleData" />
     </div>
-    <div class="mt-5">
+    <div
+      class="mt-5"
+      v-if="$checkProofOfPhotography(serviceSingleData?.status)"
+    >
       <ProofOfPhotography />
     </div>
   </div>

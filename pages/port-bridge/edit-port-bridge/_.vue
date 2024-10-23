@@ -18,7 +18,7 @@
         <div
           v-for="(item, index) in formData?.requirements"
           :key="index"
-          class="grid xxxl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-[2rem] gap-y-4"
+          class="grid xxxl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-3 sm:grid-cols-1 grid-cols-1 gap-5 gap-y-4"
         >
           <div>
             <div v-if="index === 0">
@@ -64,48 +64,50 @@
               errors[`type${index}`]
             }}</span>
           </div>
-          <div>
-            <label
-              for="price"
-              class="block mb-2 text-sm font-normal text-[#4B4B4B]"
-              >Price *</label
-            >
-            <input
-              type="text"
-              placeholder="Your Price"
-              class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[14px]"
-              v-model="formData.requirements[index].price"
-              @input="validatePriceInput($event, index)"
-              :class="
+          <div class="flex lg:flex-row flex-col gap-5 gap-y-5">
+            <div>
+              <label
+                for="price"
+                class="block mb-2 text-sm font-normal text-[#4B4B4B]"
+                >Price *</label
+              >
+              <input
+                type="text"
+                placeholder="Your Price"
+                class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[14px]"
+                v-model="formData.requirements[index].price"
+                @input="validatePriceInput($event, index)"
+                :class="
+                  errors[`price${index}`]
+                    ? 'border border-red-600'
+                    : 'border border-gray-300'
+                "
+              />
+              <span class="error-msg" v-if="errors[`price${index}`]">{{
                 errors[`price${index}`]
-                  ? 'border border-red-600'
-                  : 'border border-gray-300'
-              "
-            />
-            <span class="error-msg" v-if="errors[`price${index}`]">{{
-              errors[`price${index}`]
-            }}</span>
-          </div>
-          <div class="flex sm:justify-normal justify-center">
-            <div
-              v-if="index == 0"
-              class="mt-9 cursor-pointer"
-              @click="newPortBridge"
-            >
-              <span
-                class="text-3xl font-bold bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] text-white rounded-full pb-1.5 w-10 flex items-center justify-center"
-                >+</span
-              >
+              }}</span>
             </div>
-            <div
-              v-else
-              class="mt-6 cursor-pointer"
-              @click="removePortBridge(item)"
-            >
-              <span
-                class="text-3xl font-bold bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] text-white rounded-full pb-1.5 w-10 flex items-center justify-center"
-                >-</span
+            <div class="flex lg:justify-normal justify-center">
+              <div
+                v-if="index == 0"
+                class="mt-9 cursor-pointer"
+                @click="newPortBridge"
               >
+                <span
+                  class="text-3xl font-bold bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] text-white rounded-full pb-1.5 w-10 flex items-center justify-center"
+                  >+</span
+                >
+              </div>
+              <div
+                v-else
+                class="mt-6 cursor-pointer"
+                @click="removePortBridge(item)"
+              >
+                <span
+                  class="text-3xl font-bold bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] text-white rounded-full pb-1.5 w-10 flex items-center justify-center"
+                  >-</span
+                >
+              </div>
             </div>
           </div>
         </div>
