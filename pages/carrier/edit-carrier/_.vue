@@ -957,7 +957,7 @@ export default {
             );
           }
           if (
-            this.formData?.companyFormatio?.maxico?.proof_Of_Address != null &&
+            this.formData?.companyFormation?.maxico?.proof_Of_Address != null &&
             typeof this.formData?.companyFormation?.maxico?.proof_Of_Address ==
               "object"
           ) {
