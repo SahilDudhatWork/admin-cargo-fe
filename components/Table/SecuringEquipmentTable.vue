@@ -63,12 +63,6 @@
                   class="w-[17px] h-[17px] mt-6"
                   @click="$emit('handleClick')"
                 />
-                <img
-                  src="@/static/svg/delete-icon.svg"
-                  alt=""
-                  class="w-[20px] h-[20px] mt-6"
-                  @click="$emit('deleteItem')"
-                />
               </td>
             </tr>
           </tbody>

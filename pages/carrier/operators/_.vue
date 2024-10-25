@@ -19,7 +19,7 @@
         type="text"
         name="search"
         id="search"
-        placeholder="Search by user name/ID"
+        placeholder="Search by operator name/ID"
         class="border border-gray-300 text-gray-900 rounded-lg block px-3 py-[14px] focus:outline-none mb-4 w-full"
         v-model="search"
         @keyup="searchText"

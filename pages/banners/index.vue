@@ -26,8 +26,6 @@ export default {
   layout: "dashboard",
   data() {
     return {
-      isModal: false,
-      selectedItem: null,
       sortBy: "all",
       bannerData: [],
     };
@@ -37,18 +35,9 @@ export default {
     ...mapActions({
       fetchBanners: "banner/fetchBanners",
     }),
-    // handleDelete() {
-    //   console.log("handleSubmit");
-    //   this.isModal = false;
-    // },
     editBanner(item) {
       this.$router.push(`banners/edit-banner/${item._id}`);
     },
-    // removeBannerItem(id) {
-    //   console.log("delete", id);
-    //   this.isModal = true;
-    //   this.selectedId = id;
-    // },
     async getAllBanners() {
       const res = await this.fetchBanners();
       this.bannerData = res.data;
@@ -64,9 +53,6 @@ export default {
           type: "error",
         });
       }
-    },
-    closeModal() {
-      this.isModal = false;
     },
     addBanner() {
       this.$router.push("/banners/add-banner");

@@ -103,6 +103,7 @@
 import { mapActions } from "vuex";
 export default {
   layout: "blank",
+  middleware: "guest",
   data() {
     return {
       isPassword: false,

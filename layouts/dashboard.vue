@@ -68,32 +68,22 @@
               v-if="isDropdown"
               v-click-outside="closeDropdown"
               :class="isShow ? 'sm:right-[16rem] right-2' : 'sm:right-[5rem]'"
-              class="z-50 absolute top-8 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
+              class="z-50 absolute top-8 bg-white divide-y divide-gray-100 rounded-2xl w-40 shadow flex flex-col items-center dropdown-content"
+              style="box-shadow: rgba(0, 0, 0, 0.5) 0px 6px 50px 0px"
             >
-              <ul
-                class="py-2 text-sm text-gray-700 dark:text-gray-200 cursor-pointer"
-                aria-labelledby="dropdownHoverButton"
-                @click="closeDropdown"
-              >
-                <li>
-                  <a
-                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                    >Profile</a
-                  >
-                </li>
-                <li>
-                  <nuxt-link to="/settings">
-                    <a
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+              <ul class="py-2 cursor-pointer" @click="closeDropdown">
+                <nuxt-link to="/settings">
+                  <li class="flex items-center gap-3 px-[18px]">
+                    <img src="@/static/svg/settings-sliders.svg" alt="" />
+                    <a class="block py-2.5 text-[#333333] font-medium text-base"
                       >Settings</a
                     >
-                  </nuxt-link>
-                </li>
-                <li>
-                  <a
-                    @click="logOut"
-                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                    >Log out</a
+                  </li>
+                </nuxt-link>
+                <li class="flex items-center gap-3 px-[18px]" @click="logOut">
+                  <img src="@/static/svg/logout.svg" alt="" class="w-6 h-6" />
+                  <a class="block py-2.5 text-[#333333] font-medium text-base"
+                    >Logout</a
                   >
                 </li>
               </ul>
@@ -505,11 +495,15 @@ export default {
   background-color: #3683d5;
   color: white;
   font-size: 16px;
-  padding: 5px 35px;
+  width: 180px;
+  padding: 5px 5px;
   border-radius: 4px;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.2s ease;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
 }
 .sideitem-tooltip {
   position: absolute;
@@ -528,11 +522,24 @@ export default {
   width: 235px;
   display: flex !important;
   flex-direction: column !important;
+  row-gap: 7px;
 }
 
 .group:hover .visible-tooltip {
   opacity: 1;
   visibility: visible;
   display: block;
+}
+
+.dropdown-content:after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  right: 15%;
+  margin-top: -15px;
+  z-index: 1;
+  border-bottom: solid 15px #fff;
+  border-left: solid 12px transparent;
+  border-right: solid 12px transparent;
 }
 </style>
