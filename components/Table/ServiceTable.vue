@@ -127,7 +127,7 @@
                   >
                 </td>
               </template>
-              <template v-if="item?.status === 'InProgress'">
+              <template v-if="$checkQr(item?.status)">
                 <td>
                   <div class="flex flex-col">
                     <span class="text-[#000000] font-normal text-xs pt-1">{{
@@ -353,6 +353,29 @@ export default {
           return item.status;
         }
       };
+    },
+  },
+  watch: {
+    isAssignOperatorModal(value) {
+      if (value) {
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.overflow = "";
+      }
+    },
+    isAssignVehicleModal(value) {
+      if (value) {
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.overflow = "";
+      }
+    },
+    isAssignCarrierModal(value) {
+      if (value) {
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.overflow = "";
+      }
     },
   },
   methods: {

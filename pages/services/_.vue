@@ -65,7 +65,7 @@
       class="mt-5"
       v-if="$checkProofOfPhotography(serviceSingleData?.status)"
     >
-      <ProofOfPhotography />
+      <ProofOfPhotography :serviceSingleData="serviceSingleData" />
     </div>
   </div>
 </template>
