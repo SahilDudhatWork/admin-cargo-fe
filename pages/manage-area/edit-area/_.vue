@@ -20,7 +20,7 @@
         </div>
         <div>
           <label
-            for="price"
+            for="Price"
             class="block mb-2 text-sm font-normal text-[#4B4B4B]"
             >Price *</label
           >

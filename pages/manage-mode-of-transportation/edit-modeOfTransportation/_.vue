@@ -41,7 +41,7 @@
           </div>
           <div>
             <label
-              for="title"
+              for="Title"
               class="block mb-2 text-sm font-normal text-[#4B4B4B]"
               >Title *</label
             >
@@ -63,7 +63,7 @@
 
           <div>
             <label
-              for="price"
+              for="Price"
               class="block mb-2 text-sm font-normal text-[#4B4B4B]"
               >Price *</label
             >
@@ -85,7 +85,7 @@
           </div>
           <div>
             <label
-              for="email"
+              for="Description"
               class="block mb-2 text-sm font-normal text-[#4B4B4B]"
               >Description
             </label>

@@ -50,47 +50,4 @@ export const actions = {
       throw error;
     }
   },
-  async updateProfile(ctx, payload) {
-    try {
-      const response = await $axios.put("/v1/admin/profile", payload);
-      return response;
-    } catch (error) {
-      throw error;
-    }
-  },
-  async sendOtp(ctx, payload) {
-    try {
-      const response = await $axios.post("/v1/common/otp/sent/admin", payload);
-      return response;
-    } catch (error) {
-      throw error;
-    }
-  },
-  async verifyOtp(ctx, payload) {
-    try {
-      const response = await $axios.post("/v1/common/otp/verify", payload);
-      return response;
-    } catch (error) {
-      throw error;
-    }
-  },
-  async resetPassword(ctx, payload) {
-    try {
-      const response = await $axios.post(
-        "/v1/common/resetPassword/admin",
-        payload
-      );
-      return response;
-    } catch (error) {
-      throw error;
-    }
-  },
-  async uploadImage(ctx, payload) {
-    try {
-      const response = await $axios.post("/v1/common/imageUpload", payload);
-      return response;
-    } catch (error) {
-      throw error;
-    }
-  },
 };

@@ -40,7 +40,7 @@
             </div>
             <div>
               <label
-                for="ContactName"
+                for="Contact name"
                 class="block mb-2 text-sm font-normal text-[#4B4B4B]"
                 >Contact name *</label
               >
@@ -63,7 +63,7 @@
             </div>
             <div>
               <label
-                for="email"
+                for="Email Address"
                 class="block mb-2 text-sm font-normal text-[#4B4B4B]"
                 >Email Address *</label
               >
@@ -86,7 +86,7 @@
             </div>
             <div>
               <label
-                for="createPassword"
+                for="Create Password"
                 class="block mb-2 text-sm font-normal text-[#4B4B4B]"
                 >Create Password *</label
               >
@@ -130,7 +130,7 @@
                     name="createPassword"
                     id="createPassword"
                     class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[13px] focus:outline-none"
-                    placeholder="Type your email address"
+                    placeholder="Type your password"
                     v-model="formData.password"
                   />
                 </div>
@@ -141,7 +141,7 @@
             </div>
             <div>
               <label
-                for="ContactNo"
+                for="Contact"
                 class="block mb-2 text-sm font-normal text-[#4B4B4B]"
                 >Contact *</label
               >
@@ -341,7 +341,7 @@
                 </div>
                 <div>
                   <label
-                    for="ContactName"
+                    for="Contact name"
                     class="block mb-2 text-sm font-normal text-[#4B4B4B]"
                     >Contact name</label
                   >
@@ -367,7 +367,7 @@
                 </div>
                 <div>
                   <label
-                    for="email"
+                    for="Email Address"
                     class="block mb-2 text-sm font-normal text-[#4B4B4B]"
                     >Email Address</label
                   >
@@ -393,7 +393,7 @@
                 </div>
                 <div>
                   <label
-                    for="ContactNo"
+                    for="Contact No"
                     class="block mb-2 text-sm font-normal text-[#4B4B4B]"
                     >Contact No.</label
                   >

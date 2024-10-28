@@ -16,11 +16,11 @@
         @submit.prevent="editTransportation"
       >
         <div
-          class="grid grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 !gap-y-4 gap-5"
+          class="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 !gap-y-4 gap-5"
         >
           <div>
             <label
-              for="title"
+              for="Title"
               class="block mb-2 text-sm font-normal text-[#4B4B4B]"
               >Title *</label
             >
@@ -42,7 +42,7 @@
 
           <div>
             <label
-              for="price"
+              for="Price"
               class="block mb-2 text-sm font-normal text-[#4B4B4B]"
               >Price *</label
             >
@@ -64,7 +64,7 @@
           </div>
           <div>
             <label
-              for="email"
+              for="Description"
               class="block mb-2 text-sm font-normal text-[#4B4B4B]"
               >Description
             </label>

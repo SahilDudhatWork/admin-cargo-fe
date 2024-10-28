@@ -12,7 +12,10 @@ export default async function ({ store, redirect }) {
         return redirect("/login");
       }
     } catch (error) {
-      return redirect("/login");
+      if (error.response.data.msg.name === "TokenExpiredError") {
+        Cookies.remove("token");
+        return redirect("/login");
+      }
     }
   } else {
     return redirect("/login");

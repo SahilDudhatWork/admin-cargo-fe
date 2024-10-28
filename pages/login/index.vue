@@ -13,6 +13,11 @@
             </p>
             <form class="space-y-4 md:space-y-6 mt-6" @submit.prevent="login">
               <div>
+                <label
+                  for="Email Address"
+                  class="block mb-2 text-sm font-normal text-[#4B4B4B]"
+                  >Email Address</label
+                >
                 <input
                   type="email"
                   name="email"
@@ -23,6 +28,12 @@
                 />
               </div>
               <div class="relative">
+                <label
+                  for="Password"
+                  class="block mb-2 text-sm font-normal text-[#4B4B4B]"
+                  >Password</label
+                >
+
                 <svg
                   @click="togglePassword"
                   xmlns="http://www.w3.org/2000/svg"
@@ -30,7 +41,7 @@
                   viewBox="0 0 24 24"
                   stroke-width="2"
                   stroke="currentColor"
-                  class="cursor-pointer w-6 h-6 absolute xl:right-3 lg:right-3 sm:right-3 right-2 top-5"
+                  class="cursor-pointer w-6 h-6 absolute xl:right-3 lg:right-3 sm:right-3 right-2 top-12"
                 >
                   <path
                     v-if="!isPassword"
@@ -59,13 +70,6 @@
                   placeholder="Your password"
                   v-model="formData.password"
                 />
-              </div>
-              <div class="flex justify-end !m-0">
-                <NuxtLink
-                  to="/password-recovery"
-                  class="text-sm font-normal text-[#3683D5] cursor-pointer mt-2"
-                  >Forgot password?</NuxtLink
-                >
               </div>
               <button
                 type="submit"

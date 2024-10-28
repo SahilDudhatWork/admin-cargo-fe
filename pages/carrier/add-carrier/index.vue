@@ -40,7 +40,7 @@
             </div>
             <div>
               <label
-                for="ContactName"
+                for="Contact name"
                 class="block mb-2 text-sm font-normal text-[#4B4B4B]"
                 >Contact name *</label
               >
@@ -63,7 +63,7 @@
             </div>
             <div>
               <label
-                for="email"
+                for="Email Address"
                 class="block mb-2 text-sm font-normal text-[#4B4B4B]"
                 >Email Address *</label
               >
@@ -86,7 +86,7 @@
             </div>
             <div>
               <label
-                for="createPassword"
+                for="Create Password"
                 class="block mb-2 text-sm font-normal text-[#4B4B4B]"
                 >Create Password *</label
               >
@@ -141,7 +141,7 @@
             </div>
             <div>
               <label
-                for="ContactNo"
+                for="Contact"
                 class="block mb-2 text-sm font-normal text-[#4B4B4B]"
                 >Contact *</label
               >
@@ -419,7 +419,7 @@
                 </div>
                 <div>
                   <label
-                    for="ContactName"
+                    for="Contact name"
                     class="block mb-2 text-sm font-normal text-[#4B4B4B]"
                     >Contact name</label
                   >
@@ -445,7 +445,7 @@
                 </div>
                 <div>
                   <label
-                    for="email"
+                    for="Email Address"
                     class="block mb-2 text-sm font-normal text-[#4B4B4B]"
                     >Email Address</label
                   >
@@ -471,7 +471,7 @@
                 </div>
                 <div>
                   <label
-                    for="ContactNo"
+                    for="Contact No"
                     class="block mb-2 text-sm font-normal text-[#4B4B4B]"
                     >Contact No.</label
                   >

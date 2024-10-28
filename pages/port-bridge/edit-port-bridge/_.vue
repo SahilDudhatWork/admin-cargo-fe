@@ -23,7 +23,7 @@
           <div>
             <div v-if="index === 0">
               <label
-                for="title"
+                for="Port & Bridge"
                 class="block mb-2 text-sm font-normal text-[#4B4B4B]"
                 >Port & Bridge *</label
               >
@@ -45,7 +45,7 @@
           </div>
           <div>
             <label
-              for="type"
+              for="Requirement"
               class="block mb-2 text-sm font-normal text-[#4B4B4B]"
               >Requirement *
             </label>
@@ -67,7 +67,7 @@
           <div class="flex lg:flex-row flex-col gap-5 gap-y-5">
             <div>
               <label
-                for="price"
+                for="Price"
                 class="block mb-2 text-sm font-normal text-[#4B4B4B]"
                 >Price *</label
               >

@@ -24,7 +24,7 @@
         >
           <div>
             <label
-              for="chains"
+              for="Chains"
               class="block mb-2 text-sm font-normal text-[#4B4B4B]"
               >Chains *</label
             >
@@ -47,7 +47,7 @@
 
           <div>
             <label
-              for="tarps"
+              for="Tarps"
               class="block mb-2 text-sm font-normal text-[#4B4B4B]"
               >Tarps *</label
             >
@@ -69,7 +69,7 @@
           </div>
           <div>
             <label
-              for="straps"
+              for="Straps"
               class="block mb-2 text-sm font-normal text-[#4B4B4B]"
               >Straps *
             </label>
