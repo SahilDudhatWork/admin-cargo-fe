@@ -13,16 +13,12 @@
           </p>
         </div>
       </div>
-
-      <!-- <div class="mt-5">
-        <Document
-          title="User’s required Information"
-          description="(Lorem ipsum doit sum to en la pat)"
-        />
-      </div> -->
       <div
         class="mt-4 bg-[#F7F7F7] px-2 rounded-lg py-2"
-        v-if="$checkQr(serviceSingleData?.status)"
+        v-if="
+          $checkQr(serviceSingleData?.status) &&
+          serviceSingleData?.qrCode !== null
+        "
       >
         <p class="text-[#1E1E1E] font-normal text-xs">
           You received an <span class="font-semibold">QR code</span> from

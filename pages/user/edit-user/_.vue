@@ -774,6 +774,22 @@ export default {
             }
           }
         });
+        const commercialRef1 = this.formData.commercialReference[0];
+        const commercialRef2 = this.formData.commercialReference[1];
+        if (
+          commercialRef2 &&
+          (commercialRef1.companyName ||
+            commercialRef1.contactName ||
+            commercialRef2.companyName ||
+            commercialRef2.contactName) &&
+          (!commercialRef1.companyName || !commercialRef1.contactName)
+        ) {
+          this.$toast.open({
+            message: "Please add commercial reference 1",
+            type: "error",
+          });
+          return;
+        }
         const response = await this.updateUser(formData);
         this.$toast.open({
           message: response.msg,
