@@ -310,13 +310,13 @@
               :key="key"
               class="grid gap-y-2"
             >
+            <h1 class="text-[#1E1E1E] font-medium text-base">
+              Commercial Reference {{ key + 1 }}
+            </h1>
               <div
                 class="grid lg:grid-cols-3 sm:grid-cols-2 :grid-cols-1 gap-y-4 sm:gap-4 lg:gap-4"
               >
                 <div>
-                  <h1 class="text-[#1E1E1E] font-medium text-base">
-                    Commercial Reference {{ key + 1 }}
-                  </h1>
                   <label
                     for="Company name"
                     class="block mb-2 text-sm font-normal text-[#4B4B4B]"
