@@ -64,6 +64,7 @@
                   +{{ item?.countryCode }} {{ item?.operatorNumber }}
                 </span>
               </td>
+
               <td class="px-6 text-[#000000] font-normal text-[12px]">
                 {{ item?.mxDriversLicense }}
               </td>
