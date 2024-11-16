@@ -103,6 +103,7 @@
           class="mt-4 flex justify-end gap-5 items-center mb-10"
         >
           <span>{{ paginationText }}</span>
+
           <button
             class="p-1 rounded-lg"
             @click="$emit('firstPage')"
