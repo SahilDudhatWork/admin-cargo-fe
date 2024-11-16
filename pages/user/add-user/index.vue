@@ -176,7 +176,7 @@
                 }}</span>
               </label>
             </div>
-            <div class="">
+            <div>
               <label
                 for="companyFormation"
                 class="block mb-2 text-sm font-normal text-[#1E1E1E]"

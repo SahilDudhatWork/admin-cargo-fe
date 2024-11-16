@@ -291,6 +291,8 @@ import bannerSvg from "@/static/svg/banner.svg";
 import blackBannerSvg from "@/static/svg/black-banner.svg";
 import blackCityManagementSvg from "@/static/svg/black-city-management.svg";
 import cityManagementSvg from "@/static/svg/city-management.svg";
+import cmsManagementSvg from "@/static/svg/cms.svg";
+import blackCmsManagementSvg from "@/static/svg/black-cms.svg";
 import blackManageServiceSvg from "@/static/svg/black-manage-services.svg";
 import Cookies from "js-cookie";
 import { mapGetters } from "vuex";
@@ -376,6 +378,14 @@ export default {
           isOpenSubMenu: false,
           svg: cityManagementSvg,
           blackSvg: blackCityManagementSvg,
+        },
+        {
+          name: "Manage CMS",
+          href: "/manage-cms",
+          isActive: false,
+          isOpenSubMenu: false,
+          svg: cmsManagementSvg,
+          blackSvg: blackCmsManagementSvg,
         },
         {
           name: "Settings",

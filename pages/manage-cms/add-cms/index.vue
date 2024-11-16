@@ -1,0 +1,186 @@
+<template>
+  <div>
+    <div>
+      <div class="flex items-center gap-3 mb-5">
+        <h1 class="text-[#989898] font-normal text-[12px] cursor-pointer">
+          <nuxt-link to="/manage-cms">CMS</nuxt-link>
+        </h1>
+        <img src="@/static/svg/right-arrow.svg" alt="" />
+        <p class="text-[#1E1E1E] font-normal text-[12px] cursor-pointer">
+          ADD CMS
+        </p>
+      </div>
+      <form class="space-y-4 md:space-y-6 mt-6" @submit.prevent="addCms">
+        <div>
+          <div
+            class="grid lg:grid-cols-3 sm:grid-cols-2 :grid-cols-1 gap-y-4 sm:gap-4 lg:gap-4"
+          >
+            <div>
+              <label
+                for="type"
+                class="block mb-2 text-sm font-normal text-[#4B4B4B]"
+                >Type *</label
+              >
+              <input
+                type="text"
+                name="Type"
+                id="Type"
+                class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[14px] focus:outline-none"
+                :class="
+                  errors.type
+                    ? 'border border-red-600'
+                    : 'border border-gray-300'
+                "
+                placeholder="Your Type"
+                v-model="formData.type"
+              />
+              <span class="error-msg" v-if="errors.type">{{
+                errors.type
+              }}</span>
+            </div>
+            <div>
+              <label
+                for="Title"
+                class="block mb-2 text-sm font-normal text-[#4B4B4B]"
+                >Title *</label
+              >
+              <input
+                type="text"
+                name="Title"
+                id="Title"
+                placeholder="Your Title"
+                class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[14px] focus:outline-none"
+                :class="
+                  errors.title
+                    ? 'border border-red-600'
+                    : 'border border-gray-300'
+                "
+                v-model="formData.title"
+              />
+              <span class="error-msg" v-if="errors.title">{{
+                errors.title
+              }}</span>
+            </div>
+            <div>
+              <label
+                for="SubTitle"
+                class="block mb-2 text-sm font-normal text-[#4B4B4B]"
+                >Sub Title *</label
+              >
+              <input
+                type="text"
+                name="subTitle"
+                :class="
+                  errors.subTitle
+                    ? 'border border-red-600'
+                    : 'border border-gray-300'
+                "
+                placeholder="Your SubTitle"
+                class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[14px] focus:outline-none"
+                v-model="formData.subTitle"
+              />
+              <span class="error-msg" v-if="errors.subTitle">{{
+                errors.subTitle
+              }}</span>
+            </div>
+            <div>
+              <label
+                for="decription"
+                class="block mb-2 text-sm font-normal text-[#4B4B4B]"
+                >Decription *</label
+              >
+              <vue-editor
+                v-model="formData.decription"
+                :editorConfig="editorConfig"
+                class="!rounded-lg h-[100px]"
+              />
+            </div>
+            <div class="">
+              <label
+                for="companyFormation"
+                class="block mb-2 text-sm font-normal text-[#1E1E1E]"
+                >Role</label
+              >
+              <Dropdown
+                :items="countriesList"
+                :selectedLabel="selectedLabel"
+                @getValue="getValue"
+              />
+            </div>
+          </div>
+          <div class="flex justify-center">
+            <button
+              class="text-white bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] font-medium rounded-lg text-[16px] px-8 py-[15px] text-center mt-8 sm:mr-40"
+            >
+              Add Cms
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</template>
+
+<script>
+import { mapActions } from "vuex";
+export default {
+  layout: "dashboard",
+  data() {
+    return {
+      errors: {},
+      selectedLabel: "Select option",
+      countriesList: [
+        {
+          label: "User",
+        },
+        {
+          label: "Carrier",
+        },
+        {
+          label: "Admin",
+        },
+      ],
+      errorMessage: "",
+      formData: {
+        type: "",
+        title: "",
+        subTitle: "",
+        decription: "",
+        role: "",
+      },
+      editorConfig: {
+        toolbar: [
+          ["bold", "italic", "underline"],
+          ["link", "image"],
+          ["undo", "redo"],
+        ],
+      },
+    };
+  },
+  methods: {
+    ...mapActions({
+      CreateUser: "user/CreateUser",
+
+    }),
+    getValue(item) {
+      this.selectedLabel = item.label;
+      this.formData.role = item.label;
+      console.log(this.formData.role,'this.formData.role');
+    },
+    async addCms() {
+     try{
+      console.log(this.formData,'this.formData');
+     }
+     catch (error) {
+        console.log(error);
+        this.$toast.open({
+          message: error?.response?.data?.msg || this.$i18n.t("errorMessage"),
+          type: "error",
+        });
+      }
+    },
+  },
+};
+</script>
+
+<style scoped></style>
