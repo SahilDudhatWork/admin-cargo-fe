@@ -1,14 +1,38 @@
 ::-webkit-scrollbar {
-    width: 5px;
-    height: 5px;
-  }
-  
-  ::-webkit-scrollbar-thumb {
-    background: linear-gradient(90deg, #9ED0FF 0%, #0464CB 100%);
-  }
-  
-  .error-msg {
-    font-size: 14px;
-    font-weight: 400;
-    color: red;
-  }
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg, #9ed0ff 0%, #0464cb 100%);
+}
+
+.error-msg {
+  font-size: 14px;
+  font-weight: 400;
+  color: red;
+}
+
+.editor-container .ql-editor {
+  overflow-y: auto !important;
+  height: 100px !important;
+  max-height: 60vh !important;
+  padding: 10px !important;
+  box-sizing: border-box !important;
+}
+
+.editor-container {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-height: 300px !important;
+  height: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.editor-container .ql-container {
+  height: 100% !important;
+  min-height: 200px !important;
+  max-height: 70vh !important;
+  overflow-y: auto !important;
+}

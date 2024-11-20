@@ -30,7 +30,7 @@ export default {
     "~/plugins/moment.js",
     { src: "~/plugins/vue2-google-maps.js", ssr: false },
     "~/plugins/statusPlugin.js",
-    '~/plugins/vue2-editor.js',
+    "~/plugins/vue2-editor.js",
   ],
 
   components: [{ path: "~/components/", pathPrefix: false }],

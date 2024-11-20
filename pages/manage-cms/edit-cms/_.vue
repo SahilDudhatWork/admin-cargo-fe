@@ -7,10 +7,10 @@
         </h1>
         <img src="@/static/svg/right-arrow.svg" alt="" />
         <p class="text-[#1E1E1E] font-normal text-[12px] cursor-pointer">
-          ADD CMS
+          EDIT CMS
         </p>
       </div>
-      <form class="space-y-4 md:space-y-6 mt-6" @submit.prevent="addCms">
+      <form class="space-y-4 md:space-y-6 mt-6" @submit.prevent="editCms">
         <div>
           <div
             class="grid lg:grid-cols-3 sm:grid-cols-2 :grid-cols-1 gap-y-4 sm:gap-4 lg:gap-4"
@@ -57,7 +57,7 @@
                 errors.subTitle
               }}</span>
             </div>
-            <div>
+            <div class="">
               <label
                 for="Role"
                 class="block mb-2 text-sm font-normal text-[#4B4B4B]"
@@ -91,7 +91,7 @@
             <button
               class="text-white bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] font-medium rounded-lg text-[16px] px-8 py-[15px] text-center mt-8 sm:mr-40"
             >
-              Add Cms
+              Update Cms
             </button>
           </div>
         </div>
@@ -129,13 +129,29 @@ export default {
   },
   methods: {
     ...mapActions({
-      CreateCms: "cms/CreateCms",
+      fetchSingleCms: "cms/fetchSingleCms",
+      updateCms: "cms/updateCms",
     }),
     getValue(item) {
       this.selectedLabel = item.label;
       this.formData.role = item.label;
     },
-    async addCms() {
+    async getportBridge() {
+      try {
+        const res = await this.fetchSingleCms({
+          id: this.cmdId,
+        });
+        this.formData = res.data;
+        this.selectedLabel = res?.data?.role || "";
+      } catch (error) {
+        console.log(error, "error");
+        this.$toast.open({
+          message: error?.response?.data?.msg || this.$i18n.t("errorMessage"),
+          type: "error",
+        });
+      }
+    },
+    async editCms() {
       try {
         this.errors = await this.$validateCms({
           form: this.formData,
@@ -150,7 +166,7 @@ export default {
           return;
         }
 
-        const res = await this.CreateCms(this.formData);
+        const res = await this.updateCms(this.formData);
         this.$toast.open({
           message: res.msg,
         });
@@ -163,6 +179,15 @@ export default {
         });
       }
     },
+  },
+
+  async mounted() {
+    await this.getportBridge();
+  },
+  async asyncData({ params }) {
+    return {
+      cmdId: params.pathMatch,
+    };
   },
 };
 </script>

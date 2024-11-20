@@ -288,6 +288,28 @@ export default async (ctx, inject) => {
 
     return errors;
   };
+  const validateCms = async ({ form, selectedLabel }) => {
+    const errors = [];
+
+    const isEmpty = (value) => {
+      return typeof value === "string" ? value.trim() === "" : !value;
+    };
+
+    const setError = (fieldName, message) => {
+      errors[fieldName] = message;
+    };
+    if (selectedLabel === "Select option") {
+      setError("selectedLabel", "Please select an option");
+    }
+    if (isEmpty(form.title)) {
+      setError("title", "title is required");
+    }
+    if (isEmpty(form.subTitle)) {
+      setError("subTitle", "sub title is required");
+    }
+
+    return errors;
+  };
 
   const validatePortBridge = async ({ form }) => {
     const errors = [];
@@ -420,5 +442,6 @@ export default async (ctx, inject) => {
   inject("validateSettingPrice", validateSettingPrice);
   inject("validatePrice", validatePrice);
   inject("validateAreaPrice", validateAreaPrice);
+  inject("validateCms", validateCms);
   inject("validateServicesModal", validateServicesModal);
 };
