@@ -70,7 +70,7 @@
         </div>
       </div>
 
-      <form class="space-y-4 md:space-y-6 mt-6" @submit.prevent="editCarrier">
+      <form class="space-y-4 md:space-y-6 mt-6">
         <div>
           <div
             class="grid lg:grid-cols-3 sm:grid-cols-2 :grid-cols-1 gap-y-4 sm:gap-4 lg:gap-4"
@@ -448,9 +448,9 @@
               :key="key"
               class="grid gap-y-2"
             >
-            <h1 class="text-[#1E1E1E] font-medium text-base">
-              Commercial Reference {{ key + 1 }}
-            </h1>
+              <h1 class="text-[#1E1E1E] font-medium text-base">
+                Commercial Reference {{ key + 1 }}
+              </h1>
               <div
                 class="grid lg:grid-cols-3 sm:grid-cols-2 :grid-cols-1 gap-y-4 sm:gap-4 lg:gap-4"
               >
@@ -583,11 +583,25 @@
               </div>
             </div>
           </div>
-          <div class="flex justify-center mt-4">
+          <div class="flex justify-center mt-4 sm:gap-10 sm:flex-row flex-col">
             <button
-              class="mb-5 text-white bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] font-medium rounded-lg text-[16px] px-5 py-[15px] text-center"
+              type="button"
+              @click="editCarrier"
+              class="text-white bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] font-medium rounded-lg text-[16px] px-8 py-[15px] text-center mt-8"
             >
               Update Carrier
+            </button>
+            <button
+              type="button"
+              @click="handleVerify"
+              :class="
+                getSingleCarrierData?.verifyByAdmin
+                  ? 'bg-gradient-to-r from-[#59D31C] to-[#59D31C]'
+                  : 'bg-gradient-to-r from-[#eab308] to-[#eab308]'
+              "
+              class="text-white font-medium rounded-lg text-[16px] px-8 py-[15px] text-center mt-8"
+            >
+              {{ getSingleCarrierData?.verifyByAdmin ? "Verified" : "Verify" }}
             </button>
           </div>
         </div>
@@ -682,7 +696,49 @@ export default {
     ...mapActions({
       fetchSingleCarrier: "carrier/fetchSingleUser",
       updateCarrier: "carrier/updateCarrier",
+      carrierVerified: "carrier/carrierVerified",
+      carrierUnVerify: "carrier/carrierUnVerify",
     }),
+    async handleVerify() {
+      try {
+        const accountId = this.$route.params.pathMatch;
+        if (this.getSingleCarrierData.verifyByAdmin) {
+          try {
+            const res = await this.carrierUnVerify({ accountId: accountId });
+            this.$toast.open({
+              message: res.msg,
+            });
+          } catch (error) {
+            console.log(error);
+            this.$toast.open({
+              message:
+                error?.response?.data?.msg || this.$i18n.t("errorMessage"),
+              type: "error",
+            });
+          }
+        } else {
+          try {
+            const res = await this.carrierVerified({ accountId: accountId });
+            this.$toast.open({
+              message: res.msg,
+            });
+          } catch (error) {
+            console.log(error);
+            this.$toast.open({
+              message:
+                error?.response?.data?.msg || this.$i18n.t("errorMessage"),
+              type: "error",
+            });
+          }
+        }
+      } catch (error) {
+        console.log(error);
+        this.$toast.open({
+          message: error?.response?.data?.msg || this.$i18n.t("errorMessage"),
+          type: "error",
+        });
+      }
+    },
     getVehicle() {
       const carrierId = this.getSingleCarrierData?.accountId;
       this.$router.push(`/carrier/${carrierId}/vehicles`);

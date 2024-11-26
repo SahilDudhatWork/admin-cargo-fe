@@ -36,11 +36,9 @@ export const mutations = {
       !state.allUserData[userIndex].isBlocked;
   },
   userVerification(state, payload) {
-    const userIndex = state.allUserData.findIndex(
-      (user) => user._id === payload._id
-    );
-    state.allUserData[userIndex].verifyByAdmin =
-      !state.allUserData[userIndex].verifyByAdmin;
+    if (state.singleUserData.accountId == payload.accountId) {
+      state.singleUserData.verifyByAdmin = !state.singleUserData.verifyByAdmin;
+    }
   },
   removeUser(state, payload) {
     state.allUserData = state.allUserData.filter(

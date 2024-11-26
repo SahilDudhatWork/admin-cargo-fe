@@ -10,7 +10,7 @@
           EDIT USER
         </p>
       </div>
-      <form class="space-y-4 md:space-y-6 mt-6" @submit.prevent="editUser">
+      <form class="space-y-4 md:space-y-6 mt-6">
         <div>
           <div
             class="grid lg:grid-cols-3 sm:grid-cols-2 :grid-cols-1 gap-y-4 sm:gap-4 lg:gap-4"
@@ -310,9 +310,9 @@
               :key="key"
               class="grid gap-y-2"
             >
-            <h1 class="text-[#1E1E1E] font-medium text-base">
-              Commercial Reference {{ key + 1 }}
-            </h1>
+              <h1 class="text-[#1E1E1E] font-medium text-base">
+                Commercial Reference {{ key + 1 }}
+              </h1>
               <div
                 class="grid lg:grid-cols-3 sm:grid-cols-2 :grid-cols-1 gap-y-4 sm:gap-4 lg:gap-4"
               >
@@ -445,11 +445,25 @@
               </div>
             </div>
           </div>
-          <div class="flex justify-center">
+          <div class="flex justify-center sm:gap-10 sm:flex-row flex-col">
             <button
-              class="text-white bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] font-medium rounded-lg text-[16px] px-8 py-[15px] text-center mt-8 sm:mr-40"
+              type="button"
+              @click="editUser"
+              class="text-white bg-gradient-to-r from-[#0464CB] to-[#2AA1EB] font-medium rounded-lg text-[16px] px-8 py-[15px] text-center mt-8"
             >
               Update User
+            </button>
+            <button
+              type="button"
+              @click="handleVerify"
+              :class="
+                getSingleUserData?.verifyByAdmin
+                  ? 'bg-gradient-to-r from-[#59D31C] to-[#59D31C]'
+                  : 'bg-gradient-to-r from-[#eab308] to-[#eab308]'
+              "
+              class="text-white font-medium rounded-lg text-[16px] px-8 py-[15px] text-center mt-8"
+            >
+              {{ getSingleUserData?.verifyByAdmin ? "Verified" : "Verify" }}
             </button>
           </div>
         </div>
@@ -545,6 +559,8 @@ export default {
     ...mapActions({
       fetchSingleUser: "user/fetchSingleUser",
       updateUser: "user/updateUser",
+      userVerified: "user/userVerified",
+      userUnVerify: "user/userUnVerify",
     }),
     getCountry(item) {
       this.formData.countryCode = item.value;
@@ -651,6 +667,46 @@ export default {
       } else {
         this.formData.commercialReference =
           this.getSingleUserData?.commercialReference;
+      }
+    },
+    async handleVerify() {
+      try {
+        const accountId = this.$route.params.pathMatch;
+        if (this.getSingleUserData.verifyByAdmin) {
+          try {
+            const res = await this.userUnVerify({ accountId: accountId });
+            this.$toast.open({
+              message: res.msg,
+            });
+          } catch (error) {
+            console.log(error, "error");
+            this.$toast.open({
+              message:
+                error?.response?.data?.msg || this.$i18n.t("errorMessage"),
+              type: "error",
+            });
+          }
+        } else {
+          try {
+            const res = await this.userVerified({ accountId: accountId });
+            this.$toast.open({
+              message: res.msg,
+            });
+          } catch (error) {
+            console.log(error, "error");
+            this.$toast.open({
+              message:
+                error?.response?.data?.msg || this.$i18n.t("errorMessage"),
+              type: "error",
+            });
+          }
+        }
+      } catch (error) {
+        console.log(error, "error");
+        this.$toast.open({
+          message: error?.response?.data?.msg || this.$i18n.t("errorMessage"),
+          type: "error",
+        });
       }
     },
     async editUser() {

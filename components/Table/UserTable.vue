@@ -45,7 +45,7 @@
                 scope="col"
                 class="px-6 py-3 text-[#000000] font-normal text-[12px]"
               >
-                Verify Admin
+                Status
               </th>
               <th
                 scope="col"
@@ -92,7 +92,7 @@
                 Menlo Park, CA 94025, USA Lorem ipsum dolor sit amet
                 consectetur, Vitae netus
               </td> -->
-              <td class="cursor-pointer" @click="handleVerify(item)">
+              <td class="cursor-pointer">
                 <span
                   class="ml-6 border-b font-normal text-[12px]"
                   :class="
@@ -266,9 +266,6 @@ export default {
   methods: {
     editUser(item) {
       this.$emit("handleClick", item);
-    },
-    async handleVerify(item) {
-      this.$emit("handleVerify", item);
     },
     prevPage() {
       if (this.currentPage > 1) {

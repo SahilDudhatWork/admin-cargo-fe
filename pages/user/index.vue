@@ -36,7 +36,6 @@
       <UserTable
         :allData="allUserData"
         :paginationText="paginationText"
-        @handleVerify="handleVerify"
         @deleteItem="removeUser"
         @handleClick="editUser"
         @firstPage="firstPage"
@@ -78,9 +77,6 @@ export default {
   methods: {
     ...mapActions({
       fetchAllUser: "user/fetchAllUser",
-      userAddToBlock: "user/userAddToBlock",
-      userVerified: "user/userVerified",
-      userUnVerify: "user/userUnVerify",
       deleteUser: "user/deleteUser",
     }),
     async getAllUser(payload) {
@@ -210,45 +206,6 @@ export default {
     async removeUser(id) {
       this.isModal = true;
       this.selectedId = id;
-    },
-    async handleVerify(item) {
-      try {
-        if (item.verifyByAdmin) {
-          try {
-            const res = await this.userUnVerify(item);
-            this.$toast.open({
-              message: res.msg,
-            });
-          } catch (error) {
-            console.log(error);
-            this.$toast.open({
-              message:
-                error?.response?.data?.msg || this.$i18n.t("errorMessage"),
-              type: "error",
-            });
-          }
-        } else {
-          try {
-            const res = await this.userVerified(item);
-            this.$toast.open({
-              message: res.msg,
-            });
-          } catch (error) {
-            console.log(error);
-            this.$toast.open({
-              message:
-                error?.response?.data?.msg || this.$i18n.t("errorMessage"),
-              type: "error",
-            });
-          }
-        }
-      } catch (error) {
-        console.log(error);
-        this.$toast.open({
-          message: error?.response?.data?.msg || this.$i18n.t("errorMessage"),
-          type: "error",
-        });
-      }
     },
   },
   async mounted() {

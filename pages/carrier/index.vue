@@ -36,7 +36,6 @@
       <CarrierTable
         :allData="allCarrierData"
         :paginationText="paginationText"
-        @handleVerify="handleVerify"
         @deleteItem="removeCarrier"
         @handleClick="editCarrier"
         @firstPage="firstPage"
@@ -77,8 +76,6 @@ export default {
   methods: {
     ...mapActions({
       fetchAllCarrier: "carrier/fetchAllCarrier",
-      carrierVerified: "carrier/carrierVerified",
-      carrierUnVerify: "carrier/carrierUnVerify",
       deleteCarrier: "carrier/deleteCarrier",
     }),
     async allActionButtons(type) {
@@ -211,45 +208,6 @@ export default {
     removeCarrier(id) {
       this.isModal = true;
       this.selectedId = id;
-    },
-    async handleVerify(item) {
-      try {
-        if (item.verifyByAdmin) {
-          try {
-            const res = await this.carrierUnVerify(item);
-            this.$toast.open({
-              message: res.msg,
-            });
-          } catch (error) {
-            console.log(error);
-            this.$toast.open({
-              message:
-                error?.response?.data?.msg || this.$i18n.t("errorMessage"),
-              type: "error",
-            });
-          }
-        } else {
-          try {
-            const res = await this.carrierVerified(item);
-            this.$toast.open({
-              message: res.msg,
-            });
-          } catch (error) {
-            console.log(error);
-            this.$toast.open({
-              message:
-                error?.response?.data?.msg || this.$i18n.t("errorMessage"),
-              type: "error",
-            });
-          }
-        }
-      } catch (error) {
-        console.log(error);
-        this.$toast.open({
-          message: error?.response?.data?.msg || this.$i18n.t("errorMessage"),
-          type: "error",
-        });
-      }
     },
   },
   async mounted() {

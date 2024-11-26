@@ -36,11 +36,10 @@ export const mutations = {
       !state.allCarrierData[carrierIndex].isBlocked;
   },
   carrierVerification(state, payload) {
-    const carrierIndex = state.allCarrierData.findIndex(
-      (user) => user._id === payload._id
-    );
-    state.allCarrierData[carrierIndex].verifyByAdmin =
-      !state.allCarrierData[carrierIndex].verifyByAdmin;
+    if (state.singleCarrierData.accountId == payload.accountId) {
+      state.singleCarrierData.verifyByAdmin =
+        !state.singleCarrierData.verifyByAdmin;
+    }
   },
   removeUser(state, payload) {
     state.allCarrierData = state.allCarrierData.filter(
