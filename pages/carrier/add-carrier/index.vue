@@ -385,9 +385,9 @@
               :key="key"
               class="grid gap-y-2"
             >
-            <h1 class="text-[#1E1E1E] font-medium text-base">
-              Commercial Reference {{ key + 1 }}
-            </h1>
+              <h1 class="text-[#1E1E1E] font-medium text-base">
+                Commercial Reference {{ key + 1 }}
+              </h1>
               <div
                 class="grid lg:grid-cols-3 sm:grid-cols-2 :grid-cols-1 gap-y-4 sm:gap-4 lg:gap-4"
               >
@@ -602,7 +602,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      CreateCarrier: "carrier/CreateCarrier",
+      createCarrier: "carrier/createCarrier",
     }),
     getCountry(item) {
       this.formData.countryCode = item.value;
@@ -844,7 +844,7 @@ export default {
           });
           return;
         }
-        const response = await this.CreateCarrier(formData);
+        const response = await this.createCarrier(formData);
         this.$toast.open({
           message: response.msg,
         });

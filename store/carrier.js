@@ -110,7 +110,7 @@ export const actions = {
       throw error;
     }
   },
-  async CreateCarrier(ctx, payload) {
+  async createCarrier(ctx, payload) {
     try {
       const response = await $axios.post("v1/admin/module/carrier", payload);
       return response;

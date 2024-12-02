@@ -11,6 +11,7 @@
         buttonText="Add Port & Bridge"
         listWidth="86%"
         @add="addPortBridge"
+        :isAddBtn="checkPermission?.add"
       />
     </div>
     <div class="mt-6">
@@ -29,7 +30,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   layout: "dashboard",
@@ -38,6 +39,14 @@ export default {
       isModal: false,
       allPortBridgeData: [],
     };
+  },
+  computed: {
+    ...mapGetters({
+      getSinglePermission: "auth/getSinglePermission",
+    }),
+    checkPermission() {
+      return this.getSinglePermission("Port & Bridge");
+    },
   },
   methods: {
     ...mapActions({

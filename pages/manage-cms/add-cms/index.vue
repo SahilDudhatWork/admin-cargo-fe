@@ -129,7 +129,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      CreateCms: "cms/CreateCms",
+      createCms: "cms/createCms",
     }),
     getValue(item) {
       this.selectedLabel = item.label;
@@ -150,7 +150,7 @@ export default {
           return;
         }
 
-        const res = await this.CreateCms(this.formData);
+        const res = await this.createCms(this.formData);
         this.$toast.open({
           message: res.msg,
         });

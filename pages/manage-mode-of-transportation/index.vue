@@ -11,6 +11,7 @@
         buttonText="Add Mode Of Transportation"
         listWidth="78%"
         @add="addModeOfTransportation"
+        :isAddBtn="checkPermission?.add"
       />
     </div>
     <div class="mt-6">
@@ -29,7 +30,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   layout: "dashboard",
@@ -39,6 +40,14 @@ export default {
       allModeOfTransportationData: {},
       flattenedData: [],
     };
+  },
+  computed: {
+    ...mapGetters({
+      getSinglePermission: "auth/getSinglePermission",
+    }),
+    checkPermission() {
+      return this.getSinglePermission("Mode Of Transportation");
+    },
   },
   methods: {
     ...mapActions({

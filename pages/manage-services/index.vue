@@ -11,6 +11,7 @@
         buttonText="Add Service"
         listWidth="90%"
         @add="addService"
+        :isAddBtn="checkPermission?.add"
       />
     </div>
     <div class="mt-4">
@@ -29,7 +30,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   layout: "dashboard",
   data() {
@@ -37,6 +38,14 @@ export default {
       isModal: false,
       allServiceData: [],
     };
+  },
+  computed: {
+    ...mapGetters({
+      getSinglePermission: "auth/getSinglePermission",
+    }),
+    checkPermission() {
+      return this.getSinglePermission("Service");
+    },
   },
   methods: {
     ...mapActions({

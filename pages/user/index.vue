@@ -27,6 +27,7 @@
         buttonText="Add User"
         listWidth="92%"
         @add="addUser"
+        :isAddBtn="checkPermission?.add"
       />
     </div>
     <div class="mt-6">
@@ -42,6 +43,8 @@
         @prevPage="prevPage"
         @nextPage="nextPage"
         @lastPage="lastPage"
+        :isEditBtn="checkPermission?.edit"
+        :isDeleteBtn="checkPermission?.delete"
       />
       <DeleteAlertModal
         :isModal="isModal"
@@ -60,7 +63,6 @@ export default {
   data() {
     return {
       isModal: false,
-      selectedItem: null,
       sortBy: "all",
       search: "",
     };
@@ -69,9 +71,13 @@ export default {
     ...mapGetters({
       allUserData: "user/getAllUserData",
       userPaginationData: "user/getUserPaginationData",
+      getSinglePermission: "auth/getSinglePermission",
     }),
     paginationText() {
       return this.generatePaginationText(this.userPaginationData);
+    },
+    checkPermission() {
+      return this.getSinglePermission("User");
     },
   },
   methods: {

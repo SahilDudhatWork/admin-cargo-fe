@@ -120,6 +120,7 @@ export default {
   methods: {
     ...mapActions({
       signin: "auth/signin",
+      checkPermissions: "auth/checkPermissions",
     }),
     togglePassword() {
       this.isPassword = !this.isPassword;
@@ -133,11 +134,26 @@ export default {
           });
         } else {
           this.formData.email = this.formData.email.toLowerCase();
-          const res = await this.signin(this.formData);
+          await this.signin(this.formData);
           this.$toast.open({
             message: this.$i18n.t("loginMessage"),
           });
-          this.$router.push("/dashboard");
+
+          const response = await this.checkPermissions();
+
+          if (response && response.data && response.data.menuDetails) {
+            const filteredMenu = response.data.menuDetails.filter(
+              (menu) => menu.read
+            );
+
+            if (filteredMenu.length > 0) {
+              this.$router.push(filteredMenu[0].to);
+            } else {
+              this.$router.push("/dashboard");
+            }
+          } else {
+            this.$router.push("/dashboard");
+          }
         }
       } catch (error) {
         console.log(error);

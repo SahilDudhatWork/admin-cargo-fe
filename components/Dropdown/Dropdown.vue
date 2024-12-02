@@ -5,23 +5,23 @@
       class="dropdown-list relative bg-white mx-0 text-[#5B638B] font-semibold rounded-lg text-base py-[17px] w-full xl:w-[382px] text-center inline-flex justify-between px-2"
       :class="[
         isDropdown ? ' border-t border-r border-l rounded-t-lg' : 'border',
-        !isDisabled ? 'bg-white' : 'bg-[#efefef4d]',
+        !computedIsDisabled ? 'bg-white' : 'bg-[#efefef4d]',
         errors ? 'border border-red-600' : 'border',
       ]"
       type="button"
-      :disabled="isDisabled"
+      :disabled="computedIsDisabled"
     >
       <span class="flex gap-2 justify-between">
         <span>{{ selectedLabel || "Select option" }}</span>
         <img
           src="@/static/svg/up-arrow.svg"
           alt=""
-          v-if="isDropdown"
+          v-if="computedIsDisabled"
           class="absolute right-3 top-5"
         />
         <div v-else>
           <img
-            v-if="!isDisabled"
+            v-if="!computedIsDisabled"
             src="@/static/svg/down-arrow.svg"
             alt=""
             class="absolute right-4 top-6"
@@ -72,6 +72,11 @@ export default {
       default: "",
     },
   },
+  computed: {
+    computedIsDisabled() {
+      return this.isDisabled || this.items.length === 0;
+    },
+  },
   data() {
     return {
       isDropdown: false,
@@ -82,6 +87,7 @@ export default {
       this.isDropdown = false;
     },
     toggleDropdown() {
+      if (this.computedIsDisabled) return;
       this.isDropdown = !this.isDropdown;
       // if (this.isDropdown) {
       //   this.$nextTick(() => {

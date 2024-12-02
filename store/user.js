@@ -111,7 +111,7 @@ export const actions = {
       throw error;
     }
   },
-  async CreateUser(ctx, payload) {
+  async createUser(ctx, payload) {
     try {
       const response = await $axios.post("v1/admin/module/user", payload);
       return response;

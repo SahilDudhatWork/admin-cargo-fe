@@ -2,16 +2,26 @@ import $axios from "@/plugins/axios";
 
 export const state = () => ({
   profileData: {},
+  permissionsData: {},
 });
 
 export const getters = {
   getUserProfile(state) {
     return state.profileData;
   },
+  getPermissionsData(state) {
+    return state.permissionsData;
+  },
+  getSinglePermission: (state, getters) => (menu) => {
+    return state.permissionsData?.menuDetails?.find((x) => x.menuTitle == menu);
+  },
 };
 export const mutations = {
   setUserProfile(state, payload) {
     state.profileData = payload;
+  },
+  setPermissionsData(state, payload) {
+    state.permissionsData = payload;
   },
 };
 
@@ -45,6 +55,15 @@ export const actions = {
     try {
       const response = await $axios.get("/v1/admin/profile");
       ctx.commit("setUserProfile", response.data);
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  },
+  async checkPermissions(ctx, payload) {
+    try {
+      const response = await $axios.get("/v1/admin/auth/checkPermissions");
+      ctx.commit("setPermissionsData", response.data);
       return response;
     } catch (error) {
       throw error;

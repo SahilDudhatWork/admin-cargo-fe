@@ -11,6 +11,7 @@
         buttonText="Add Cms"
         listWidth="92%"
         @add="addArea"
+        :isAddBtn="checkPermission?.add"
       />
     </div>
     <div class="mt-4">
@@ -18,6 +19,8 @@
         :allData="allCmsData"
         @deleteItem="removeCms"
         @handleClick="editCms"
+        :isEditBtn="checkPermission?.edit"
+        :isDeleteBtn="checkPermission?.delete"
       />
       <DeleteAlertModal
         :isModal="isModal"
@@ -37,6 +40,14 @@ export default {
       isModal: false,
       allCmsData: [],
     };
+  },
+  computed: {
+    ...mapGetters({
+      getSinglePermission: "auth/getSinglePermission",
+    }),
+    checkPermission() {
+      return this.getSinglePermission("Manage CMS");
+    },
   },
   methods: {
     ...mapActions({

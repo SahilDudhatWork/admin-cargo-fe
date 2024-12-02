@@ -11,16 +11,21 @@
         buttonText="Add Banner"
         listWidth="91%"
         @add="addBanner"
+        :isAddBtn="checkPermission?.add"
       />
     </div>
     <div>
-      <BannerTable :allData="bannerData" @handleClick="editBanner" />
+      <BannerTable
+        :allData="bannerData"
+        @handleClick="editBanner"
+        :isEditBtn="checkPermission?.edit"
+      />
     </div>
   </div>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   layout: "dashboard",
@@ -30,7 +35,14 @@ export default {
       bannerData: [],
     };
   },
-  computed: {},
+  computed: {
+    ...mapGetters({
+      getSinglePermission: "auth/getSinglePermission",
+    }),
+    checkPermission() {
+      return this.getSinglePermission("Banners");
+    },
+  },
   methods: {
     ...mapActions({
       fetchBanners: "banner/fetchBanners",

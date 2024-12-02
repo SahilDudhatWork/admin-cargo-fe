@@ -25,6 +25,7 @@
               </th>
               <th
                 scope="col"
+                v-if="isEditBtn"
                 class="py-3 rounded-tr-lg text-[#000000] font-normal text-[12px]"
               >
                 Actions
@@ -63,6 +64,7 @@
               <td>
                 <div class="flex items-center gap-2">
                   <img
+                    v-if="isEditBtn"
                     src="@/static/svg/edit-icon.svg"
                     alt=""
                     class="w-[17px] h-[17px]"
@@ -104,6 +106,10 @@ export default {
     paginationText: {
       type: String,
       default: "",
+    },
+    isEditBtn: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {

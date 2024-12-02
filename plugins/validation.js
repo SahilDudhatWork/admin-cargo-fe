@@ -310,6 +310,23 @@ export default async (ctx, inject) => {
 
     return errors;
   };
+  const validateRole = async ({ form }) => {
+    const errors = [];
+
+    const isEmpty = (value) => {
+      return typeof value === "string" ? value.trim() === "" : !value;
+    };
+
+    const setError = (fieldName, message) => {
+      errors[fieldName] = message;
+    };
+
+    if (isEmpty(form.roleTitle)) {
+      setError("roleTitle", "role-title is required");
+    }
+
+    return errors;
+  };
 
   const validatePortBridge = async ({ form }) => {
     const errors = [];
@@ -432,6 +449,40 @@ export default async (ctx, inject) => {
     return errors;
   };
 
+  const validateSubAdminForm = async ({
+    form,
+    isEdit = false,
+    selectedLabel,
+  }) => {
+    const errors = {};
+    const isEmpty = (value) => {
+      return typeof value === "string" ? value.trim() === "" : !value;
+    };
+    const setError = (fieldName, message) => {
+      errors[fieldName] = message;
+    };
+
+    const validateField = (field, fieldName, errorLabel) => {
+      if (isEmpty(field)) {
+        setError(fieldName, `${errorLabel} is required`);
+      }
+    };
+
+    validateField(form.contactName, "contactName", "contact-name");
+    validateField(form.email, "email", "email");
+    if (!isEdit) {
+      validateField(form.password, "password", "password");
+    }
+    if (selectedLabel === "Select option") {
+      setError("selectedLabel", "Please select an option");
+    }
+    if (form.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+      setError("email", "Invalid email format");
+    }
+
+    return errors;
+  };
+
   inject("validateUserForm", validateUserForm);
   inject("validateCarrierForm", validateCarrierForm);
   inject("validateBannerForm", validateBannerForm);
@@ -443,5 +494,7 @@ export default async (ctx, inject) => {
   inject("validatePrice", validatePrice);
   inject("validateAreaPrice", validateAreaPrice);
   inject("validateCms", validateCms);
+  inject("validateSubAdminForm", validateSubAdminForm);
+  inject("validateRole", validateRole);
   inject("validateServicesModal", validateServicesModal);
 };

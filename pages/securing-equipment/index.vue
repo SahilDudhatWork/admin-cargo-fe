@@ -11,6 +11,7 @@
         buttonText="Add Securing Equipment"
         listWidth="81%"
         @add="addsecuringEquipment"
+        :isAddBtn="checkPermission?.add"
       />
     </div>
     <div class="mt-6">
@@ -23,7 +24,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   layout: "dashboard",
@@ -32,6 +33,14 @@ export default {
       allSecuringEquipmentData: {},
       flattenedData: [],
     };
+  },
+  computed: {
+    ...mapGetters({
+      getSinglePermission: "auth/getSinglePermission",
+    }),
+    checkPermission() {
+      return this.getSinglePermission("Securing Equipment");
+    },
   },
   methods: {
     ...mapActions({

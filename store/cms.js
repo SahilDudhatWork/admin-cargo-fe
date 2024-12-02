@@ -27,7 +27,7 @@ export const actions = {
     }
   },
 
-  async CreateCms(ctx, payload) {
+  async createCms(ctx, payload) {
     try {
       const response = await $axios.post("v1/admin/guidelinePages", payload);
       return response;

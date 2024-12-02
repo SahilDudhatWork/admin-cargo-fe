@@ -27,6 +27,7 @@
         buttonText="Add Carrier"
         listWidth="91%"
         @add="addCarrier"
+        :isAddBtn="checkPermission?.add"
       />
     </div>
     <div class="mt-6">
@@ -42,6 +43,8 @@
         @prevPage="prevPage"
         @nextPage="nextPage"
         @lastPage="lastPage"
+        :isEditBtn="checkPermission?.edit"
+        :isDeleteBtn="checkPermission?.delete"
       />
       <DeleteAlertModal
         :isModal="isModal"
@@ -59,7 +62,6 @@ export default {
   data() {
     return {
       isModal: false,
-      selectedItem: null,
       sortBy: "all",
       search: "",
     };
@@ -68,9 +70,13 @@ export default {
     ...mapGetters({
       allCarrierData: "carrier/getAllCarrierData",
       carrierPaginationData: "carrier/getCarrierPaginationData",
+      getSinglePermission: "auth/getSinglePermission",
     }),
     paginationText() {
       return this.generatePaginationText(this.carrierPaginationData);
+    },
+    checkPermission() {
+      return this.getSinglePermission("Carrier");
     },
   },
   methods: {

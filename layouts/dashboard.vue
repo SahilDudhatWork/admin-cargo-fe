@@ -293,12 +293,16 @@ import blackCityManagementSvg from "@/static/svg/black-city-management.svg";
 import cityManagementSvg from "@/static/svg/city-management.svg";
 import cmsManagementSvg from "@/static/svg/cms.svg";
 import blackCmsManagementSvg from "@/static/svg/black-cms.svg";
+import manageRoleSvg from "@/static/svg/manage-role.svg";
+import blackManageRoleSvg from "@/static/svg/black-manage-role.svg";
 import blackManageServiceSvg from "@/static/svg/black-manage-services.svg";
+import subAdminSvg from "@/static/svg/sub-admin.svg";
+import blackSubAdminSvg from "@/static/svg/black-sub-admin.svg";
 import Cookies from "js-cookie";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
-  middleware: "auth",
+  middleware: ["auth", "permissionCheck"],
   data() {
     return {
       isSidebarOpen: false,
@@ -388,6 +392,21 @@ export default {
           blackSvg: blackCmsManagementSvg,
         },
         {
+          name: "Manage Role",
+          href: "/manage-role",
+          isActive: false,
+          isOpenSubMenu: false,
+          svg: manageRoleSvg,
+          blackSvg: blackManageRoleSvg,
+        },
+        {
+          name: "Sub Admin",
+          href: "/sub-admin",
+          isActive: false,
+          svg: subAdminSvg,
+          blackSvg: blackSubAdminSvg,
+        },
+        {
           name: "Settings",
           href: "/settings",
           isActive: false,
@@ -405,15 +424,16 @@ export default {
       this.updateActiveTab(newPath);
     },
   },
-  beforeMount() {
-    this.updateActiveTab(this.$router.history.current.fullPath);
-  },
   computed: {
     ...mapGetters({
       profileData: "auth/getUserProfile",
+      permissionsData: "auth/getPermissionsData",
     }),
   },
   methods: {
+    ...mapActions({
+      checkPermissions: "auth/checkPermissions",
+    }),
     closeDropdown() {
       this.isDropdown = false;
     },
@@ -461,6 +481,27 @@ export default {
         }
       });
     },
+    async fetchPermissions() {
+      try {
+        await this.checkPermissions();
+        if (this.permissionsData && this.permissionsData.menuDetails) {
+          this.sideBarItems = this.sideBarItems.filter((item) => {
+            const matchedMenu = this.permissionsData.menuDetails.find(
+              (menu) => menu.menuTitle === item.name
+            );
+            return matchedMenu?.read;
+          });
+        } else {
+          console.warn("menuDetails not found in API response.");
+        }
+      } catch (error) {
+        console.log(error, "error");
+      }
+    },
+  },
+  beforeMount() {
+    this.fetchPermissions();
+    this.updateActiveTab(this.$router.history.current.fullPath);
   },
 };
 </script>

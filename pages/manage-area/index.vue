@@ -11,6 +11,7 @@
         buttonText="Add Area"
         listWidth="92%"
         @add="addArea"
+        :isAddBtn="checkPermission?.add"
       />
     </div>
     <div class="mt-4">
@@ -24,6 +25,8 @@
         @prevPage="prevPage"
         @nextPage="nextPage"
         @lastPage="lastPage"
+        :isEditBtn="checkPermission?.edit"
+        :isDeleteBtn="checkPermission?.delete"
       />
       <DeleteAlertModal
         :isModal="isModal"
@@ -35,7 +38,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   layout: "dashboard",
   data() {
@@ -47,8 +50,14 @@ export default {
     };
   },
   computed: {
+    ...mapGetters({
+      getSinglePermission: "auth/getSinglePermission",
+    }),
     paginationText() {
       return this.generatePaginationText(this.areaPaginationData);
+    },
+    checkPermission() {
+      return this.getSinglePermission("City Management");
     },
   },
   methods: {

@@ -37,6 +37,7 @@
               </th>
               <th
                 scope="col"
+                v-if="isEditBtn || isDeleteBtn"
                 class="py-3 rounded-tr-lg text-[#000000] font-normal text-[12px]"
               >
                 Actions
@@ -72,14 +73,19 @@
                 </span>
               </td>
               <td>
-                <div class="flex items-center gap-2">
+                <div
+                  class="flex items-center gap-2"
+                  v-if="isEditBtn || isDeleteBtn"
+                >
                   <img
+                    v-if="isEditBtn"
                     src="@/static/svg/edit-icon.svg"
                     alt=""
                     class="w-[17px] h-[17px]"
                     @click="$emit('handleClick', item._id)"
                   />
                   <img
+                    v-if="isDeleteBtn"
                     src="@/static/svg/delete-icon.svg"
                     alt=""
                     class="w-[20px] h-[20px]"
@@ -111,6 +117,14 @@ export default {
     allData: {
       type: Array,
       required: true,
+    },
+    isEditBtn: {
+      type: Boolean,
+      default: false,
+    },
+    isDeleteBtn: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
