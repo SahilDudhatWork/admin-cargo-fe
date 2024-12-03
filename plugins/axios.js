@@ -2,8 +2,8 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 const $axios = axios.create({
-  // baseURL: "https://api.mycargoconnects.com",
-  baseURL: "http://localhost:5555",
+  baseURL: "https://api.mycargoconnects.com",
+  // baseURL: "http://localhost:5555",
 });
 
 $axios.interceptors.request.use(
