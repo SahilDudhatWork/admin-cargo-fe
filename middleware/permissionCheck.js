@@ -116,7 +116,10 @@ export default async function ({ store, route, redirect, from }) {
 
       const currentPath = route.fullPath.replace(/\/+$/, "");
 
-      const currentPermission = permissions[currentPath];
+      const normalizedPath = Object.keys(permissions).find((path) =>
+        currentPath.startsWith(path)
+      );
+      const currentPermission = permissions[normalizedPath];
 
       if (currentPermission) {
         const { action, permission } = currentPermission;
