@@ -114,20 +114,32 @@ export default async function ({ store, route, redirect, from }) {
         "/dashboard": { action: "read", permission: "Dashboard" },
       };
 
-      const currentPath = route.fullPath.replace(/\/+$/, "");
+      const currentPath = route.fullPath
+        .replace(/\/+$/, "")
+        .split("?")[0]
+        .split("#")[0];
 
-      const normalizedPath = Object.keys(permissions).find((path) =>
-        currentPath.startsWith(path)
-      );
-      const currentPermission = permissions[normalizedPath];
+      let currentPermission = null;
 
-      if (currentPermission) {
+      for (const path in permissions) {
+        const regexPattern = path.replace(/:\w+/g, "\\w+");
+        const regex = new RegExp(`^${regexPattern}$`);
+
+        if (regex.test(currentPath)) {
+          currentPermission = permissions[path];
+          break;
+        }
+      }
+
+      if (currentPermission && currentPermission !== null) {
         const { action, permission } = currentPermission;
         const access = store.getters["auth/getSinglePermission"](permission);
 
         if (!access || !access[action]) {
           history.back();
         }
+      } else {
+        history.back();
       }
     }
   } catch (error) {
