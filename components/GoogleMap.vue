@@ -1,7 +1,7 @@
 <template>
   <div>
     <GmapMap
-      :center="getMapLocation"
+      :center="mapCenter"
       :zoom="12"
       map-style-id="roadmap"
       map-type-id="terrain"
@@ -41,7 +41,6 @@ export default {
       geocoder: null,
       polygonPaths: this.coordinates,
       getMapLocation: { lat: 40.73061, lng: -73.935242 },
-      drawingManager: null, // Drawing manager instance
     };
   },
   watch: {
@@ -49,6 +48,9 @@ export default {
       immediate: true,
       handler(newCoords) {
         this.polygonPaths = newCoords;
+        if (newCoords.length) {
+          this.mapCenter = { lat: newCoords[0].lat, lng: newCoords[0].lng };
+        }
       },
     },
   },
