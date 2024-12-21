@@ -58,6 +58,21 @@
       </div>
       <div class="bg-[#E6E6E6] h-[1px] w-full mt-6"></div>
     </div>
+    <div
+      class="mt-7"
+      v-if="
+        serviceSingleData?.operatorData?.accountId &&
+        location?.lat &&
+        location?.long
+      "
+    >
+      <GoogleMapMarker
+        :addressDetails="location"
+        height="300px"
+        :isMarkerEnabled="false"
+      />
+      <div class="bg-[#E6E6E6] h-[1px] w-full mt-7"></div>
+    </div>
     <div class="mt-5">
       <Locations :serviceSingleData="serviceSingleData" />
     </div>
@@ -77,11 +92,13 @@ export default {
   data() {
     return {
       serviceSingleData: {},
+      location: {},
     };
   },
   methods: {
     ...mapActions({
       fetchSingleService: "services/fetchSingleService",
+      fetchLocation: "services/fetchLocation",
     }),
     async getSingleTransitInfo() {
       try {
@@ -97,9 +114,24 @@ export default {
         });
       }
     },
+    async getLocation() {
+      try {
+        const accountId = this.serviceSingleData?.operatorData?.accountId;
+        if (!accountId) {
+          return;
+        }
+        const res = await this.fetchLocation({
+          id: accountId,
+        });
+        this.location = res?.data;
+      } catch (error) {
+        console.log(error, "error");
+      }
+    },
   },
   async beforeMount() {
     await this.getSingleTransitInfo();
+    await this.getLocation();
   },
   async asyncData({ params }) {
     return {

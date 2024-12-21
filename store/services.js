@@ -98,4 +98,15 @@ export const actions = {
       throw error;
     }
   },
+  async fetchLocation(ctx, payload) {
+    try {
+      const response = await $axios.get(
+        `/v1/common/locat/operator/${payload.id}`,
+        payload
+      );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  },
 };
