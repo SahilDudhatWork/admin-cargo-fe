@@ -17,8 +17,8 @@ export default async function ({ store, route, redirect, from }) {
         "/carrier/add-carrier": { action: "add", permission: "Carrier" },
         "/carrier/edit-carrier": { action: "edit", permission: "Carrier" },
         "/banners": { action: "read", permission: "Banners" },
-        "/banners/add-banners": { action: "add", permission: "Banners" },
-        "/banners/edit-banners": { action: "edit", permission: "Banners" },
+        "/banners/add-banner": { action: "add", permission: "Banners" },
+        "/banners/edit-banner": { action: "edit", permission: "Banners" },
         "/manage-cms": { action: "read", permission: "Manage CMS" },
         "/manage-cms/add-cms": { action: "add", permission: "Manage CMS" },
         "/manage-cms/edit-cms": { action: "edit", permission: "Manage CMS" },
@@ -114,27 +114,26 @@ export default async function ({ store, route, redirect, from }) {
         "/dashboard": { action: "read", permission: "Dashboard" },
       };
 
-      const currentPath = route.fullPath
-        .replace(/\/+$/, "")
-        .split("?")[0]
-        .split("#")[0];
-
-      let currentPermission = null;
-
-      for (const path in permissions) {
-        const regexPattern = path.replace(/:\w+/g, "\\w+");
-        const regex = new RegExp(`^${regexPattern}$`);
-
-        if (regex.test(currentPath)) {
-          currentPermission = permissions[path];
-          break;
-        }
+      let currentPath = route.fullPath;
+      if (route.params.pathMatch) {
+        currentPath = route.fullPath.replace(`/${route.params.pathMatch}`, "");
       }
+      let currentPermission = null;
+      currentPermission = currentPath ? permissions[currentPath] : null;
+
+      // for (const path in permissions) {
+      //   const regexPattern = path.replace(/:\w+/g, "\\w+");
+      //   const regex = new RegExp(`^${regexPattern}$`);
+
+      //   if (regex.test(currentPath)) {
+      //     currentPermission = permissions[path];
+      //     break;
+      //   }
+      // }
 
       if (currentPermission && currentPermission !== null) {
         const { action, permission } = currentPermission;
         const access = store.getters["auth/getSinglePermission"](permission);
-
         if (!access || !access[action]) {
           history.back();
         }
