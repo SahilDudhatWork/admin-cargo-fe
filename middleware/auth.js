@@ -12,14 +12,14 @@ export default async function ({ store, redirect }) {
         return redirect("/login");
       }
     } catch (error) {
-      if (
-        error.response.data.msg.name === "TokenExpiredError" ||
-        error.response.data.msg ==
-          "Your session has expired. Please log in again."
-      ) {
-        Cookies.remove("token");
-        return redirect("/login");
-      }
+      // if (
+      //   error.response.data.msg.name === "TokenExpiredError" ||
+      //   error.response.data.msg ==
+      //     "Your session has expired. Please log in again."
+      // ) {
+      Cookies.remove("token");
+      return redirect("/login");
+      // }
     }
   } else {
     return redirect("/login");
