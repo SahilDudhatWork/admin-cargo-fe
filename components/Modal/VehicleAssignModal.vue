@@ -12,11 +12,13 @@
     >
       <template #content>
         <div>
-          <div class="flex justify-between items-center mt-5 mb-6">
+          <div
+            class="flex justify-between items-center mt-5 mb-6 sm:flex-row flex-col"
+          >
             <h1 class="font-semibold text-lg text-[#3683D5]">Assign Vehicle</h1>
             <div
               v-if="allVehicleData?.length > 0"
-              class="flex justify-end gap-5 items-center"
+              class="flex justify-end sm:gap-5 gap-2 sm:mt-0 mt-3 items-center"
             >
               <span>{{ vehiclePaginationText }}</span>
               <button
@@ -122,16 +124,22 @@
             </div>
           </div>
           <div
+            class="overflow-y-auto sm:h-[480px] h-[400px]"
             v-if="allVehicleData.length > 0"
-            class="grid grid-cols-2 gap-y-5 overflow-y-auto h-[480px]"
           >
-            <AssignVehicle
-              v-for="item in allVehicleData"
-              :key="item._id"
-              :allVehicleData="item"
-              :isSelected="selectedVehicle && selectedVehicle._id === item._id"
-              @selectVehicle="selectVehicle(item)"
-            />
+            <div
+              class="grid sm:grid-cols-2 grid-cols-1 !gap-y-5 xl:gap-0 gap-3"
+            >
+              <AssignVehicle
+                v-for="item in allVehicleData"
+                :key="item._id"
+                :allVehicleData="item"
+                :isSelected="
+                  selectedVehicle && selectedVehicle._id === item._id
+                "
+                @selectVehicle="selectVehicle(item)"
+              />
+            </div>
           </div>
           <div v-else>
             <h1
