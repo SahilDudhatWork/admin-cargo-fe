@@ -31,6 +31,7 @@ export default {
     { src: "~/plugins/vue2-google-maps.js", ssr: false },
     "~/plugins/statusPlugin.js",
     "~/plugins/vue2-editor.js",
+    "~/plugins/vue2-daterange-picker.js",
   ],
 
   components: [{ path: "~/components/", pathPrefix: false }],

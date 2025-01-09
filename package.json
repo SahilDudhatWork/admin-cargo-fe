@@ -25,6 +25,7 @@
     "vue-slick-carousel": "^1.0.6",
     "vue-template-compiler": "^2.7.10",
     "vue-toast-notification": "^1.0.1",
+    "vue2-daterange-picker": "^0.6.8",
     "vue2-editor": "^2.10.3",
     "vue2-google-maps": "^0.10.7"
   }

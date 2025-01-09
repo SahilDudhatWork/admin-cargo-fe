@@ -109,4 +109,17 @@ export const actions = {
       throw error;
     }
   },
+  async fetchActivity(ctx, payload) {
+    try {
+      const startDate = payload?.startDate || "";
+      const endDate = payload?.endDate || "";
+      const response = await $axios.get(
+        `/v1/admin/activity/dashboard?startDate=${startDate}&endDate=${endDate}`,
+        payload
+      );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  },
 };
