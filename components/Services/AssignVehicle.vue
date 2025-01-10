@@ -36,9 +36,6 @@
             <div class="bg-[#1E1E1E] rounded-[4px] w-3 h-3"></div>
           </div>
         </div>
-        <div class="mt-4">
-          <img src="@/static/svg/dots.svg" alt="" />
-        </div>
       </div>
     </div>
   </div>

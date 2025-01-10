@@ -32,6 +32,7 @@ export default {
     "~/plugins/statusPlugin.js",
     "~/plugins/vue2-editor.js",
     "~/plugins/vue2-daterange-picker.js",
+    "~/plugins/loading-overlay.js",
   ],
 
   components: [{ path: "~/components/", pathPrefix: false }],

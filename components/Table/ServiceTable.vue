@@ -308,7 +308,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 
 export default {
   props: {
@@ -388,6 +388,10 @@ export default {
       fetchAllServices: "services/fetchAllServices",
       validateCarrierReference: "services/validateCarrierReference",
     }),
+    ...mapMutations({
+      setAllOperatorData: "operator/setAllOperatorData",
+      setAllVehicleData: "vehicle/setAllVehicleData",
+    }),
     buttonColor(status) {
       if (status === "NewAssignments") {
         return "#023770";
@@ -460,6 +464,7 @@ export default {
           });
           return;
         }
+        this.setAllOperatorData([]);
         this.isAssignCarrierModal = false;
         this.isAssignOperatorModal = true;
       } catch (error) {
@@ -494,6 +499,7 @@ export default {
           carrierId: this.carrierId,
           carrierReference: this.carrierReference,
         });
+        this.setAllVehicleData([]);
         this.isAssignVehicleModal = true;
         this.isAssignOperatorModal = false;
       } catch (error) {

@@ -1,13 +1,11 @@
 <template>
   <div>
-    <div class="grid grid-cols-2 gap-5">
+    <div class="grid lg:grid-cols-2 grid-cols-1 gap-5">
       <div>
-        <div class="flex items-center justify-between">
+        <div
+          class="flex items-center justify-between lg:flex-row flex-col gap-y-3"
+        >
           <h1 class="text-[#1E1E1E] font-normal text-sm">Requests</h1>
-          <!-- <div v-if="date">
-            {{ $moment(date.startDate).locale("en").format("MMMM,DD, YYYY") }} -
-            {{ $moment(date.endDate).locale("en").format("MMMM,DD, YYYY") }}
-          </div> -->
           <div>
             <StaticDropdown
               :items="listData"

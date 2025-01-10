@@ -39,9 +39,6 @@
               {{ allOperatorData?.operatorNumber }}
             </p>
           </div>
-          <div class="mt-4">
-            <img src="@/static/svg/dots.svg" alt="" />
-          </div>
         </div>
       </div>
       <div class="bg-[#EEEEEE] h-[1px] w-full mt-5 mb-5"></div>

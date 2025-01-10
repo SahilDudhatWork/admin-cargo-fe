@@ -151,6 +151,14 @@
         </div>
       </template>
     </AssignModal>
+    <loading
+      :active="isLoading"
+      :is-full-page="true"
+      color="#007BFF"
+      loader="bars"
+      :height="70"
+      :width="70"
+    />
   </div>
 </template>
 
@@ -168,7 +176,9 @@ export default {
     },
   },
   data() {
-    return {};
+    return {
+      isLoading: false,
+    };
   },
   computed: {
     ...mapGetters({
@@ -266,6 +276,7 @@ export default {
     },
     async getVehicleById(payload) {
       try {
+        this.isLoading = true;
         let { page, limit } = payload;
         page = page || 1;
         limit = limit || 10;
@@ -276,6 +287,8 @@ export default {
         });
       } catch (error) {
         console.log(error);
+      } finally {
+        this.isLoading = false;
       }
     },
   },

@@ -2,7 +2,7 @@
   <div>
     <button
       @click="toggleDropdown"
-      class="dropdown-list relative bg-white mx-0 text-[#5B638B] font-semibold rounded-lg text-base py-1.5 w-full xl:w-[140px] text-center inline-flex justify-between px-2"
+      class="dropdown-list relative bg-white mx-0 text-[#5B638B] font-semibold rounded-lg text-base py-1.5 w-[140px] text-center inline-flex justify-between px-2"
       :class="[
         isDropdown ? ' border-t border-r border-l rounded-t-lg' : 'border',
         !computedIsDisabled ? 'bg-white' : 'bg-[#efefef4d]',
@@ -31,7 +31,7 @@
     <div
       v-if="isDropdown"
       v-click-outside="closeDropdown"
-      class="!z-[999] bg-white rounded-lg shadow-md xl:w-[140px] w-full dark:bg-gray-700 absolute"
+      class="!z-[999] bg-white rounded-lg shadow-md w-[140px] dark:bg-gray-700 absolute"
     >
       <ul class="text-sm text-gray-700 dark:text-gray-200 cursor-pointer mb-2">
         <li v-for="(item, index) in items" :key="index">
