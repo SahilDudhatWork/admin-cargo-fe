@@ -33,6 +33,56 @@
     <div>
       <div class="mt-5" v-if="serviceSingleData?.userData">
         <UserInfo :serviceSingleData="serviceSingleData" />
+
+        <div
+          class="mt-4 bg-[#F7F7F7] px-2 rounded-lg py-2"
+          v-if="serviceSingleData?.qrCode && serviceSingleData?.qrCode.length"
+        >
+          <p class="text-[#1E1E1E] font-normal text-xs">
+            You received an <span class="font-semibold">QR code</span> from
+            carrier for further verification with user.
+          </p>
+          <div class="flex flex-wrap gap-4 mt-3">
+            <div v-for="(doc, key) in serviceSingleData?.qrCode" :key="key">
+              <img
+                v-if="
+                  fileTypes[doc] === 'application/pdf' ||
+                  fileTypes[doc] === 'pdf'
+                "
+                src="@/static/svg/pdf.svg"
+                alt="PDF Preview"
+                class="mt-2 w-[100px] h-[100px] cursor-pointer"
+                @click="downloadFileItem(doc)"
+              />
+              <img
+                v-else-if="
+                  fileTypes[doc] === 'application/msword' ||
+                  fileTypes[doc] === 'doc' ||
+                  fileTypes[doc] === 'document'
+                "
+                src="@/static/svg/doc.svg"
+                alt="DOC Preview"
+                class="mt-2 w-[100px] h-[100px] cursor-pointer"
+                @click="downloadFileItem(doc)"
+              />
+
+              <img
+                v-else-if="
+                  fileTypes[doc] === 'image' ||
+                  fileTypes[doc] === 'jpg' ||
+                  fileTypes[doc] === 'jpeg' ||
+                  fileTypes[doc] === 'png' ||
+                  fileTypes[doc] === 'gif' ||
+                  fileTypes[doc] === 'webp'
+                "
+                :src="doc"
+                alt="Image Preview"
+                class="mt-2 w-[100px] h-[100px] cursor-pointer"
+                @click="downloadFileItem(doc)"
+              />
+            </div>
+          </div>
+        </div>
       </div>
       <div class="bg-[#E6E6E6] h-[1px] w-full mt-6"></div>
     </div>
@@ -58,18 +108,18 @@
       </div>
       <div class="bg-[#E6E6E6] h-[1px] w-full mt-6"></div>
     </div>
-    <div
-      class="mt-7"
-      v-if="
-        serviceSingleData?.operatorData?.accountId &&
-        location?.lat &&
-        location?.long
-      "
-    >
+    <div class="mt-7">
+      <p
+        class="text-[#000000] font-bold text-lg mb-2"
+        v-if="!location?.lat && !location?.long"
+      >
+        Operator location not found
+      </p>
       <GoogleMapMarker
         :addressDetails="location"
         height="300px"
         :isMarkerEnabled="false"
+        :isShowMarker="location?.lat && location?.long ? true : false"
       />
       <div class="bg-[#E6E6E6] h-[1px] w-full mt-7"></div>
     </div>
@@ -93,13 +143,52 @@ export default {
     return {
       serviceSingleData: {},
       location: {},
+      fileTypes: {},
     };
+  },
+  watch: {
+    serviceSingleData: {
+      deep: true,
+      handler(item) {
+        this.checkFileTypes(item.qrCode);
+      },
+    },
   },
   methods: {
     ...mapActions({
       fetchSingleService: "services/fetchSingleService",
       fetchLocation: "services/fetchLocation",
     }),
+    downloadFileItem(doc) {
+      const baseUrl = "https://cargo-storage-bucket.s3.us-east-1.amazonaws.com";
+      if (doc.startsWith(baseUrl)) {
+        const fileName = doc.split("/").pop();
+        this.$downloadFile({ src: doc, name: fileName });
+      }
+    },
+    getFileTypeFromUrl(url) {
+      const extension = url.split(".").pop().toLowerCase();
+      const fileTypes = {
+        pdf: "pdf",
+        doc: "document",
+        docx: "document",
+        jpg: "image",
+        jpeg: "image",
+        png: "image",
+        gif: "image",
+        webp: "image",
+        mp4: "video",
+        mp3: "audio",
+        txt: "text",
+      };
+      return fileTypes[extension] || "unknown";
+    },
+    async checkFileTypes(urls) {
+      for (let url of urls) {
+        const fileType = this.getFileTypeFromUrl(url);
+        this.$set(this.fileTypes, url, fileType);
+      }
+    },
     async getSingleTransitInfo() {
       try {
         const res = await this.fetchSingleService({

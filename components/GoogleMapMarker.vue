@@ -13,6 +13,7 @@
       @center_changed="checkCenter"
     >
       <GmapMarker
+        v-if="isShowMarker"
         :position="marker.position"
         :clickable="isMarkerEnabled"
         :draggable="isMarkerEnabled"
@@ -34,6 +35,10 @@ export default {
       default: "242px",
     },
     isMarkerEnabled: {
+      type: Boolean,
+      default: true,
+    },
+    isShowMarker: {
       type: Boolean,
       default: true,
     },
