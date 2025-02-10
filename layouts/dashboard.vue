@@ -101,7 +101,7 @@
         class="fixed top-0 left-0 z-40 h-screen transition-transform sm:translate-x-0 bg-[#F5F9FD] ease-in-out duration-500 delay-1000"
         aria-label="Sidebar"
       >
-        <div class="bg-dashboard-img h-full py-7 dark:bg-gray-800">
+        <div class="bg-dashboard-img h-full py-7">
           <div>
             <div class="flex items-center justify-center gap-3">
               <img
@@ -267,7 +267,7 @@
       <div
         v-if="isSidebarOpen"
         @click="isSidebarOpen = false"
-        class="bg-gray-900/50 dark:bg-gray-900/80 fixed sm:inset-full inset-0 z-30"
+        class="bg-gray-900/50 fixed sm:inset-full inset-0 z-30"
       ></div>
       <div class="mt-24">
         <Nuxt />

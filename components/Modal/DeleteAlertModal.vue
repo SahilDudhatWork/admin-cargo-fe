@@ -11,7 +11,7 @@
           >
             <div class="flex items-center gap-1 mx-2">
               <svg
-                class="text-gray-400 dark:text-gray-500 w-6 h-6 mx-auto"
+                class="text-gray-400 w-6 h-6 mx-auto"
                 aria-hidden="true"
                 fill="currentColor"
                 viewBox="0 0 20 20"
@@ -28,7 +28,7 @@
             <svg
               @click="closeModal"
               aria-hidden="true"
-              class="text-gray-400 dark:text-gray-500 w-8 h-8 mb-3.5 mr-2 mt-2 cursor-pointer"
+              class="text-gray-400 w-8 h-8 mb-3.5 mr-2 mt-2 cursor-pointer"
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
@@ -43,7 +43,7 @@
           <div class="flex overflow-hidden w-[33rem] flex-col">
             <div>
               <svg
-                class="text-gray-400 dark:text-gray-500 w-11 h-11 mx-auto"
+                class="text-gray-400 w-11 h-11 mx-auto"
                 aria-hidden="true"
                 fill="currentColor"
                 viewBox="0 0 20 20"

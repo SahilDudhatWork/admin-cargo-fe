@@ -32,7 +32,7 @@
       <div
         v-if="isDropdown"
         v-click-outside="closeDropdown"
-        class="!z-[999] bg-white rounded-lg shadow-lg w-full dark:bg-gray-700 absolute"
+        class="!z-[999] bg-white rounded-lg shadow-lg w-full absolute"
       >
         <ul class="text-base text-gray-700 cursor-pointer">
           <li>

@@ -32,9 +32,9 @@
     <div
       v-if="isDropdown"
       v-click-outside="closeDropdown"
-      class="!z-[999] bg-white rounded-lg shadow-md xl:w-[382px] w-full dark:bg-gray-700 absolute"
+      class="!z-[999] bg-white rounded-lg shadow-md xl:w-[382px] w-full absolute"
     >
-      <ul class="text-sm text-gray-700 dark:text-gray-200 cursor-pointer mb-2">
+      <ul class="text-sm text-gray-700 cursor-pointer mb-2">
         <li v-for="(item, index) in items" :key="index">
           <a @click.prevent="selectItem(item, index)">
             <span class="block px-4 py-[16px] font-medium hover:bg-gray-100">
