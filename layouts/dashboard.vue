@@ -101,164 +101,161 @@
         class="fixed top-0 left-0 z-40 h-screen transition-transform sm:translate-x-0 bg-[#F5F9FD] ease-in-out duration-500 delay-1000"
         aria-label="Sidebar"
       >
-        <div class="bg-dashboard-img h-full py-7">
-          <div>
-            <div class="flex items-center justify-center gap-3">
+        <div class="h-full py-7 overflow-y-auto">
+          <div
+            class="flex items-center justify-center gap-3 fixed top-0 pt-7 bg-[#F5F9FD] w-full !z-50"
+          >
+            <img
+              src="@/static/Images/slime.webp"
+              alt=""
+              class="cursor-pointer sm:block hidden"
+              @click="toggleSidebarWidth"
+            />
+            <nuxt-link to="/dashboard">
               <img
-                src="@/static/Images/slime.webp"
+                src="@/static/Images/header-logo.webp"
                 alt=""
-                class="cursor-pointer sm:block hidden"
-                @click="toggleSidebarWidth"
+                v-if="isShow"
               />
-              <nuxt-link to="/dashboard">
-                <img
-                  src="@/static/Images/header-logo.webp"
-                  alt=""
-                  v-if="isShow"
-                />
-              </nuxt-link>
-            </div>
-            <div class="flex justify-center mt-12 sidebar">
-              <ul
-                class="flex flex-col text-white text-xl font-medium cursor-pointer w-full list-none relative"
+            </nuxt-link>
+          </div>
+          <div class="flex justify-center pt-12">
+            <ul
+              class="flex flex-col text-white text-xl font-medium cursor-pointer w-full list-none relative"
+            >
+              <li
+                v-for="(tab, key) in sideBarItems"
+                :key="key"
+                @click="toggleSidebarItems(tab)"
+                :class="
+                  previousPath == tab.href
+                    ? 'bg-[#3683D5] text-white'
+                    : 'text-[#686868]'
+                "
               >
-                <li
-                  v-for="(tab, key) in sideBarItems"
-                  :key="key"
-                  @click="toggleSidebarItems(tab)"
-                  :class="
-                    previousPath == tab.href
-                      ? 'bg-[#3683D5] text-white'
-                      : 'text-[#686868]'
-                  "
+                <Nuxt-link
+                  v-if="!tab.subItems"
+                  :to="tab.href"
+                  class="flex items-center gap-2 ml-5 py-[20px] relative group"
                 >
-                  <Nuxt-link
-                    v-if="!tab.subItems"
-                    :to="tab.href"
-                    class="flex items-center gap-2 ml-5 py-[20px] relative group"
+                  <img
+                    :src="previousPath == tab.href ? tab.svg : tab.blackSvg"
+                    alt=""
+                    class="w-5 h-5"
+                  />
+                  <div v-if="!isShow" :class="['tooltip', 'visible-tooltip']">
+                    <span>
+                      {{ tab?.name }}
+                    </span>
+                  </div>
+                  <span
+                    v-if="isShow"
+                    class="flex gap-4 font-medium text-sm"
+                    :class="
+                      previousPath == tab.href ? 'text-white' : 'text-[#686868]'
+                    "
+                    >{{ tab.name }}</span
                   >
-                    <img
-                      :src="previousPath == tab.href ? tab.svg : tab.blackSvg"
-                      alt=""
-                    />
-                    <div v-if="!isShow" :class="['tooltip', 'visible-tooltip']">
-                      <span>
-                        {{ tab?.name }}
-                      </span>
-                    </div>
+                </Nuxt-link>
+                <div
+                  v-if="tab.subItems"
+                  class="flex items-center gap-2 ml-5 py-[20px] group"
+                >
+                  <img
+                    :src="
+                      previousPath == tab.href ||
+                      tab.subItems.some(
+                        (subItem) => previousPath == subItem.href
+                      )
+                        ? tab.svg
+                        : tab.blackSvg
+                    "
+                    alt=""
+                    class="w-5 h-5"
+                  />
+                  <div class="flex gap-10 items-center">
                     <span
-                      v-if="isShow"
-                      class="flex gap-4 font-medium text-sm"
-                      :class="
-                        previousPath == tab.href
-                          ? 'text-white'
-                          : 'text-[#686868]'
-                      "
-                      >{{ tab.name }}</span
+                      v-if="!isShow"
+                      :class="['sideitem-tooltip', 'visible-tooltip']"
+                      class=""
                     >
-                  </Nuxt-link>
-                  <div
-                    v-if="tab.subItems"
-                    class="flex items-center gap-2 ml-5 py-[20px] group"
-                  >
-                    <img
-                      :src="
-                        previousPath == tab.href ||
-                        tab.subItems.some(
-                          (subItem) => previousPath == subItem.href
-                        )
-                          ? tab.svg
-                          : tab.blackSvg
-                      "
-                      alt=""
-                    />
-                    <div class="flex gap-10 items-center">
+                      <span class="mb-2"> Manage Serivces </span>
                       <span
-                        v-if="!isShow"
-                        :class="['sideitem-tooltip', 'visible-tooltip']"
-                        class=""
+                        v-for="(subItem, subIndex) in tab.subItems"
+                        :key="subIndex"
                       >
-                        <span class="mb-2"> Manage Serivces </span>
-                        <span
-                          v-for="(subItem, subIndex) in tab.subItems"
-                          :key="subIndex"
+                        <Nuxt-link
+                          :to="subItem.href"
+                          class="flex items-center gap-1"
                         >
-                          <Nuxt-link
-                            :to="subItem.href"
-                            class="flex items-center gap-1"
-                          >
-                            <div
-                              class="bg-white !w-1.5 !h-1.5 rounded-full"
-                            ></div>
-                            {{ subItem?.name }}
-                          </Nuxt-link>
-                        </span>
+                          <div
+                            class="bg-white !w-1.5 !h-1.5 rounded-full"
+                          ></div>
+                          {{ subItem?.name }}
+                        </Nuxt-link>
                       </span>
-                      <span
-                        v-if="isShow"
-                        class="flex gap-4 font-medium text-sm"
-                      >
-                        {{ tab.name }}
-                      </span>
-                      <div v-if="isShow">
-                        <img
-                          src="@/static/svg/black-down-arrow.svg"
-                          alt=""
-                          class="w-5"
-                          v-if="tab.isOpenSubMenu"
-                        />
-                        <img
-                          src="@/static/svg/black-right-arrow.svg"
-                          class="w-5"
-                          alt=""
-                          v-else
-                        />
-                      </div>
+                    </span>
+                    <span v-if="isShow" class="flex gap-4 font-medium text-sm">
+                      {{ tab.name }}
+                    </span>
+                    <div v-if="isShow">
+                      <img
+                        src="@/static/svg/black-down-arrow.svg"
+                        alt=""
+                        class="w-5"
+                        v-if="tab.isOpenSubMenu"
+                      />
+                      <img
+                        src="@/static/svg/black-right-arrow.svg"
+                        class="w-5"
+                        alt=""
+                        v-else
+                      />
                     </div>
                   </div>
-                  <div class="">
-                    <transition name="fade" mode="out-in">
-                      <ul class="slide-in-top" v-if="tab.isOpenSubMenu">
-                        <li
-                          v-for="subItem in tab.subItems"
-                          :key="subItem.href"
-                          :class="
-                            previousPath == subItem.href
-                              ? 'bg-[#3683D5] text-white'
-                              : 'text-[#686868]'
-                          "
-                          class="pl-12"
+                </div>
+                <div v-if="isShow">
+                  <transition name="fade" mode="out-in">
+                    <ul class="slide-in-top" v-if="tab.isOpenSubMenu">
+                      <li
+                        v-for="subItem in tab.subItems"
+                        :key="subItem.href"
+                        :class="
+                          previousPath == subItem.href
+                            ? 'bg-[#3683D5] text-white'
+                            : 'text-[#686868]'
+                        "
+                        class="pl-12"
+                      >
+                        <Nuxt-link
+                          :to="subItem.href"
+                          class="flex items-center gap-2 py-[10px]"
                         >
-                          <Nuxt-link
-                            :to="subItem.href"
-                            class="flex items-center gap-2 py-[10px]"
+                          <span
+                            :class="
+                              previousPath == subItem.href
+                                ? 'bg-white'
+                                : ' bg-black'
+                            "
+                            class="w-1.5 h-1.5 rounded-full"
+                          ></span>
+                          <span
+                            v-if="isShow"
+                            :class="
+                              previousPath == subItem.href
+                                ? 'text-white'
+                                : 'text-[#686868]'
+                            "
+                            class="flex gap-4 font-medium text-sm"
+                            >{{ subItem.name }}</span
                           >
-                            <span
-                              :class="
-                                previousPath == subItem.href
-                                  ? 'bg-white'
-                                  : ' bg-black'
-                              "
-                              class="w-1.5 h-1.5 rounded-full"
-                            ></span>
-                            <span
-                              v-if="isShow"
-                              :class="
-                                previousPath == subItem.href
-                                  ? 'text-white'
-                                  : 'text-[#686868]'
-                              "
-                              class="flex gap-4 font-medium text-sm"
-                              >{{ subItem.name }}</span
-                            >
-                          </Nuxt-link>
-                        </li>
-                      </ul>
-                    </transition>
-                  </div>
-                </li>
-              </ul>
-            </div>
+                        </Nuxt-link>
+                      </li>
+                    </ul>
+                  </transition>
+                </div>
+              </li>
+            </ul>
           </div>
         </div>
       </aside>
@@ -298,6 +295,8 @@ import blackManageRoleSvg from "@/static/svg/black-manage-role.svg";
 import blackManageServiceSvg from "@/static/svg/black-manage-services.svg";
 import subAdminSvg from "@/static/svg/sub-admin.svg";
 import blackSubAdminSvg from "@/static/svg/black-sub-admin.svg";
+import operatorSvg from "@/static/svg/operator-white.svg";
+import blackOperatorSvg from "@/static/svg/operator.svg";
 import Cookies from "js-cookie";
 import { mapGetters, mapActions } from "vuex";
 
@@ -343,6 +342,14 @@ export default {
           isOpenSubMenu: false,
           svg: carrierSvg,
           blackSvg: blackCarrierSvg,
+        },
+        {
+          name: "Operator",
+          href: "/operator",
+          isActive: false,
+          isOpenSubMenu: false,
+          svg: operatorSvg,
+          blackSvg: blackOperatorSvg,
         },
         {
           name: "Banners",

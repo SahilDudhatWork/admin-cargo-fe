@@ -104,7 +104,7 @@ export default {
       createService: "transitinfo/createService",
     }),
     async validatePriceInput(event) {
-      const validatedPrice = await this.$validatePrice(event.target.value);
+      const validatedPrice = await this.$validatePointPrice(event.target.value);
       this.typeOfService.price = validatedPrice;
     },
     async addService() {

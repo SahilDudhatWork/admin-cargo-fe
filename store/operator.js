@@ -55,6 +55,24 @@ export const actions = {
       throw error;
     }
   },
+  async fetchOperators(ctx, payload) {
+    try {
+      const sortBy = payload?.sortBy || "";
+      const keyWord = payload?.keyWord || "";
+      const page = payload?.page || "";
+      const limit = payload?.limit || "";
+
+      const response = await $axios.get(
+        `v1/admin/operator?&keyWord=${keyWord}&sortBy=${sortBy}&page=${page}&limit=${limit}`,
+        payload
+      );
+      ctx.commit("setAllOperatorData", response.data.response);
+      ctx.commit("setOperatorPaginationData", response.data?.pagination);
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  },
   async fetchSingleOperator(ctx, payload) {
     try {
       const response = await $axios.get(

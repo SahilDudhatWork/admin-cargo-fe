@@ -16,6 +16,7 @@ export default async function ({ store, route, redirect, from }) {
         "/carrier": { action: "read", permission: "Carrier" },
         "/carrier/add-carrier": { action: "add", permission: "Carrier" },
         "/carrier/edit-carrier": { action: "edit", permission: "Carrier" },
+        "/operator": { action: "read", permission: "Operator" },
         "/banners": { action: "read", permission: "Banners" },
         "/banners/add-banner": { action: "add", permission: "Banners" },
         "/banners/edit-banner": { action: "edit", permission: "Banners" },

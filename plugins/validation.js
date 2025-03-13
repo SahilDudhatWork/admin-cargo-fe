@@ -15,7 +15,12 @@ export default async (ctx, inject) => {
     return number;
   };
   const validatePrice = async (value) => {
-    let number = value.replace(/\D/g, "");
+    let number = value.replace(/[^0-9.]/g, "");
+    return number;
+  };
+
+  const validatePointPrice = async (value) => {
+    let number = value.replace(/[^0-9.]/g, "");
     return number;
   };
   const validateUserForm = async ({ form, isEdit = false }) => {
@@ -492,6 +497,7 @@ export default async (ctx, inject) => {
   inject("validateNumber", validateNumber);
   inject("validateSettingPrice", validateSettingPrice);
   inject("validatePrice", validatePrice);
+  inject("validatePointPrice", validatePointPrice);
   inject("validateAreaPrice", validateAreaPrice);
   inject("validateCms", validateCms);
   inject("validateSubAdminForm", validateSubAdminForm);
