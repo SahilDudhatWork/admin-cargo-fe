@@ -27,6 +27,12 @@
                 scope="col"
                 class="px-6 py-3 text-[#000000] font-normal text-[12px]"
               >
+                Carrier Info
+              </th>
+              <th
+                scope="col"
+                class="px-6 py-3 text-[#000000] font-normal text-[12px]"
+              >
                 License Number
               </th>
               <th
@@ -50,12 +56,9 @@
               :key="index"
             >
               <td class="pl-3">#</td>
-              <th
-                scope="row"
-                class="pr-4 ftext-[#000000] font-normal text-[12px]"
-              >
+              <td class="pr-4 ftext-[#000000] font-normal text-[12px]">
                 <span class="border-b border-black">{{ item?.accountId }}</span>
-              </th>
+              </td>
               <td class="px-6 flex flex-col justify-center">
                 <span class="text-[#000000] font-normal text-[12px] pt-3">{{
                   item?.operatorName
@@ -63,6 +66,24 @@
                 <span class="text-[#989898] font-normal text-[10px] pb-5">
                   +{{ item?.countryCode }} {{ item?.operatorNumber }}
                 </span>
+              </td>
+
+              <td class="px-6">
+                <nuxt-link
+                  :to="`carrier/edit-carrier/${item?.carrierData?.accountId}}`"
+                >
+                  <div class="flex flex-col">
+                    <span class="text-[#000000] font-normal text-[12px] pt-3">{{
+                      item?.carrierData?.contactName
+                    }}</span>
+                    <span class="text-[#989898] font-normal text-[10px] pb-5">
+                      +{{ item?.carrierData?.countryCode }}
+                      {{ item?.carrierData?.contactNumber }} ({{
+                        item?.carrierData?.email
+                      }})
+                    </span>
+                  </div>
+                </nuxt-link>
               </td>
 
               <td class="px-6 text-[#000000] font-normal text-[12px]">
