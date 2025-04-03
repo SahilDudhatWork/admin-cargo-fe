@@ -116,10 +116,13 @@
         Operator location not found
       </p>
       <GoogleMapMarker
+        v-if="loaded"
         :addressDetails="location"
         height="300px"
         :isMarkerEnabled="false"
         :isShowMarker="location?.lat && location?.long ? true : false"
+        :pickUpAddressData="serviceSingleData?.pickUpAddressData"
+        :dropAddressData="serviceSingleData?.dropAddressData"
       />
       <div class="bg-[#E6E6E6] h-[1px] w-full mt-7"></div>
     </div>
@@ -144,6 +147,7 @@ export default {
       serviceSingleData: {},
       location: {},
       fileTypes: {},
+      loaded: false,
     };
   },
   watch: {
@@ -195,6 +199,7 @@ export default {
           id: this.movementId,
         });
         this.serviceSingleData = res.data;
+        this.loaded = true;
       } catch (error) {
         console.log(error);
         this.$toast.open({

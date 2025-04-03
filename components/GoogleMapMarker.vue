@@ -19,6 +19,30 @@
         :draggable="isMarkerEnabled"
         @dragend="getUpdatedLocation"
       />
+      <GmapMarker
+        v-if="dropAddressData && dropAddressData.length"
+        v-for="(address, index) in dropAddressData"
+        :icon="redMarker"
+        :key="`drop-${index}`"
+        :position="{
+          lat: parseFloat(address.addressDetails.lat),
+          lng: parseFloat(address.addressDetails.long),
+        }"
+        :clickable="false"
+        :draggable="false"
+      />
+      <GmapMarker
+        v-if="pickUpAddressData && pickUpAddressData.length"
+        v-for="(address, index) in pickUpAddressData"
+        :icon="greenMarker"
+        :key="`pick-${index}`"
+        :position="{
+          lat: parseFloat(address.addressDetails.lat),
+          lng: parseFloat(address.addressDetails.long),
+        }"
+        :clickable="false"
+        :draggable="false"
+      />
     </GmapMap>
   </div>
 </template>
@@ -42,6 +66,14 @@ export default {
       type: Boolean,
       default: true,
     },
+    dropAddressData: {
+      type: Array,
+      default: () => [],
+    },
+    pickUpAddressData: {
+      type: Array,
+      default: () => [],
+    },
   },
   data() {
     return {
@@ -60,6 +92,14 @@ export default {
 
       getMapLocation: { lat: 40.73061, lng: -73.935242 },
       latLng: "",
+      greenMarker: {
+        url: "https://maps.google.com/mapfiles/ms/icons/green-dot.png",
+        scaledSize: { width: 40, height: 40 }, // Adjust size if needed
+      },
+      redMarker: {
+        url: "https://maps.google.com/mapfiles/ms/icons/red-dot.png",
+        scaledSize: { width: 40, height: 40 }, // Adjust size if needed
+      },
     };
   },
   watch: {

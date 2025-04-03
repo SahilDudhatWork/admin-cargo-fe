@@ -138,6 +138,37 @@ export default {
         });
       }
     },
+
+    async generatePolygon(center, radius) {
+      const numPoints = 8; // Number of points in the polygon
+      const coords = [];
+      for (let i = 0; i < numPoints; i++) {
+        const angle = (i * 360) / numPoints;
+        const lat = center.lat + radius * Math.cos((angle * Math.PI) / 180);
+        const lng = center.lng + radius * Math.sin((angle * Math.PI) / 180);
+        coords.push({ lat, lng });
+      }
+      return coords;
+    },
+  },
+  async mounted() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const userLocation = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+          const polygonCoords = await this.generatePolygon(userLocation, 0.03); // Adjust radius as needed
+          this.area.coordinates = polygonCoords;
+        },
+        (error) => {
+          console.error("Error getting location: ", error);
+        }
+      );
+    } else {
+      console.log("Geolocation is not supported by this browser");
+    }
   },
 };
 </script>
