@@ -113,7 +113,7 @@
         class="text-[#000000] font-bold text-lg mb-2"
         v-if="!location?.lat && !location?.long"
       >
-        Operator location not found
+        Operator location is waiting for assignment
       </p>
       <GoogleMapMarker
         v-if="loaded"
