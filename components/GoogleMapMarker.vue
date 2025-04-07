@@ -94,11 +94,11 @@ export default {
       latLng: "",
       greenMarker: {
         url: "https://maps.google.com/mapfiles/ms/icons/green-dot.png",
-        scaledSize: { width: 40, height: 40 }, // Adjust size if needed
+        scaledSize: { width: 40, height: 40 },
       },
       redMarker: {
         url: "https://maps.google.com/mapfiles/ms/icons/red-dot.png",
-        scaledSize: { width: 40, height: 40 }, // Adjust size if needed
+        scaledSize: { width: 40, height: 40 },
       },
     };
   },
@@ -120,10 +120,25 @@ export default {
         }
       },
     },
+    pickUpAddressData: {
+      handler() {
+        this.fitMarkersInView();
+      },
+      immediate: true,
+      deep: true,
+    },
+    dropAddressData: {
+      handler() {
+        this.fitMarkersInView();
+      },
+      immediate: true,
+      deep: true,
+    },
   },
   mounted() {
     setTimeout(() => {
       this.geocoder = new google.maps.Geocoder();
+      this.fitMarkersInView();
     }, 1000);
   },
   methods: {
@@ -199,6 +214,31 @@ export default {
       } catch (error) {
         console.log(error.message);
       }
+    },
+    fitMarkersInView() {
+      if (!this.$refs.mapRef || typeof google === "undefined") return;
+
+      const bounds = new google.maps.LatLngBounds();
+      const allMarkers = [...this.pickUpAddressData, ...this.dropAddressData];
+
+      if (allMarkers.length === 0) return;
+
+      allMarkers.forEach((marker) => {
+        const lat = parseFloat(marker.addressDetails.lat);
+        const lng = parseFloat(marker.addressDetails.long);
+        bounds.extend(new google.maps.LatLng(lat, lng));
+      });
+
+      if (this.isShowMarker) {
+        bounds.extend(
+          new google.maps.LatLng(
+            this.marker.position.lat,
+            this.marker.position.lng
+          )
+        );
+      }
+
+      this.$refs.mapRef.fitBounds(bounds);
     },
   },
 };

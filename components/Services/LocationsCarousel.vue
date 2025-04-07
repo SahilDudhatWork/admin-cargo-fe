@@ -1,18 +1,36 @@
 <template>
   <div>
     <VueSlickCarousel v-if="carouselItem.length" v-bind="settings">
-      <div class="w-[360px]" v-for="(item, key) in carouselItem" :key="key">
+      <div
+        class="w-[360px] overflow-hidden"
+        v-for="(item, key) in carouselItem"
+        :key="key"
+      >
         <div
           class="flex gap-4 mt-2 mr-3 py-3 h-[84px] px-3 bg-[#F7F7F7] rounded"
         >
-          <div>
-            <h1 class="text-xs text-[#151515] font-normal">
+          <div class="overflow-hidden text-ellipsis">
+            <h1 class="text-xs text-[#151515] font-normal line-clamp-2">
               {{ item?.addressDetails?.laneNumber }},
               {{ item?.addressDetails?.postalCode }}
-              {{ item?.addressDetails?.additionalDetails }}
+              {{
+                String(item?.addressDetails?.additionalDetails).length > 100
+                  ? String(item?.addressDetails?.additionalDetails).substring(
+                      0,
+                      100
+                    ) + "..."
+                  : item?.addressDetails?.additionalDetails
+              }}
             </h1>
-            <p class="text-xs font-light text-[#686868]">
-              {{ item?.addressDetails?.buildinName }}
+            <p class="text-xs font-light text-[#686868] line-clamp-1">
+              {{
+                String(item?.addressDetails?.buildinName).length > 100
+                  ? String(item?.addressDetails?.buildinName).substring(
+                      0,
+                      100
+                    ) + "..."
+                  : item?.addressDetails?.buildinName
+              }}
             </p>
             <p class="text-xs font-light text-[#686868] pt-1">items: Chains</p>
           </div>
@@ -36,19 +54,14 @@ export default {
   data() {
     return {
       settings: {
-        focusOnSelect: true,
-        speed: 500,
         slidesToShow: 4,
         slidesToScroll: 1,
-        touchThreshold: 1,
         dots: false,
         swipeToSlide: true,
         centerMode: true,
         centerPadding: "0px",
         infinite: true,
         arrows: true,
-        autoplay: true,
-        autoplaySpeed: 2000,
         responsive: [
           {
             breakpoint: 1400,
