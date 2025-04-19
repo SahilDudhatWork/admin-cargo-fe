@@ -11,6 +11,16 @@
         >
           <div class="overflow-hidden text-ellipsis">
             <h1 class="text-xs text-[#151515] font-normal line-clamp-2">
+              {{
+                String(item?.addressDetails?.buildinName).length > 100
+                  ? String(item?.addressDetails?.buildinName).substring(
+                      0,
+                      100
+                    ) + "..."
+                  : item?.addressDetails?.buildinName
+              }}
+            </h1>
+            <p class="text-xs font-light text-[#686868] line-clamp-1">
               {{ item?.addressDetails?.laneNumber }},
               {{ item?.addressDetails?.postalCode }}
               {{
@@ -21,18 +31,7 @@
                     ) + "..."
                   : item?.addressDetails?.additionalDetails
               }}
-            </h1>
-            <p class="text-xs font-light text-[#686868] line-clamp-1">
-              {{
-                String(item?.addressDetails?.buildinName).length > 100
-                  ? String(item?.addressDetails?.buildinName).substring(
-                      0,
-                      100
-                    ) + "..."
-                  : item?.addressDetails?.buildinName
-              }}
             </p>
-            <p class="text-xs font-light text-[#686868] pt-1">items: Chains</p>
           </div>
         </div>
       </div>
