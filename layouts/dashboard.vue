@@ -165,7 +165,7 @@
                     :src="
                       previousPath == tab.href ||
                       tab.subItems.some(
-                        (subItem) => previousPath == subItem.href
+                        (subItem) => previousPath == subItem.href,
                       )
                         ? tab.svg
                         : tab.blackSvg
@@ -380,6 +380,10 @@ export default {
               name: "Securing Equipment",
               href: "/securing-equipment",
             },
+            {
+              name: "Special Requirements",
+              href: "/manage-special-requirements",
+            },
           ],
         },
         {
@@ -473,7 +477,7 @@ export default {
       this.sideBarItems.forEach((tab) => {
         if (tab.subItems) {
           const activeSubItem = tab.subItems.find((subItem) =>
-            path.startsWith(subItem.href)
+            path.startsWith(subItem.href),
           );
           tab.isActive = !!activeSubItem;
           if (activeSubItem) {
@@ -494,7 +498,7 @@ export default {
         if (this.permissionsData && this.permissionsData.menuDetails) {
           this.sideBarItems = this.sideBarItems.filter((item) => {
             const matchedMenu = this.permissionsData.menuDetails.find(
-              (menu) => menu.menuTitle === item.name
+              (menu) => menu.menuTitle === item.name,
             );
             return matchedMenu?.read;
           });

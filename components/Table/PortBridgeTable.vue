@@ -23,12 +23,12 @@
               >
                 Port & Bridge
               </th>
-              <th
+              <!-- <th
                 scope="col"
                 class="px-6 py-3 text-[#000000] font-normal text-[12px]"
               >
                 Requirements
-              </th>
+              </th> -->
               <th
                 scope="col"
                 class="py-3 rounded-tr-lg text-[#000000] font-normal text-[12px]"
@@ -49,10 +49,10 @@
               </td>
               <td class="px-6">
                 <span class="text-[#000000] font-normal text-xs pt-3">{{
-                  item?.post_bridge
+                  item?.port_bridge
                 }}</span>
               </td>
-              <td class="flex flex-wrap gap-2 items-center mt-4">
+              <!-- <td class="flex flex-wrap gap-2 items-center mt-4">
                 <span
                   class="text-[#000000] font-normal text-[11px] pt-3 flex flex-wrap"
                   v-for="(requirement, index) in item?.requirements"
@@ -60,7 +60,7 @@
                 >
                   {{ requirement?.type }},
                 </span>
-              </td>
+              </td> -->
               <td>
                 <div class="flex items-center gap-2">
                   <img

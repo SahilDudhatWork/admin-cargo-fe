@@ -343,8 +343,8 @@ export default async (ctx, inject) => {
     const setError = (fieldName, message) => {
       errors[fieldName] = message;
     };
-    if (isEmpty(form.post_bridge)) {
-      setError("post_bridge", "Port & Bridge is required");
+    if (isEmpty(form.port_bridge)) {
+      setError("port_bridge", "Port & Bridge is required");
     }
 
     form.requirements.forEach((item, index) => {

@@ -44,7 +44,7 @@ export const actions = {
     try {
       const response = await $axios.get(
         "/v1/admin/specialRequirements",
-        payload
+        payload,
       );
       return response;
     } catch (error) {
@@ -55,7 +55,7 @@ export const actions = {
   async fetchSinglePortBridge(ctx, payload) {
     try {
       const response = await $axios.get(
-        `/v1/admin/specialRequirements/${payload.id}`
+        `/v1/admin/specialRequirements/${payload.id}`,
       );
       return response;
     } catch (error) {
@@ -66,7 +66,7 @@ export const actions = {
     try {
       const response = await $axios.put(
         `/v1/admin/specialRequirements/${payload._id}`,
-        payload
+        payload,
       );
       return response;
     } catch (error) {
@@ -76,7 +76,7 @@ export const actions = {
   async deletePortBridge(ctx, payload) {
     try {
       const response = await $axios.delete(
-        `/v1/admin/specialRequirements/${payload.id}`
+        `/v1/admin/specialRequirements/${payload.id}`,
       );
       return response;
     } catch (error) {
@@ -87,7 +87,7 @@ export const actions = {
     try {
       const response = await $axios.post(
         "/v1/admin/specialRequirements",
-        payload
+        payload,
       );
       return response;
     } catch (error) {
@@ -100,7 +100,7 @@ export const actions = {
     try {
       const response = await $axios.post(
         `/v1/admin/transitInfo/typeOfService`,
-        payload
+        payload,
       );
       return response;
     } catch (error) {
@@ -110,7 +110,7 @@ export const actions = {
   async fetchSingleService(ctx, payload) {
     try {
       const response = await $axios.get(
-        `/v1/admin/transitInfo/typeOfService/${payload.id}`
+        `/v1/admin/transitInfo/typeOfService/${payload.id}`,
       );
       return response;
     } catch (error) {
@@ -121,7 +121,7 @@ export const actions = {
     try {
       const response = await $axios.put(
         `/v1/admin/transitInfo/typeOfService/${payload._id}`,
-        payload
+        payload,
       );
       return response;
     } catch (error) {
@@ -131,7 +131,7 @@ export const actions = {
   async deleteService(ctx, payload) {
     try {
       const response = await $axios.delete(
-        `/v1/admin/transitInfo/typeOfService/${payload.id}`
+        `/v1/admin/transitInfo/typeOfService/${payload.id}`,
       );
       return response;
     } catch (error) {
@@ -144,7 +144,7 @@ export const actions = {
     try {
       const response = await $axios.post(
         `/v1/admin/transitInfo/typeOfTransportation`,
-        payload
+        payload,
       );
       return response;
     } catch (error) {
@@ -154,7 +154,7 @@ export const actions = {
   async fetchSingleTransportation(ctx, payload) {
     try {
       const response = await $axios.get(
-        `/v1/admin/transitInfo/typeOfTransportation/${payload.id}`
+        `/v1/admin/transitInfo/typeOfTransportation/${payload.id}`,
       );
       return response;
     } catch (error) {
@@ -165,7 +165,7 @@ export const actions = {
     try {
       const response = await $axios.put(
         `/v1/admin/transitInfo/typeOfTransportation/${payload._id}`,
-        payload
+        payload,
       );
       return response;
     } catch (error) {
@@ -175,7 +175,7 @@ export const actions = {
   async deleteTransportation(ctx, payload) {
     try {
       const response = await $axios.delete(
-        `/v1/admin/transitInfo/typeOfTransportation/${payload.id}`
+        `/v1/admin/transitInfo/typeOfTransportation/${payload.id}`,
       );
       return response;
     } catch (error) {
@@ -188,7 +188,7 @@ export const actions = {
     try {
       const response = await $axios.post(
         `/v1/admin/transitInfo/modeOfTransportation/${transportationLabel}`,
-        data
+        data,
       );
       return response;
     } catch (error) {
@@ -198,7 +198,7 @@ export const actions = {
   async fetchSingleModeOfTransportation(ctx, { transportationLabel, id }) {
     try {
       const response = await $axios.get(
-        `/v1/admin/transitInfo/modeOfTransportation/${transportationLabel}/${id}`
+        `/v1/admin/transitInfo/modeOfTransportation/${transportationLabel}/${id}`,
       );
       return response;
     } catch (error) {
@@ -209,7 +209,7 @@ export const actions = {
     try {
       const response = await $axios.put(
         `/v1/admin/transitInfo/modeOfTransportation/${transportationLabel}/${id}`,
-        data
+        data,
       );
       return response;
     } catch (error) {
@@ -219,7 +219,59 @@ export const actions = {
   async deleteModeOfTransportation(ctx, { transportationLabel, id }) {
     try {
       const response = await $axios.delete(
-        `/v1/admin/transitInfo/modeOfTransportation/${transportationLabel}/${id}`
+        `/v1/admin/transitInfo/modeOfTransportation/${transportationLabel}/${id}`,
+      );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  },
+  // ---------- Special Requirements --------------
+
+  async fetchSpecialRequirements(ctx, { type }) {
+    try {
+      const response = await $axios.get(`/v1/admin/commonRequirements/${type}`);
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  },
+  async fetchSpecialRequirementsDetails(ctx, { type, id }) {
+    try {
+      const response = await $axios.get(
+        `/v1/admin/commonRequirements/${type}/${id}`,
+      );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  },
+  async deleteSpecialRequirements(ctx, { type, id, requirementId }) {
+    try {
+      const response = await $axios.delete(
+        `/v1/admin/commonRequirements/${type}/${id}/${requirementId}`,
+      );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  },
+  async updateSpecialRequirements(ctx, { type, id, requirementId, data }) {
+    try {
+      const response = await $axios.put(
+        `/v1/admin/commonRequirements/${type}/${id}/${requirementId}`,
+        data,
+      );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  },
+  async createSpecialRequirements(ctx, { type, id, data }) {
+    try {
+      const response = await $axios.post(
+        `/v1/admin/commonRequirements/${type}/${id}`,
+        data,
       );
       return response;
     } catch (error) {
