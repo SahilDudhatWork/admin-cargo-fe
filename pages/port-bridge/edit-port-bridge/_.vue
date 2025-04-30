@@ -31,15 +31,15 @@
                 type="text"
                 placeholder="Your Post & Bridge"
                 class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[14px]"
-                v-model="formData.port_bridge"
+                v-model="formData.post_bridge"
                 :class="
-                  errors?.port_bridge
+                  errors?.post_bridge
                     ? 'border border-red-600'
                     : 'border border-gray-300'
                 "
               />
-              <span class="error-msg" v-if="errors?.port_bridge">{{
-                errors?.port_bridge
+              <span class="error-msg" v-if="errors?.post_bridge">{{
+                errors?.post_bridge
               }}</span>
             </div>
           </div>
@@ -130,7 +130,7 @@ export default {
   data() {
     return {
       formData: {
-        port_bridge: "",
+        post_bridge: "",
         requirements: [
           {
             type: "",

@@ -32,7 +32,7 @@
         <div v-if="showTitleDropdown" class="mb-6 w-full">
           <label class="block mb-2 text-sm font-normal text-[#4B4B4B]">
             {{
-              selectedType === "port_bridge"
+              selectedType === "post_bridge"
                 ? "Your Port & Bridge *"
                 : "Your Transportation *"
             }}
@@ -194,7 +194,7 @@ export default {
       editingField: { type: "", price: null },
       typeOptions: [
         { label: "Transportation", value: "transportation" },
-        { label: "Port Bridge", value: "port_bridge" },
+        { label: "Port Bridge", value: "post_bridge" },
       ],
     };
   },

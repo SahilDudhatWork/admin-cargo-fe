@@ -49,7 +49,7 @@
               </td>
               <td class="px-6">
                 <span class="text-[#000000] font-normal text-xs pt-3">{{
-                  item?.port_bridge
+                  item?.post_bridge
                 }}</span>
               </td>
               <!-- <td class="flex flex-wrap gap-2 items-center mt-4">
