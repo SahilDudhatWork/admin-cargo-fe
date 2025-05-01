@@ -13,20 +13,21 @@
           >
             Port & Bridge - Transportation*
           </label>
-          <select
-            v-model="selectedType"
-            @change="handleTypeSelection"
-            class="w-full px-3 py-[14px] border border-gray-300 text-sm rounded-lg"
-          >
-            <option value="" disabled>Select an option</option>
-            <option
-              v-for="option in typeOptions"
-              :key="option.value"
-              :value="option.value"
-            >
-              {{ option.label }}
-            </option>
-          </select>
+          <Dropdown
+            :items="[
+              { label: 'Transportation', value: 'transportation' },
+              { label: 'Port Bridge', value: 'post_bridge' },
+            ]"
+            :selectedLabel="selectedTypeLabel"
+            @getValue="
+              (val) => {
+                selectedType = val.value;
+                selectedTypeLabel = val.label;
+                handleTypeSelection();
+              }
+            "
+            :errors="errors?.selectedType"
+          />
         </div>
 
         <div v-if="showTitleDropdown" class="mb-6 w-full">
@@ -37,20 +38,20 @@
                 : "Your Transportation *"
             }}
           </label>
-          <select
-            v-model="selectedTitle"
-            @change="handleTitleSelection"
-            class="w-full px-3 py-[14px] border border-gray-300 text-sm rounded-lg"
-          >
-            <option value="" disabled>Select a title</option>
-            <option
-              v-for="title in availableTitles"
-              :key="title._id"
-              :value="title._id"
-            >
-              {{ title.title }}
-            </option>
-          </select>
+          <Dropdown
+            :items="
+              availableTitles.map((t) => ({ label: t.title, value: t._id }))
+            "
+            :selectedLabel="selectedTitleLabel"
+            @getValue="
+              (val) => {
+                selectedTitle = val.value;
+                selectedTitleLabel = val.label;
+                handleTitleSelection();
+              }
+            "
+            :errors="errors?.selectedTitle"
+          />
         </div>
       </div>
 
@@ -101,7 +102,7 @@
                 v-if="editingIndex === index"
                 @click="updateRequirement"
                 class="text-white bg-gradient-to-r from-[#0457cb] to-[#2AA1EB] font-medium rounded-lg text-sm px-2.5 py-1"
-                >
+              >
                 Save
               </button>
               <img
@@ -184,6 +185,7 @@ export default {
   data() {
     return {
       selectedType: "",
+      selectedTypeLabel: "",
       selectedTitle: "",
       showTitleDropdown: false,
       showForm: false,
@@ -196,6 +198,7 @@ export default {
         { label: "Transportation", value: "transportation" },
         { label: "Port Bridge", value: "post_bridge" },
       ],
+      errors: {},
     };
   },
   methods: {
@@ -211,7 +214,7 @@ export default {
     async handleTypeSelection() {
       this.showTitleDropdown = false;
       this.showForm = false;
-      this.selectedTitle = "";
+      this.selectedTitleLabel = "";
 
       if (this.selectedType) {
         try {
