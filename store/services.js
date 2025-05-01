@@ -122,4 +122,15 @@ export const actions = {
       throw error;
     }
   },
+  async verifyActivity(ctx, payload) {
+    try {
+      const response = await $axios.post(
+        `v1/admin/services/verify/${payload._id}`,
+        payload
+      );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  },
 };

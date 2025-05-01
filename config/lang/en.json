@@ -1,7 +1,8 @@
 {
-    "requiredErrorMessage":"Please fill up your field !",
-    "matchErrorMessage":"Passwords do not match.",
-    "loginMessage":"Successfully logged in.",
-    "matchPasswordMessage":"Passwords do not match.",
-    "errorMessage":"Something is wrong please try again"
+  "requiredErrorMessage": "Please fill up your field !",
+  "matchErrorMessage": "Passwords do not match.",
+  "loginMessage": "Successfully logged in.",
+  "matchPasswordMessage": "Passwords do not match.",
+  "errorMessage": "Something is wrong please try again",
+  "orderVerifiedMessage": "Order verified successfully."
 }

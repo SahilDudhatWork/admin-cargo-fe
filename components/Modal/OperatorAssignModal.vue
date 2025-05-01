@@ -24,7 +24,7 @@
               <input
                 type="text"
                 placeholder="Carrier Reference"
-                class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[15px] focus:outline-none border border-gray-300"
+                class="xl:w-[382px] text-gray-900 rounded-lg block w-full px-3 py-[12px] focus:outline-none border border-gray-300"
                 v-model="carrierReferenceData"
               />
               <span class="error-msg" v-if="errors?.carrierReference">{{
@@ -33,7 +33,7 @@
             </div>
           </div>
           <div
-            class="flex justify-between items-center mt-5 mb-6 sm:flex-row flex-col"
+            class="flex justify-between items-center mt-3 mb-4 sm:flex-row flex-col"
           >
             <h1 class="font-semibold text-lg text-[#3683D5]">
               Assign Operator
@@ -147,7 +147,7 @@
           </div>
           <div
             v-if="allOperatorData.length > 0"
-            class="grid sm:grid-cols-2 grid-cols-1 xxl:gap-0 gap-3 !gap-y-5 overflow-y-auto sm:h-[480px] h-[350px]"
+            class="grid sm:grid-cols-2 grid-cols-1 xxl:gap-0 gap-3 !gap-y-5 overflow-y-auto sm:max-h-[260px] max-h-[160px]"
           >
             <AssignOperator
               v-for="item in allOperatorData"

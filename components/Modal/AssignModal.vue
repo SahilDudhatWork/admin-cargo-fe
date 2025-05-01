@@ -6,10 +6,10 @@
           <div class="absolute inset-0 bg-black opacity-50"></div>
         </div>
         <div
-          class="max-w-4xl lg:mx-auto z-50 bg-white rounded-lg w-[864px] py-3 sm:px-6 px-2 mx-3 h-auto"
+          class="max-w-4xl lg:mx-auto z-50 bg-white rounded-lg w-[864px] py-1 px-3 mx-3 h-auto"
         >
           <div
-            class="flex flex-col items-end mx-2 my-1 cursor-pointer"
+            class="flex flex-col items-end my-1 cursor-pointer"
             @click="closeModal"
           >
             <img src="@/static/Images/close.webp" alt="" />
@@ -17,7 +17,7 @@
           <div>
             <slot name="content"></slot>
           </div>
-          <div class="flex justify-end gap-3 mt-5 mb-2 mr-5">
+          <div class="flex justify-end gap-3 mt-3 mb-2 mr-5">
             <button
               v-if="isBackAssign"
               type="submit"

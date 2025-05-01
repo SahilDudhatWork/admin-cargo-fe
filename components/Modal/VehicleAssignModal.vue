@@ -124,7 +124,7 @@
             </div>
           </div>
           <div
-            class="overflow-y-auto sm:h-[480px] h-[400px]"
+            class="overflow-y-auto sm:max-h-[260px] max-h-[160px]"
             v-if="allVehicleData.length > 0"
           >
             <div

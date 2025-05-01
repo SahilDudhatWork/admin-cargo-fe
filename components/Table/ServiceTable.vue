@@ -83,7 +83,7 @@
 
               <td class="px-6 py-6">
                 <span
-                  :style="{ backgroundColor: buttonColor(item?.status) }"
+                  :style="{ backgroundColor: buttonColor(item) }"
                   class="text-[#FEFEFE] font-medium text-[10px] py-0.5 px-3.5 rounded"
                   >{{ formatStatus(item) }}</span
                 >
@@ -99,7 +99,7 @@
                   }}</span>
                 </div>
               </td>
-              <td class="sm:px-6 py-6">
+              <td class="sm:px-6 py-6" v-if="item?.userData">
                 <div class="flex flex-col" v-if="item?.userData">
                   <span class="text-[#000000] font-normal text-xs pt-1">{{
                     item?.userData?.contactName
@@ -110,6 +110,7 @@
                   >
                 </div>
               </td>
+              <td v-else class="sm:px-6 py-6">-</td>
               <template v-if="item?.status === 'NewAssignments'">
                 <td class="px-6 py-6">
                   <span
@@ -341,6 +342,9 @@ export default {
     formatStatus() {
       return (item) => {
         if (!item) return "";
+        if (item.verify) {
+          return "Verified";
+        }
         if (item?.status === "NewAssignments") {
           return "NEW-ASSIGNMENTS";
         } else if (item.status === "Pending") {
@@ -392,14 +396,17 @@ export default {
       setAllOperatorData: "operator/setAllOperatorData",
       setAllVehicleData: "vehicle/setAllVehicleData",
     }),
-    buttonColor(status) {
-      if (status === "NewAssignments") {
+    buttonColor(item) {
+      if (item.verify) {
+        return "#3ECC48";
+      }
+      if (item.status === "NewAssignments") {
         return "#023770";
-      } else if (status === "Pending") {
+      } else if (item.status === "Pending") {
         return "#989898";
-      } else if (status === "InProgress") {
+      } else if (item.status === "InProgress") {
         return "#FFAA00";
-      } else if (status === "Completed") {
+      } else if (item.status === "Completed") {
         return "#3ECC48";
       } else {
         return "#000000";

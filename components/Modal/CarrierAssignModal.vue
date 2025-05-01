@@ -122,7 +122,7 @@
             </div>
           </div>
           <div
-            class="grid sm:grid-cols-2 grid-cols-1 !gap-y-5 xxl:gap-0 gap-3 overflow-y-auto sm:h-[480px] h-[350px]"
+            class="grid sm:grid-cols-2 grid-cols-1 !gap-y-5 xxl:gap-0 gap-3 overflow-y-auto sm:max-h-[260px] max-h-[160px]"
             v-if="allCarrierData.length > 0"
           >
             <AssignCarrier

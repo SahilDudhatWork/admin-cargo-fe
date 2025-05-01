@@ -2,7 +2,7 @@
   <div>
     <div
       @click="$emit('selectOperator')"
-      class="xxl:w-[384px] w-full h-[184px] py-3 px-3 rounded-lg cursor-pointer"
+      class="xxl:w-[384px] w-full h-[175px] py-3 px-3 rounded-lg cursor-pointer"
       :class="
         isSelected ? 'border border-[#3683D5]' : 'border border-[#E7E7E7] '
       "

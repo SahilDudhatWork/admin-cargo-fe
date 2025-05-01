@@ -10,18 +10,12 @@
       </h1>
     </div>
     <div v-if="$checkUserUpload(serviceSingleData?.status)">
-      <h1 class="text-[#B9B9B9] font-semibold text-[10px] mb-5">UPDATES</h1>
-      <div class="flex items-center gap-4">
-        <p class="text-[#1E1E1E] font-medium text-[10px]">
-          User’s details info uploaded
-        </p>
-        <p class="text-[#3683D5] font-normal text-[10px]">view details</p>
-      </div>
       <div class="mt-4 mb-4">
         <button
+          @click="handleVerify"
           class="text-[#FFFFFF] font-semibold text-sm rounded-md px-5 py-2 bg-gradient-to-r from-[#0464CB] to-[#2AA1EB]"
         >
-          Generate Invoice
+          {{ serviceSingleData?.verify ? "Verified" : "Verify" }}
         </button>
       </div>
       <div class="bg-[#E6E6E6] h-[1px] w-full mt-6"></div>
@@ -162,6 +156,7 @@ export default {
     ...mapActions({
       fetchSingleService: "services/fetchSingleService",
       fetchLocation: "services/fetchLocation",
+      verifyActivity: "services/verifyActivity",
     }),
     downloadFileItem(doc) {
       const baseUrl = "https://cargo-storage-bucket.s3.us-east-1.amazonaws.com";
@@ -220,6 +215,26 @@ export default {
         this.location = res?.data;
       } catch (error) {
         console.log(error, "error");
+      }
+    },
+    async handleVerify() {
+      try {
+        if (this.serviceSingleData.verify) {
+          return;
+        }
+        await this.verifyActivity({
+          _id: this.serviceSingleData.movementId,
+        });
+        this.$toast.open({
+          message: this.$i18n.t("orderVerifiedMessage"),
+        });
+        await this.getSingleTransitInfo();
+      } catch (error) {
+        console.log(error, "error");
+        this.$toast.open({
+          message: error?.response?.data?.msg || this.$i18n.t("errorMessage"),
+          type: "error",
+        });
       }
     },
   },

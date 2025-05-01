@@ -34,6 +34,17 @@
       >
         Completed
       </button>
+      <button
+        :class="
+          activeButton === 'Verified'
+            ? 'bg-[#3683D5] text-white'
+            : 'bg-[#E6F0FA] text-[#4B4B4B]'
+        "
+        @click="actionButton('Verified')"
+        class="rounded-lg font-medium text-[12px] py-[5px] px-[15px]"
+      >
+        Verified
+      </button>
     </div>
   </div>
 </template>
