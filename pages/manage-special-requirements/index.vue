@@ -11,12 +11,13 @@
             for="type"
             class="block mb-2 text-sm font-normal text-[#4B4B4B]"
           >
-            Port & Bridge - Transportation*
+            Port & Bridge - Transportation - typeOfService*
           </label>
           <Dropdown
             :items="[
               { label: 'Transportation', value: 'transportation' },
               { label: 'Port Bridge', value: 'post_bridge' },
+              { label: 'Type Of Service', value: 'typeOfService' },
             ]"
             :selectedLabel="selectedTypeLabel"
             @getValue="
@@ -35,7 +36,11 @@
             {{
               selectedType === "post_bridge"
                 ? "Your Port & Bridge *"
-                : "Your Transportation *"
+                : selectedType === "transportation"
+                ? "Your Transportation *"
+                : selectedType === "typeOfService"
+                ? "Your Type Of Service *"
+                : ""
             }}
           </label>
           <Dropdown
