@@ -165,7 +165,7 @@
                     :src="
                       previousPath == tab.href ||
                       tab.subItems.some(
-                        (subItem) => previousPath == subItem.href,
+                        (subItem) => previousPath == subItem.href
                       )
                         ? tab.svg
                         : tab.blackSvg
@@ -297,6 +297,8 @@ import subAdminSvg from "@/static/svg/sub-admin.svg";
 import blackSubAdminSvg from "@/static/svg/black-sub-admin.svg";
 import operatorSvg from "@/static/svg/operator-white.svg";
 import blackOperatorSvg from "@/static/svg/operator.svg";
+import cardSvg from "@/static/svg/card.svg";
+import blackCardSvg from "@/static/svg/black-card.svg";
 import Cookies from "js-cookie";
 import { mapGetters, mapActions } from "vuex";
 
@@ -358,6 +360,14 @@ export default {
           isOpenSubMenu: false,
           svg: bannerSvg,
           blackSvg: blackBannerSvg,
+        },
+        {
+          name: "Rate Card",
+          href: "/rate-card",
+          isActive: false,
+          isOpenSubMenu: false,
+          svg: cardSvg,
+          blackSvg: blackCardSvg,
         },
         {
           name: "Manage Services",
@@ -477,7 +487,7 @@ export default {
       this.sideBarItems.forEach((tab) => {
         if (tab.subItems) {
           const activeSubItem = tab.subItems.find((subItem) =>
-            path.startsWith(subItem.href),
+            path.startsWith(subItem.href)
           );
           tab.isActive = !!activeSubItem;
           if (activeSubItem) {
@@ -498,7 +508,7 @@ export default {
         if (this.permissionsData && this.permissionsData.menuDetails) {
           this.sideBarItems = this.sideBarItems.filter((item) => {
             const matchedMenu = this.permissionsData.menuDetails.find(
-              (menu) => menu.menuTitle === item.name,
+              (menu) => menu.menuTitle === item.name
             );
             return matchedMenu?.read;
           });

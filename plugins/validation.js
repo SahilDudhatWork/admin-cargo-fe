@@ -67,7 +67,7 @@ export default async (ctx, inject) => {
       if (!form.companyFormation.maxico.constance_Of_Fiscal_Situation) {
         setError(
           "constance_Of_Fiscal_Situation",
-          "Constance Of Fiscal Situation is required",
+          "Constance Of Fiscal Situation is required"
         );
       }
       if (!form.companyFormation.maxico.proof_of_Favorable) {
@@ -88,17 +88,17 @@ export default async (ctx, inject) => {
         validateField(
           ref.companyName,
           `commercialReference[${index}].companyName`,
-          "company-name",
+          "company-name"
         );
         validateField(
           ref.contactName,
           `commercialReference[${index}].contactName`,
-          "contact-name",
+          "contact-name"
         );
         validateField(
           ref.emailAddress,
           `commercialReference[${index}].emailAddress`,
-          "email",
+          "email"
         );
         if (
           ref.emailAddress &&
@@ -106,19 +106,19 @@ export default async (ctx, inject) => {
         ) {
           setError(
             `commercialReference[${index}].emailAddress`,
-            "Invalid email format",
+            "Invalid email format"
           );
         }
         validateField(
           ref.contactNo,
           `commercialReference[${index}].contactNo`,
-          "contact-number",
+          "contact-number"
         );
       }
       if (!(await validatePhoneNumber(ref.contactNo))) {
         setError(
           `commercialReference[${index}].contactNo`,
-          "Invalid contact-number format",
+          "Invalid contact-number format"
         );
       }
     });
@@ -183,7 +183,7 @@ export default async (ctx, inject) => {
       if (!form.companyFormation.maxico.constance_Of_Fiscal_Situation) {
         setError(
           "constance_Of_Fiscal_Situation",
-          "Constance Of Fiscal Situation is required",
+          "Constance Of Fiscal Situation is required"
         );
       }
       if (!form.companyFormation.maxico.proof_of_Favorable) {
@@ -204,17 +204,17 @@ export default async (ctx, inject) => {
         validateField(
           ref.companyName,
           `commercialReference[${index}].companyName`,
-          "company-name",
+          "company-name"
         );
         validateField(
           ref.contactName,
           `commercialReference[${index}].contactName`,
-          "contact-name",
+          "contact-name"
         );
         validateField(
           ref.emailAddress,
           `commercialReference[${index}].emailAddress`,
-          "email",
+          "email"
         );
         if (
           ref.emailAddress &&
@@ -222,19 +222,19 @@ export default async (ctx, inject) => {
         ) {
           setError(
             `commercialReference[${index}].emailAddress`,
-            "Invalid email format",
+            "Invalid email format"
           );
         }
         validateField(
           ref.contactNo,
           `commercialReference[${index}].contactNo`,
-          "contact-number",
+          "contact-number"
         );
       }
       if (!(await validatePhoneNumber(ref.contactNo))) {
         setError(
           `commercialReference[${index}].contactNo`,
-          "Invalid contact-number format",
+          "Invalid contact-number format"
         );
       }
     });
@@ -311,6 +311,24 @@ export default async (ctx, inject) => {
     }
     if (isEmpty(form.subTitle)) {
       setError("subTitle", "sub title is required");
+    }
+
+    return errors;
+  };
+
+  const validateRateCard = async ({ form }) => {
+    const errors = [];
+
+    const isEmpty = (value) => {
+      return typeof value === "string" ? value.trim() === "" : !value;
+    };
+
+    const setError = (fieldName, message) => {
+      errors[fieldName] = message;
+    };
+
+    if (isEmpty(form.cardName)) {
+      setError("cardName", "Card name is required");
     }
 
     return errors;
@@ -403,14 +421,14 @@ export default async (ctx, inject) => {
       validateField(
         form.carrierReference,
         "carrierReference",
-        "carrier reference",
+        "carrier reference"
       );
     }
     if (fieldsToValidate.includes("selectedOperator")) {
       validateField(
         form.selectedOperator,
         "selectedOperator",
-        "selectedOperator",
+        "selectedOperator"
       );
     }
     if (fieldsToValidate.includes("selectedVehicle")) {
@@ -503,4 +521,5 @@ export default async (ctx, inject) => {
   inject("validateSubAdminForm", validateSubAdminForm);
   inject("validateRole", validateRole);
   inject("validateServicesModal", validateServicesModal);
+  inject("validateRateCard", validateRateCard);
 };
