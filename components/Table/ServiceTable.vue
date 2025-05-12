@@ -33,7 +33,7 @@
                 scope="col"
                 class="pr-6 py-3 text-[#000000] font-normal text-[12px]"
               >
-                Card Price
+                Carrier Price
               </th>
               <th
                 scope="col"

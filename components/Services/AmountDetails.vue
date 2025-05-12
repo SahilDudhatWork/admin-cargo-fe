@@ -4,14 +4,23 @@
       <h1 class="text-[#B9B9B9] text-[10px] font-semibold mb-4">
         AMOUNT DETAILS
       </h1>
-      <div>
-        <p class="text-[#1E1E1E] font-medium text-sm">
-          {{ serviceSingleData?.amountDetails?.price
-          }}{{ serviceSingleData?.amountDetails?.currency }}
-        </p>
-        <p class="text-[#B9B9B9] font-normal text-[10px]">
-          Payment Mode: {{ serviceSingleData?.amountDetails?.paymentMode }}
-        </p>
+      <div class="mt-3 grid grid-cols-3 gap-y-5">
+        <div>
+          <p class="text-[#1E1E1E] font-medium text-sm">
+            {{ serviceSingleData?.amountDetails?.price
+            }}{{ serviceSingleData?.amountDetails?.currency }}
+          </p>
+          <p class="text-[#B9B9B9] font-normal text-[10px]">
+            Payment Mode: {{ serviceSingleData?.amountDetails?.paymentMode }}
+          </p>
+        </div>
+        <div>
+          <p class="text-[#1E1E1E] font-medium text-sm">Carrier Price</p>
+
+          <p class="text-[#1E1E1E] font-normal text-[16px]">
+            ${{ serviceSingleData?.rateCardPrice }}
+          </p>
+        </div>
       </div>
     </div>
     <div class="mt-3 grid grid-cols-3 gap-y-5">
