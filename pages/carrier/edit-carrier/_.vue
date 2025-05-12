@@ -68,6 +68,19 @@
             </div>
           </div>
         </div>
+
+        <div>
+          <label
+            for="companyFormation"
+            class="block mb-2 text-sm font-normal text-[#1E1E1E]"
+            >Rate Card</label
+          >
+          <Dropdown
+            :items="rateCardList"
+            :selectedLabel="selectedRateCardLabel"
+            @getValue="getRateCardValue"
+          />
+        </div>
       </div>
 
       <form class="space-y-4 md:space-y-6 mt-6">
@@ -637,6 +650,7 @@ export default {
       errors: {},
       isPassword: false,
       selectedLabel: "Select option",
+      selectedRateCardLabel: "Select option",
       formData: {
         companyName: "",
         contactName: "",
@@ -684,6 +698,8 @@ export default {
   computed: {
     ...mapGetters({
       getSingleCarrierData: "carrier/getSingleCarrierData",
+      allCardData: "rate-card/getAllCardData",
+      cardPaginationData: "rate-card/getCardPaginationData",
     }),
     isDropdownDisabled() {
       return (
@@ -691,14 +707,36 @@ export default {
         this.getSingleCarrierData.companyFormationType !== null
       );
     },
+    rateCardList() {
+      return this.allCardData.map((item) => ({
+        label: item.cardName,
+        value: item._id,
+      }));
+    },
   },
   methods: {
     ...mapActions({
-      fetchSingleCarrier: "carrier/fetchSingleUser",
       updateCarrier: "carrier/updateCarrier",
       carrierVerified: "carrier/carrierVerified",
       carrierUnVerify: "carrier/carrierUnVerify",
+      fetchAllCard: "rate-card/fetchAllCard",
+      carrierAsign: "rate-card/carrierAsign",
     }),
+    async getRateCard(payload) {
+      try {
+        let { page, limit, keyWord } = payload;
+        page = page || 1;
+        limit = limit || 50;
+        keyWord = keyWord || "";
+        await this.fetchAllCard({
+          page: page,
+          limit: limit,
+          keyWord: keyWord,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    },
     async handleVerify() {
       try {
         const accountId = this.$route.params.pathMatch;
@@ -756,6 +794,26 @@ export default {
     getValue(item) {
       this.selectedLabel = item.label;
       this.formData.companyFormationType = item.label;
+    },
+    async getRateCardValue(item) {
+      this.selectedRateCardLabel = item.label;
+
+      try {
+        const payload = {
+          rateCardId: item.value,
+          carrierAccId: this.carrierAccountId,
+        };
+        const res = await this.carrierAsign(payload);
+        this.$toast.open({
+          message: res.msg,
+        });
+      } catch (error) {
+        console.log(error);
+        this.$toast.open({
+          message: error?.response?.data?.msg || this.$i18n.t("errorMessage"),
+          type: "error",
+        });
+      }
     },
     togglePassword() {
       this.isPassword = !this.isPassword;
@@ -1074,17 +1132,36 @@ export default {
     },
   },
   async asyncData({ params, store, redirect }) {
-    const id = params.pathMatch;
+    const carrierAccountId = params.pathMatch;
     try {
-      await store.dispatch("carrier/fetchSingleCarrier", { accountId: id });
+      await store.dispatch("carrier/fetchSingleCarrier", {
+        accountId: carrierAccountId,
+      });
+      return { carrierAccountId };
     } catch (error) {
       return redirect("/carrier");
+    }
+  },
+  async mounted() {
+    try {
+      await this.getRateCard({
+        keyWord: this.search,
+      });
+    } catch (error) {
+      console.log(error);
+      this.$toast.open({
+        message: error?.response?.data?.msg || this.$i18n.t("errorMessage"),
+        type: "error",
+      });
     }
   },
   async beforeMount() {
     this.formData = this.$lodash.cloneDeep(this.getSingleCarrierData);
     this.selectedLabel = this.formData.companyFormationType
       ? this.formData.companyFormationType
+      : "Select option";
+    this.selectedRateCardLabel = this.formData.rateCards.cardName
+      ? this.formData.rateCards.cardName
       : "Select option";
     await this.formatCommercialReference();
   },

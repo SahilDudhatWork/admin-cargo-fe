@@ -87,6 +87,16 @@ export const actions = {
       throw error;
     }
   },
+  async carrierAsign(ctx, payload) {
+    try {
+      const response = await $axios.put(
+        `v1/admin/rateCard/carrierAssign/${payload.rateCardId}/${payload.carrierAccId}`
+      );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  },
   async deleteCard(ctx, payload) {
     try {
       const response = await $axios.delete(

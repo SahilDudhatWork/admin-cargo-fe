@@ -13,7 +13,7 @@
               </th>
               <th
                 scope="col"
-                class="pr-4 px-6 py-3 text-[#000000] font-normal text-[12px]"
+                class="py-3 text-[#000000] font-normal text-[12px]"
               >
                 Movement ID
               </th>
@@ -28,6 +28,12 @@
                 class="px-6 py-3 text-[#000000] font-normal text-[12px]"
               >
                 Amount
+              </th>
+              <th
+                scope="col"
+                class="pr-6 py-3 text-[#000000] font-normal text-[12px]"
+              >
+                Card Price
               </th>
               <th
                 scope="col"
@@ -99,11 +105,12 @@
                   }}</span>
                 </div>
               </td>
+              <td class="pr-6 py-6 text-[#000000] font-normal text-xs">
+                ${{ item?.rateCardPrice ? item?.rateCardPrice : 0 }}
+              </td>
               <td class="sm:px-6 py-6" v-if="item?.userData">
                 <div class="flex flex-col" v-if="item?.userData">
-                  <span class="text-[#000000] font-normal text-xs pt-1">{{
-                    item?.userData?.contactName
-                  }}</span>
+                  <span class=" ">{{ item?.userData?.contactName }}</span>
                   <span class="text-[#989898] font-normal text-[10px] pt-1"
                     >+{{ item?.userData?.countryCode }}
                     {{ item?.userData?.contactNumber }}</span
