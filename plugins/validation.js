@@ -12,6 +12,20 @@ export default async (ctx, inject) => {
     if (number.length > 10) {
       number = number.slice(0, 10);
     }
+
+    return number;
+  };
+  const validateDecimalNumber = async (value) => {
+    // Remove any character that is not a digit or a dot
+    let number = value.replace(/[^0-9.]/g, "");
+
+    // Allow only one dot (for decimal)
+    const parts = number.split(".");
+    if (parts.length > 2) {
+      // More than one dot — ignore everything after the first dot
+      number = parts[0] + "." + parts[1];
+    }
+
     return number;
   };
   const validatePrice = async (value) => {
@@ -522,4 +536,5 @@ export default async (ctx, inject) => {
   inject("validateRole", validateRole);
   inject("validateServicesModal", validateServicesModal);
   inject("validateRateCard", validateRateCard);
+  inject("validateDecimalNumber", validateDecimalNumber);
 };

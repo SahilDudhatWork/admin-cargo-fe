@@ -132,7 +132,9 @@ export default {
       fetchSingleCard: "rate-card/fetchSingleCard",
     }),
     async validatePriceInput(event, index, category) {
-      let validatedPrice = await this.$validateNumber(event.target.value);
+      let validatedPrice = await this.$validateDecimalNumber(
+        event.target.value
+      );
       this.localServices[category][index].price = validatedPrice;
     },
     async editCard() {
